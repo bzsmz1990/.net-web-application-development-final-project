@@ -18,11 +18,18 @@ namespace DataLayer
         public int Id { get; set; }
 
         [Required]
-        public virtual UserInfo user { get; set; }
+        [ForeignKey("User")]
+        public string UserId { get; set; }
+        [Required]
+        public virtual UserInfo User { get; set; }
 
+        [Required]
         public virtual ICollection<Picture> Pictures { get { return PicturesList; } }
 
-        public double Cost { get; set; }
+        [Range(0, 100)]
+        [Required]
+        [DataType(DataType.Currency)]
+        public decimal Cost { get; set; }
 
 
     }

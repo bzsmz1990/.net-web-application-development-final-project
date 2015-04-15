@@ -11,6 +11,8 @@ namespace DataLayer
 {
     class UserInfo
     {
+
+
         private List<Picture> OwnedPicList = new List<Picture>();
         private List<Picture> LikedPicList = new List<Picture>();
         private List<UserInfo> FollowersList = new List<UserInfo>();
@@ -18,24 +20,21 @@ namespace DataLayer
         private List<Transaction> TransactionList = new List<Transaction>();
         private List<Transaction> SaleTransactionList = new List<Transaction>();
         private List<Album> AlbumList = new List<Album>();
+        private Cart UserCart = new Cart();
 
         [Key]
         [Column(Order = 1)]
-        public int Id { get; set; }
-
-        [Key]
-        [Column(Order = 2)]
-        public string email { get; set; }
+        public string Id { get; set; }
 
         [Required]
-        [StringLength(25, MinimumLength = 2, ErrorMessage = "Use 5-20 characters")]
+        [StringLength(25, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 5)]
         public string FirstName { get; set; }
 
-        [StringLength(1)]
+        [StringLength(1, ErrorMessage = "The {0} should be {1} character long")]
         public string MiddleInitial { get; set; }
 
         [Required]
-        [StringLength(25, MinimumLength = 2, ErrorMessage = "Use 5-20 characters")]
+        [StringLength(25, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
         public string LastName { get; set; }
 
         [DefaultValue(0)]
@@ -58,6 +57,8 @@ namespace DataLayer
 
         public virtual ICollection<Album> Albums { get { return AlbumList; } }
 
-        public virtual Cart Cart { get; set; }
+        [ForeignKey("Cart")]
+        public int CartId { get; set; }
+        public virtual Cart Cart { get { return UserCart; } }
     }
 }
