@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{AD8D7A
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "..\..\PhotoProject\DataLayer\DataLayer.csproj", "{00BCB179-C470-4B2B-9950-BAA075A27AB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{403F8018-FF10-400D-B326-5B10C00B3454}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{403F8018-FF10-400D-B326-5B10C00B3454}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{403F8018-FF10-400D-B326-5B10C00B3454}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00BCB179-C470-4B2B-9950-BAA075A27AB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00BCB179-C470-4B2B-9950-BAA075A27AB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00BCB179-C470-4B2B-9950-BAA075A27AB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00BCB179-C470-4B2B-9950-BAA075A27AB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
