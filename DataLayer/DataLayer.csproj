@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Album.cs" />
     <Compile Include="Cart.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PhotoContext.cs" />
     <Compile Include="Picture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
