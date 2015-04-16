@@ -134,6 +134,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PhotoContext.cs" />
     <Compile Include="Picture.cs" />
+    <Compile Include="PictureProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="Transaction.cs" />
