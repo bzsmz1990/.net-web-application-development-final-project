@@ -51,7 +51,7 @@ namespace DataLayer.Migrations
                 .ForeignKey("dbo.Albums", t => t.AlbumId, cascadeDelete: true)
                 .ForeignKey("dbo.UserInfoes", t => t.UserInfo_UserId)
                 .ForeignKey("dbo.UserInfoes", t => t.UserInfo_UserId1)
-                .ForeignKey("dbo.UserInfoes", t => t.OwnerId, cascadeDelete: true)
+                .ForeignKey("dbo.UserInfoes", t => t.OwnerId, cascadeDelete: false)
                 .Index(t => t.OwnerId)
                 .Index(t => t.AlbumId)
                 .Index(t => t.UserInfo_UserId)
@@ -89,7 +89,7 @@ namespace DataLayer.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.UserInfoes", t => t.BuyerId, cascadeDelete: true)
-                .ForeignKey("dbo.UserInfoes", t => t.SellerId, cascadeDelete: true)
+                .ForeignKey("dbo.UserInfoes", t => t.SellerId, cascadeDelete: false)
                 .ForeignKey("dbo.UserInfoes", t => t.UserInfo_UserId)
                 .ForeignKey("dbo.UserInfoes", t => t.UserInfo_UserId1)
                 .Index(t => t.BuyerId)
@@ -222,7 +222,7 @@ namespace DataLayer.Migrations
                     })
                 .PrimaryKey(t => new { t.Transaction_Id, t.Album_Id })
                 .ForeignKey("dbo.Transactions", t => t.Transaction_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Albums", t => t.Album_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Albums", t => t.Album_Id, cascadeDelete: false)
                 .Index(t => t.Transaction_Id)
                 .Index(t => t.Album_Id);
             
@@ -236,7 +236,7 @@ namespace DataLayer.Migrations
                     })
                 .PrimaryKey(t => new { t.Transaction_Id, t.Picture_Id, t.Picture_OwnerId })
                 .ForeignKey("dbo.Transactions", t => t.Transaction_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Pictures", t => new { t.Picture_Id, t.Picture_OwnerId }, cascadeDelete: true)
+                .ForeignKey("dbo.Pictures", t => new { t.Picture_Id, t.Picture_OwnerId }, cascadeDelete: false)
                 .Index(t => t.Transaction_Id)
                 .Index(t => new { t.Picture_Id, t.Picture_OwnerId });
             
