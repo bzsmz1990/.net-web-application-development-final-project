@@ -33,6 +33,9 @@ namespace DataLayer
         [DefaultValue(false)]
         public Boolean isDeleted { get; set; }
 
+        [DefaultValue(1), Required]
+        public int Level { get; set; }
+
         public virtual ICollection<Picture> OwnedPictures { get; set; }
 
         public virtual ICollection<Picture> LikedPictures { get; set; }

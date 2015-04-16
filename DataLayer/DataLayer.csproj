@@ -127,6 +127,10 @@
     <Compile Include="Migrations\201504160446142_Initial Create.Designer.cs">
       <DependentUpon>201504160446142_Initial Create.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504161648189_AddLevelProperty.cs" />
+    <Compile Include="Migrations\201504161648189_AddLevelProperty.Designer.cs">
+      <DependentUpon>201504161648189_AddLevelProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PhotoContext.cs" />
     <Compile Include="Picture.cs" />
@@ -142,6 +146,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201504160446142_Initial Create.resx">
       <DependentUpon>201504160446142_Initial Create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504161648189_AddLevelProperty.resx">
+      <DependentUpon>201504161648189_AddLevelProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
