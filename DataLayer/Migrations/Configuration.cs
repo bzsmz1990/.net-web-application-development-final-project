@@ -5,14 +5,14 @@ namespace DataLayer.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DataLayer.PhotoContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<DataLayer.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(DataLayer.PhotoContext context)
+        protected override void Seed(DataLayer.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

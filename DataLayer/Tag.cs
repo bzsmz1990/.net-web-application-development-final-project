@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    class Tag
+    public class Tag
     {
-        private List<Picture> PicturesList = new List<Picture>();
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -20,6 +19,7 @@ namespace DataLayer
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
         public string Description { get; set; }
 
-        public virtual ICollection<Picture> Pictures { get { return PicturesList; } }
+        [InverseProperty("Tags")]
+        public virtual ICollection<Picture> Pictures { get; set; }
     }
 }

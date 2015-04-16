@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    class Album
+    public class Album
     {
-
-        private List<Picture> PicturesList = new List<Picture>();
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -24,13 +22,18 @@ namespace DataLayer
         public virtual UserInfo User { get; set; }
 
         [Required]
-        public virtual ICollection<Picture> Pictures { get { return PicturesList; } }
+        public virtual ICollection<Picture> Pictures { get; set; }
 
         [Range(0, 100)]
         [Required]
         [DataType(DataType.Currency)]
         public decimal Cost { get; set; }
 
+        public virtual ICollection<Transaction> SaleTransactions  { get; set; }
+
+        public virtual ICollection<Cart> CurrentCarts { get; set; }
+
+        public virtual ICollection<Cart> SavedForLaterCarts { get; set; }
 
     }
 }

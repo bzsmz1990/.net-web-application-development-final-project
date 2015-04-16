@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    class Transaction
+    public class Transaction
     {
-
-        private List<Picture> SoldPicturesList = new List<Picture>();
-        private List<Album> SoldAlbumsList = new List<Album>();
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -28,12 +25,13 @@ namespace DataLayer
         public string SellerId { get; set; }
         public virtual UserInfo Seller { get; set; }
 
-        public virtual ICollection<Picture> PicturesBeingSold { get { return SoldPicturesList; } }
+        [InverseProperty("SaleTransactions")]
+        public virtual ICollection<Picture> PicturesBeingSold { get; set; }
 
-        public virtual ICollection<Album> AlbumsBeingSold { get { return SoldAlbumsList; } }
+        [InverseProperty("SaleTransactions")]
+        public virtual ICollection<Album> AlbumsBeingSold { get; set; }
 
-        //Added this in case we want to add the ability for the user to change a picture's price.
-        public double TotalPrice { get; set; }
-
+        public decimal TotalAmount { get; set; }
+        
     }
 }

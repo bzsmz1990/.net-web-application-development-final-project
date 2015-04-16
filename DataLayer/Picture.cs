@@ -9,16 +9,18 @@ using System.Drawing;
 
 namespace DataLayer
 {
-    class Picture
+    public class Picture
     {
 
-
-        private List<Tag> tagList = new List<Tag>();
-        private List<UserInfo> likedList = new List<UserInfo>();
-
         [Key]
+        [Column(Order = 1)] 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        [Key, ForeignKey("Owner")]
+        [Column(Order = 2)] 
+        public string OwnerId { get; set; }
+        public virtual UserInfo Owner { get; set; }
 
         [Required]
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
@@ -53,20 +55,20 @@ namespace DataLayer
         [Required]
         public String CompressedImg { get; set; }
 
-
-        [Required]
-        [ForeignKey("Owner")]
-        public string OwnerId { get; set; }
-        public virtual UserInfo Owner { get; set; }
-
         [ForeignKey("Album")]
-        public string AlbumId { get; set; }
+        public int AlbumId { get; set; }
         public virtual Album Album { get; set; }
 
         [InverseProperty("Pictures")]
-        public virtual ICollection<Tag> Tags { get { return tagList; } }
+        public virtual ICollection<Tag> Tags { get; set; }
 
-        public virtual ICollection<UserInfo> LikedBy { get { return likedList; } }
+        public virtual ICollection<UserInfo> LikedBy { get; set; }
+
+        public virtual ICollection<Cart> CurrentCarts { get; set; }
+
+        public virtual ICollection<Cart> SavedForLaterCarts { get; set; }
+
+        public virtual ICollection<Transaction> SaleTransactions { get; set; }
 
     }
 }

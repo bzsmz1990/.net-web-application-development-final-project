@@ -9,22 +9,12 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    class UserInfo
+    public class UserInfo
     {
 
-
-        private List<Picture> OwnedPicList = new List<Picture>();
-        private List<Picture> LikedPicList = new List<Picture>();
-        private List<UserInfo> FollowersList = new List<UserInfo>();
-        private List<UserInfo> FollowingList = new List<UserInfo>();
-        private List<Transaction> TransactionList = new List<Transaction>();
-        private List<Transaction> SaleTransactionList = new List<Transaction>();
-        private List<Album> AlbumList = new List<Album>();
-        private Cart UserCart = new Cart();
-
-        [Key]
-        [Column(Order = 1)]
-        public string Id { get; set; }
+        [Key, ForeignKey("User")]
+        public string UserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
         [Required]
         [StringLength(25, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 5)]
@@ -38,27 +28,25 @@ namespace DataLayer
         public string LastName { get; set; }
 
         [DefaultValue(0)]
-        public double AccountBalance { get; set; }
+        public decimal AccountBalance { get; set; }
 
         [DefaultValue(false)]
         public Boolean isDeleted { get; set; }
 
-        public virtual ICollection<Picture> OwnedPictures { get { return OwnedPicList; } }
+        public virtual ICollection<Picture> OwnedPictures { get; set; }
 
-        public virtual ICollection<Picture> LikedPictures { get { return LikedPicList; } }
+        public virtual ICollection<Picture> LikedPictures { get; set; }
 
-        public virtual ICollection<UserInfo> Followers { get { return FollowersList; } }
+        public virtual ICollection<UserInfo> Followers { get; set; }
 
-        public virtual ICollection<UserInfo> Following { get { return FollowingList; } }
+        public virtual ICollection<UserInfo> Following { get; set; }
 
-        public virtual ICollection<Transaction> PurchaseTransactions { get { return TransactionList; } }
+        public virtual ICollection<Transaction> PurchaseTransactions { get; set; }
 
-        public virtual ICollection<Transaction> SaleTransactions { get { return SaleTransactionList; } }
+        public virtual ICollection<Transaction> SaleTransactions { get; set; }
 
-        public virtual ICollection<Album> Albums { get { return AlbumList; } }
+        public virtual ICollection<Album> Albums { get; set; }
 
-        [ForeignKey("Cart")]
-        public int CartId { get; set; }
-        public virtual Cart Cart { get { return UserCart; } }
+        public virtual Cart Cart { get; set; }
     }
 }
