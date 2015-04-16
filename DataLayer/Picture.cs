@@ -50,10 +50,13 @@ namespace DataLayer
         public bool HasBeenReported { get; set; }
 
         [Required]
-        public String OriginalImg { get; set; }  //The image as an url
+        public byte[] OriginalImg { get; set; }  //The image as an url
 
         [Required]
-        public String CompressedImg { get; set; }
+        public byte[] CompressImg { get; set; }
+
+        [Required]
+        public string PictureType { get; set; }
 
         [ForeignKey("Album")]
         public int AlbumId { get; set; }
