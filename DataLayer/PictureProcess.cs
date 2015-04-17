@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    class PictureProcess
+    public class PictureProcess
     {
         //Valid file type
         //Since different companies has different file extension for their RAW file

@@ -3,7 +3,7 @@ namespace DataLayer.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class CreateMigration : DbMigration
     {
         public override void Up()
         {
@@ -41,8 +41,9 @@ namespace DataLayer.Migrations
                         Description = c.String(maxLength: 500),
                         UploadTime = c.DateTime(nullable: false),
                         HasBeenReported = c.Boolean(nullable: false),
-                        OriginalImg = c.String(nullable: false),
-                        CompressedImg = c.String(nullable: false),
+                        OriginalImg = c.Binary(nullable: false),
+                        CompressImg = c.Binary(nullable: false),
+                        PictureType = c.String(nullable: false),
                         AlbumId = c.Int(nullable: false),
                         UserInfo_UserId = c.String(maxLength: 128),
                         UserInfo_UserId1 = c.String(maxLength: 128),
@@ -51,7 +52,7 @@ namespace DataLayer.Migrations
                 .ForeignKey("dbo.Albums", t => t.AlbumId, cascadeDelete: true)
                 .ForeignKey("dbo.UserInfoes", t => t.UserInfo_UserId)
                 .ForeignKey("dbo.UserInfoes", t => t.UserInfo_UserId1)
-                .ForeignKey("dbo.UserInfoes", t => t.OwnerId, cascadeDelete: false)
+                .ForeignKey("dbo.UserInfoes", t => t.OwnerId, cascadeDelete: true)
                 .Index(t => t.OwnerId)
                 .Index(t => t.AlbumId)
                 .Index(t => t.UserInfo_UserId)
@@ -67,6 +68,7 @@ namespace DataLayer.Migrations
                         LastName = c.String(nullable: false, maxLength: 25),
                         AccountBalance = c.Decimal(nullable: false, precision: 18, scale: 2),
                         isDeleted = c.Boolean(nullable: false),
+                        Level = c.Int(nullable: false),
                         Picture_Id = c.Int(),
                         Picture_OwnerId = c.String(maxLength: 128),
                     })
@@ -89,7 +91,7 @@ namespace DataLayer.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.UserInfoes", t => t.BuyerId, cascadeDelete: true)
-                .ForeignKey("dbo.UserInfoes", t => t.SellerId, cascadeDelete: false)
+                .ForeignKey("dbo.UserInfoes", t => t.SellerId, cascadeDelete: true)
                 .ForeignKey("dbo.UserInfoes", t => t.UserInfo_UserId)
                 .ForeignKey("dbo.UserInfoes", t => t.UserInfo_UserId1)
                 .Index(t => t.BuyerId)
@@ -222,7 +224,7 @@ namespace DataLayer.Migrations
                     })
                 .PrimaryKey(t => new { t.Transaction_Id, t.Album_Id })
                 .ForeignKey("dbo.Transactions", t => t.Transaction_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Albums", t => t.Album_Id, cascadeDelete: false)
+                .ForeignKey("dbo.Albums", t => t.Album_Id, cascadeDelete: true)
                 .Index(t => t.Transaction_Id)
                 .Index(t => t.Album_Id);
             
@@ -236,7 +238,7 @@ namespace DataLayer.Migrations
                     })
                 .PrimaryKey(t => new { t.Transaction_Id, t.Picture_Id, t.Picture_OwnerId })
                 .ForeignKey("dbo.Transactions", t => t.Transaction_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Pictures", t => new { t.Picture_Id, t.Picture_OwnerId }, cascadeDelete: false)
+                .ForeignKey("dbo.Pictures", t => new { t.Picture_Id, t.Picture_OwnerId }, cascadeDelete: true)
                 .Index(t => t.Transaction_Id)
                 .Index(t => new { t.Picture_Id, t.Picture_OwnerId });
             

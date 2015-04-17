@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.ComponentModel;
 
 namespace DataLayer
 {
@@ -45,8 +46,11 @@ namespace DataLayer
         [Display(Name = "UploadTime")]
         public DateTime UploadTime { get; set; }
 
-        public uint NumberOfLikes { get; set; }
+        [DefaultValue(0)]
+        [Range(0, int.MaxValue, ErrorMessage = "The number of {0} cannot be less than 0.")]
+        public int NumberOfLikes { get; set; }
 
+        [DefaultValue(false)]
         public bool HasBeenReported { get; set; }
 
         [Required]

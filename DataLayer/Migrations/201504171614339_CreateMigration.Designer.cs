@@ -7,13 +7,13 @@ namespace DataLayer.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddLevelProperty : IMigrationMetadata
+    public sealed partial class CreateMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddLevelProperty));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201504161648189_AddLevelProperty"; }
+            get { return "201504171614339_CreateMigration"; }
         }
         
         string IMigrationMetadata.Source

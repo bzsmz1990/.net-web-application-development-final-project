@@ -18,8 +18,12 @@ namespace DataLayer
         [Required]
         [ForeignKey("User")]
         public string UserId { get; set; }
-        [Required]
         public virtual UserInfo User { get; set; }
+
+        [Display(Name = "Album Name")]
+        [Column("AlbumName")]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
+        public string Name { get; set; }
 
         [Required]
         public virtual ICollection<Picture> Pictures { get; set; }
@@ -27,6 +31,8 @@ namespace DataLayer
         [Range(0, 100)]
         [Required]
         [DataType(DataType.Currency)]
+        [Display(Name = "AlbumPrice")]
+        [Column("AlbumPrice")]
         public decimal Cost { get; set; }
 
         public virtual ICollection<Transaction> SaleTransactions  { get; set; }

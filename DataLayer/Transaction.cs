@@ -20,7 +20,7 @@ namespace DataLayer
         public string BuyerId { get; set; }
         public virtual UserInfo Buyer { get; set; }
 
-        [ForeignKey("Seller")]
+        //[ForeignKey("Seller")]
         [Required]
         public string SellerId { get; set; }
         public virtual UserInfo Seller { get; set; }
