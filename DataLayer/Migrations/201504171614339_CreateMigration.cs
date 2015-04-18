@@ -49,7 +49,7 @@ namespace DataLayer.Migrations
                         UserInfo_UserId1 = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => new { t.Id, t.OwnerId })
-                .ForeignKey("dbo.Albums", t => t.AlbumId, cascadeDelete: true)
+                .ForeignKey("dbo.Albums", t => t.AlbumId, cascadeDelete: false)
                 .ForeignKey("dbo.UserInfoes", t => t.UserInfo_UserId)
                 .ForeignKey("dbo.UserInfoes", t => t.UserInfo_UserId1)
                 .ForeignKey("dbo.UserInfoes", t => t.OwnerId, cascadeDelete: true)
@@ -90,8 +90,8 @@ namespace DataLayer.Migrations
                         UserInfo_UserId1 = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.UserInfoes", t => t.BuyerId, cascadeDelete: true)
-                .ForeignKey("dbo.UserInfoes", t => t.SellerId, cascadeDelete: true)
+                .ForeignKey("dbo.UserInfoes", t => t.BuyerId, cascadeDelete: false)
+                .ForeignKey("dbo.UserInfoes", t => t.SellerId, cascadeDelete: false)
                 .ForeignKey("dbo.UserInfoes", t => t.UserInfo_UserId)
                 .ForeignKey("dbo.UserInfoes", t => t.UserInfo_UserId1)
                 .Index(t => t.BuyerId)
@@ -185,7 +185,7 @@ namespace DataLayer.Migrations
                     })
                 .PrimaryKey(t => new { t.Cart_UserId, t.Album_Id })
                 .ForeignKey("dbo.Carts", t => t.Cart_UserId, cascadeDelete: true)
-                .ForeignKey("dbo.Albums", t => t.Album_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Albums", t => t.Album_Id, cascadeDelete: false)
                 .Index(t => t.Cart_UserId)
                 .Index(t => t.Album_Id);
             
@@ -198,7 +198,7 @@ namespace DataLayer.Migrations
                     })
                 .PrimaryKey(t => new { t.Cart_UserId, t.Album_Id })
                 .ForeignKey("dbo.Carts", t => t.Cart_UserId, cascadeDelete: true)
-                .ForeignKey("dbo.Albums", t => t.Album_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Albums", t => t.Album_Id, cascadeDelete: false)
                 .Index(t => t.Cart_UserId)
                 .Index(t => t.Album_Id);
             
@@ -224,7 +224,7 @@ namespace DataLayer.Migrations
                     })
                 .PrimaryKey(t => new { t.Transaction_Id, t.Album_Id })
                 .ForeignKey("dbo.Transactions", t => t.Transaction_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Albums", t => t.Album_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Albums", t => t.Album_Id, cascadeDelete: false)
                 .Index(t => t.Transaction_Id)
                 .Index(t => t.Album_Id);
             
@@ -238,7 +238,7 @@ namespace DataLayer.Migrations
                     })
                 .PrimaryKey(t => new { t.Transaction_Id, t.Picture_Id, t.Picture_OwnerId })
                 .ForeignKey("dbo.Transactions", t => t.Transaction_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Pictures", t => new { t.Picture_Id, t.Picture_OwnerId }, cascadeDelete: true)
+                .ForeignKey("dbo.Pictures", t => new { t.Picture_Id, t.Picture_OwnerId }, cascadeDelete: false)
                 .Index(t => t.Transaction_Id)
                 .Index(t => new { t.Picture_Id, t.Picture_OwnerId });
             
@@ -252,7 +252,7 @@ namespace DataLayer.Migrations
                     })
                 .PrimaryKey(t => new { t.Picture_Id, t.Picture_OwnerId, t.Tag_Id })
                 .ForeignKey("dbo.Pictures", t => new { t.Picture_Id, t.Picture_OwnerId }, cascadeDelete: true)
-                .ForeignKey("dbo.Tags", t => t.Tag_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Tags", t => t.Tag_Id, cascadeDelete: false)
                 .Index(t => new { t.Picture_Id, t.Picture_OwnerId })
                 .Index(t => t.Tag_Id);
             
@@ -265,7 +265,7 @@ namespace DataLayer.Migrations
                         Picture_OwnerId = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => new { t.Cart_UserId, t.Picture_Id, t.Picture_OwnerId })
-                .ForeignKey("dbo.Carts", t => t.Cart_UserId, cascadeDelete: true)
+                .ForeignKey("dbo.Carts", t => t.Cart_UserId, cascadeDelete: false)
                 .ForeignKey("dbo.Pictures", t => new { t.Picture_Id, t.Picture_OwnerId }, cascadeDelete: true)
                 .Index(t => t.Cart_UserId)
                 .Index(t => new { t.Picture_Id, t.Picture_OwnerId });
@@ -279,7 +279,7 @@ namespace DataLayer.Migrations
                         Picture_OwnerId = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => new { t.Cart_UserId, t.Picture_Id, t.Picture_OwnerId })
-                .ForeignKey("dbo.Carts", t => t.Cart_UserId, cascadeDelete: true)
+                .ForeignKey("dbo.Carts", t => t.Cart_UserId, cascadeDelete: false)
                 .ForeignKey("dbo.Pictures", t => new { t.Picture_Id, t.Picture_OwnerId }, cascadeDelete: true)
                 .Index(t => t.Cart_UserId)
                 .Index(t => new { t.Picture_Id, t.Picture_OwnerId });
