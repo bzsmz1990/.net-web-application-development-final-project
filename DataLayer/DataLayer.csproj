@@ -131,6 +131,10 @@
     <Compile Include="Migrations\201504171614339_CreateMigration.Designer.cs">
       <DependentUpon>201504171614339_CreateMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504180458330_Column Name changes.cs" />
+    <Compile Include="Migrations\201504180458330_Column Name changes.Designer.cs">
+      <DependentUpon>201504180458330_Column Name changes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PhotoContext.cs" />
     <Compile Include="Picture.cs" />
@@ -147,6 +151,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201504171614339_CreateMigration.resx">
       <DependentUpon>201504171614339_CreateMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504180458330_Column Name changes.resx">
+      <DependentUpon>201504180458330_Column Name changes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
