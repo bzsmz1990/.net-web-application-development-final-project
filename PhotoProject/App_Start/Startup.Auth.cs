@@ -54,9 +54,9 @@ namespace PhotoProject
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "1429085010728321",
+               appSecret: "79fa9565391135c7180959579ed6dcb7");
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
