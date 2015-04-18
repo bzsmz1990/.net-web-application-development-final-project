@@ -58,11 +58,11 @@ namespace PhotoProject
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "826898063676-dj5vb415n594ko53udiikf3mafms58l3.apps.googleusercontent.com",
+                ClientSecret = "qcOcsNzBRMp1_btYRE5UmeJo"
+            });
         }
     }
 }
