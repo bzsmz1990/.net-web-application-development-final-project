@@ -5,11 +5,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Business_Logic;
 
 namespace PhotoProject.Controllers
 {
     public class UploadController : Controller
     {
+        ApplicationDbContext context = new ApplicationDbContext();
+
         // GET: Upload
         public ActionResult Index()
         {
@@ -28,6 +31,7 @@ namespace PhotoProject.Controllers
             var userID = User.Identity.GetUserId();
 
             Picture pic = new Picture();
+            pic.OwnerId = userID;
             pic.Title = formcollection["Title"];
             pic.Cost = Convert.ToDecimal(formcollection["Cost"]);
             pic.Location = formcollection["Location"];
@@ -46,23 +50,20 @@ namespace PhotoProject.Controllers
                     return View();
                 }
             }
-            //if (file.ContentLength < (2 * 1024 * 1024))
-            //{
-            //    ModelState.AddModelError("CustomError", "File size shoud be bigger than 2MB");
-            //    return View();
-            //}
+
+            if (file.ContentLength < (2 * 1024 * 1024))
+            {
+                ModelState.AddModelError("CustomError", "File size shoud be bigger than 2MB");
+                return View();
+            }
 
             byte[] data = new byte[file.ContentLength];
             file.InputStream.Read(data, 0, file.ContentLength);
             pic.OriginalImg = data;
             pic.CompressImg = data;
 
-
-            using (ApplicationDbContext phodb = new ApplicationDbContext())
-            {
-                phodb.Pictures.Add(pic);
-                phodb.SaveChanges();
-            }
+            context.Pictures.Add(pic);
+            context.SaveChanges();
 
             return RedirectToAction("Index");
         }
