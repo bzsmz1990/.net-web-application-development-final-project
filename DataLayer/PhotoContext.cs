@@ -15,6 +15,11 @@ namespace DataLayer
         {
         }
 
+        public ApplicationDbContext(string connectionString)
+            : base(connectionString, throwIfV1Schema: false)
+        {
+        }
+
         public DbSet<UserInfo> UserInfos { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Tag> Tags { get; set; }
