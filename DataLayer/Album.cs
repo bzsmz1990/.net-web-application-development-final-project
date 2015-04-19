@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -34,6 +35,9 @@ namespace DataLayer
         [Display(Name = "AlbumPrice")]
         [Column("AlbumPrice")]
         public decimal Cost { get; set; }
+
+        [DefaultValue(false)]
+        public bool HasBeenReported { get; set; }
 
         public virtual ICollection<Transaction> SaleTransactions  { get; set; }
 

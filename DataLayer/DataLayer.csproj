@@ -141,6 +141,10 @@
     <Compile Include="Migrations\201504180458330_Column Name changes.Designer.cs">
       <DependentUpon>201504180458330_Column Name changes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504191929575_Correcting key for picture and adding hidden property.cs" />
+    <Compile Include="Migrations\201504191929575_Correcting key for picture and adding hidden property.Designer.cs">
+      <DependentUpon>201504191929575_Correcting key for picture and adding hidden property.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PhotoContext.cs" />
     <Compile Include="Picture.cs" />
@@ -159,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504180458330_Column Name changes.resx">
       <DependentUpon>201504180458330_Column Name changes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504191929575_Correcting key for picture and adding hidden property.resx">
+      <DependentUpon>201504191929575_Correcting key for picture and adding hidden property.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

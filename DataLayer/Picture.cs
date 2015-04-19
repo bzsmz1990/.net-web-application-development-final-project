@@ -14,12 +14,11 @@ namespace DataLayer
     {
 
         [Key]
-        [Column(Order = 1)] 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Key, ForeignKey("Owner")]
-        [Column(Order = 2)] 
+        [ForeignKey("Owner")]
+        [Required] 
         public string OwnerId { get; set; }
         public virtual UserInfo Owner { get; set; }
 
@@ -61,6 +60,8 @@ namespace DataLayer
 
         [Required]
         public string PictureType { get; set; }
+
+        public bool Hidden { get; set; }
 
         [ForeignKey("Album")]
         public int AlbumId { get; set; }
