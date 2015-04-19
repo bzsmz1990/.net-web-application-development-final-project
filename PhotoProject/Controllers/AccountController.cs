@@ -165,7 +165,10 @@ namespace PhotoProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //TODO: THIS SHOULD CREAE A PROPER INFO. THE NAME SHOULD COME FROM REGISTER VIEW MODEL
+                //ideally user creation step should live on the business logic layer.
+                UserInfo userInfo = new UserInfo { FirstName = "Test Name", LastName = "Test Last Name" };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Info = userInfo };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -391,7 +394,10 @@ namespace PhotoProject.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //TODO: THIS SHOULD CREAE A PROPER INFO. THE NAME SHOULD COME FROM REGISTER VIEW MODEL
+                //ideally user creation step should live on the business logic layer.
+                UserInfo userInfo = new UserInfo { FirstName = "Test Name", LastName = "Test Last Name" };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Info = userInfo };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
