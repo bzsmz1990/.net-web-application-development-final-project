@@ -4,6 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
+using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 
 namespace Business_Logic
@@ -69,6 +72,6 @@ namespace Business_Logic
             picture.HasBeenReported = true;
             //TODO: SEND NOTIFICATION
         }
-        
+
     }
 }

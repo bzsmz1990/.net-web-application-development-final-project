@@ -28,7 +28,14 @@ namespace PhotoProject.Controllers
         [HttpPost]
         public ActionResult Upload(FormCollection formcollection)
         {
+            PictureProcess picPro = new PictureProcess();
+
             var userID = User.Identity.GetUserId();
+            UserInfo currentUser = context.UserInfos.Single(emp => emp.UserId == userID);
+
+            HttpPostedFileBase file = Request.Files[0] as HttpPostedFileBase;
+            string fileExtension = picPro.GetFileExtends(file.FileName);
+            int size = file.ContentLength;
 
             Picture pic = new Picture();
             pic.OwnerId = userID;
@@ -37,35 +44,28 @@ namespace PhotoProject.Controllers
             pic.Location = formcollection["Location"];
             pic.Description = formcollection["Description"];
             pic.UploadTime = DateTime.Now;
-            HttpPostedFileBase file = Request.Files[0] as HttpPostedFileBase;
-            string fileExtension = PictureProcess.GetFileExtends(file.FileName);
             pic.PictureType = fileExtension;
+            
 
-            //Apply validation here
-            if (file.ContentType != "image/jpeg")
+            string validationStr = picPro.ValidatePicture(pic.PictureType, size);
+            if (validationStr == "Valid")
             {
-                if (!PictureProcess.CheckFileExtends(fileExtension))
-                {
-                    ModelState.AddModelError("CustomError", "File type is invalid! We accept jpg, bmp, cr2, nef, arw, pef, dng");
-                    return View();
-                }
+                byte[] data = new byte[file.ContentLength];
+                file.InputStream.Read(data, 0, file.ContentLength);
+                pic.OriginalImg = data;
+                pic.CompressImg = data;
+
+                context.Pictures.Add(pic);
+                currentUser.OwnedPictures.Add(pic);
+                context.SaveChanges();
+
+                return RedirectToAction("Index");
             }
-
-            if (file.ContentLength < (2 * 1024 * 1024))
+            else
             {
-                ModelState.AddModelError("CustomError", "File size shoud be bigger than 2MB");
+                ModelState.AddModelError("CustomError", validationStr);
                 return View();
-            }
-
-            byte[] data = new byte[file.ContentLength];
-            file.InputStream.Read(data, 0, file.ContentLength);
-            pic.OriginalImg = data;
-            pic.CompressImg = data;
-
-            context.Pictures.Add(pic);
-            context.SaveChanges();
-
-            return RedirectToAction("Index");
+            }   
         }
     }
 }
