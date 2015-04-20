@@ -64,7 +64,7 @@ namespace DataLayer
         public bool Hidden { get; set; }
 
         [ForeignKey("Album")]
-        public int AlbumId { get; set; }
+        public int? AlbumId { get; set; }
         public virtual Album Album { get; set; }
 
         [InverseProperty("Pictures")]

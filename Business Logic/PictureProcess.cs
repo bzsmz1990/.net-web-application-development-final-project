@@ -19,7 +19,7 @@ namespace Business_Logic
         }
 
         //Extract file extension
-        public static string GetFileExtends(string filename)
+        public string GetFileExtends(string filename)
         {
             string ext = null;
             if (filename.IndexOf('.') > 0)
@@ -31,7 +31,7 @@ namespace Business_Logic
         }
 
         //Check whether file's extension is valid
-        public static bool CheckFileExtends(string fileExtends)
+        public bool CheckFileExtends(string fileExtends)
         {
             bool status = false;
             fileExtends = fileExtends.ToLower();
@@ -59,6 +59,26 @@ namespace Business_Logic
             MemoryStream ms = new MemoryStream();
             imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
             return ms.ToArray();
+        }
+
+        //Apply validation here
+        public string ValidatePicture(string picType, int picSize)
+        {
+            PictureProcess picPro = new PictureProcess();
+            string validation = "Valid";
+            if (picType != "image/jpeg")
+            {
+                if (!picPro.CheckFileExtends(picType))
+                {
+                    validation = "File type is invalid! We accept jpg, bmp, cr2, nef, arw, pef, dng";
+                }
+            }
+
+            if (picSize < (2 * 1024 * 1024))
+            {
+                validation = "File size shoud be bigger than 2MB";
+            }
+            return validation;
         }
     }
 }
