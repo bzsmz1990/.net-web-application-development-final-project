@@ -18,7 +18,6 @@ namespace Business_Logic
         public PictureHelper(ApplicationDbContext context)
         {
             db = context;
-
         }
 
         public ICollection<Picture> GetAllPictures()
