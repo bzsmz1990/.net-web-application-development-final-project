@@ -39,9 +39,8 @@ namespace PhotoProject.Controllers
                     break;
             }
 
-            int pageSize = LIST_SIZE;
             int pageNumber = (page ?? 1);
-            return View(pictures.ToPagedList(pageNumber, pageSize));
+            return View(pictures.ToPagedList(pageNumber, LIST_SIZE));
         }
 
 

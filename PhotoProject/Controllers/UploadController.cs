@@ -45,7 +45,7 @@ namespace PhotoProject.Controllers
             pic.Description = formcollection["Description"];
             pic.UploadTime = DateTime.Now;
             pic.PictureType = fileExtension;
-            
+
 
             string validationStr = picPro.ValidatePicture(pic.PictureType, size);
             if (validationStr == "Valid")
