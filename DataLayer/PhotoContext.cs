@@ -15,17 +15,12 @@ namespace DataLayer
         {
         }
 
-        public ApplicationDbContext(string connectionString)
-            : base(connectionString, throwIfV1Schema: false)
-        {
-        }
-
-        public DbSet<UserInfo> UserInfos { get; set; }
-        public DbSet<Picture> Pictures { get; set; }
-        public DbSet<Tag> Tags { get; set; }
-        public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<Cart> Carts { get; set; }
-        public DbSet<Album> Albums { get; set; }
+        public virtual DbSet<UserInfo> UserInfos { get; set; }
+        public virtual DbSet<Picture> Pictures { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<Cart> Carts { get; set; }
+        public virtual DbSet<Album> Albums { get; set; }
 
         public static ApplicationDbContext Create()
         {

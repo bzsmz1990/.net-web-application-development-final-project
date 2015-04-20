@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,18 @@ namespace Business_Logic
 {
     public class PictureHelper
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db { get; set; }
+
+        public PictureHelper(ApplicationDbContext context)
+        {
+            db = context;
+
+        }
+
+        public ICollection<Picture> GetAllPictures()
+        {
+            return db.Pictures.ToList();
+        }
 
         public ICollection<Picture> GetPicturesOrderedByMostPurchased()
         {
