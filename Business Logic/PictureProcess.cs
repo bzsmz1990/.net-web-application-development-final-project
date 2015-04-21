@@ -10,6 +10,9 @@ namespace Business_Logic
 {
     public class PictureProcess
     {
+        private static int targetWidth = 300;
+        private static int targetHeight = 200;
+
         //Valid file type
         //Since different companies has different file extension for their RAW file
         //We only conside Nikon(.nef), Canon(.cr2), SONY(.arw), PENTAX(.pef) and LEICA(.dng)
@@ -54,10 +57,17 @@ namespace Business_Logic
             return returnImage;
         }
 
-        public byte[] imageToByteArray(Image imageIn)
+        public byte[] ImageJPGToByteArray(Image imageIn)
         {
             MemoryStream ms = new MemoryStream();
             imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            return ms.ToArray();
+        }
+
+        public byte[] ImageBMPToByteArray(Image imageIn)
+        {
+            MemoryStream ms = new MemoryStream();
+            imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
             return ms.ToArray();
         }
 
@@ -79,6 +89,60 @@ namespace Business_Logic
                 validation = "File size shoud be bigger than 2MB";
             }
             return validation;
+        }
+
+        //Compress picture
+        public byte[] ZoomAuto(byte[] originalImg)
+        {
+            Image initImage = byteArrayToImage(originalImg);
+
+            //Calculat compressImg's width and height
+            double newWidth = initImage.Width;
+            double newHeight = initImage.Height;
+
+            //Original image is too small. Actually, this situation cannot happen
+            //Since I have verify the image size in ValidatePicture
+            if (initImage.Width <= targetWidth && initImage.Height <= targetHeight)
+            {
+                return originalImg;
+            }
+            else
+            {
+                //width > height
+                if (initImage.Width > initImage.Height || initImage.Width == initImage.Height)
+                {
+                    if (initImage.Width > targetWidth)
+                    {
+                        newWidth = targetWidth;
+                        newHeight = (double)initImage.Height * ((double)targetWidth / (double)initImage.Width);
+                    }
+                }
+                else
+                {
+                    if (initImage.Height > targetHeight)
+                    {
+                        newHeight = targetHeight;
+                        newWidth = (double)initImage.Width * ((double)targetHeight / (double)initImage.Height);
+                    }
+                }
+
+                //Create new compressed image
+                Image newImage = new System.Drawing.Bitmap((int)newWidth, (int)newHeight);
+                System.Drawing.Graphics newG = System.Drawing.Graphics.FromImage(newImage);
+                newG.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                newG.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                newG.Clear(Color.White);
+                newG.DrawImage(initImage, new System.Drawing.Rectangle(0, 0, newImage.Width, newImage.Height), new System.Drawing.Rectangle(0, 0, initImage.Width, initImage.Height), System.Drawing.GraphicsUnit.Pixel);
+
+                System.Drawing.Image compressImg = new System.Drawing.Bitmap(newImage);
+
+                newG.Dispose();
+                newImage.Dispose();
+                initImage.Dispose();
+
+                return ImageBMPToByteArray(compressImg);
+            }
+            
         }
     }
 }

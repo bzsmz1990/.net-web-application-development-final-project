@@ -11,7 +11,9 @@ namespace PhotoProject.Controllers
 {
     public class UploadController : Controller
     {
-        ApplicationDbContext context = new ApplicationDbContext();
+        private static ApplicationDbContext db = new ApplicationDbContext();
+        private static PictureProcess picPro = new PictureProcess();
+        private static PictureHelper picHelp = new PictureHelper(db);
 
         // GET: Upload
         public ActionResult Index()
@@ -28,11 +30,8 @@ namespace PhotoProject.Controllers
         [HttpPost]
         public ActionResult Upload(FormCollection formcollection)
         {
-            PictureProcess picPro = new PictureProcess();
-            PictureHelper picHelp = new PictureHelper(context);
-
             var userID = User.Identity.GetUserId();
-            UserInfo currentUser = context.UserInfos.Single(emp => emp.UserId == userID);
+            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
 
             HttpPostedFileBase file = Request.Files[0] as HttpPostedFileBase;
             string fileExtension = picPro.GetFileExtends(file.FileName);
@@ -47,9 +46,9 @@ namespace PhotoProject.Controllers
                 //create picture
                 Picture pic = picHelp.CreatPicture(userID, formcollection["Title"], Convert.ToDecimal(formcollection["Cost"]), formcollection["Location"], formcollection["Description"], DateTime.Now, fileExtension, data);
 
-                context.Pictures.Add(pic);
+                db.Pictures.Add(pic);
                 currentUser.OwnedPictures.Add(pic);
-                context.SaveChanges();
+                db.SaveChanges();
 
                 return RedirectToAction("Index");
             }

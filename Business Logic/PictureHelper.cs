@@ -13,7 +13,9 @@ namespace Business_Logic
 {
     public class PictureHelper
     {
-        private ApplicationDbContext db { get; set; }
+        private static ApplicationDbContext db = new ApplicationDbContext();
+        private static PictureProcess picPro = new PictureProcess();
+        private static PictureHelper picHelp = new PictureHelper(db);
 
         public PictureHelper(ApplicationDbContext context)
         {
@@ -96,9 +98,8 @@ namespace Business_Logic
             pic.UploadTime = time;
             pic.PictureType = type;
             pic.OriginalImg = data;
-            pic.CompressImg = data;
+            pic.CompressImg = picPro.ZoomAuto(data);
             return pic;
         }
-
     }
 }
