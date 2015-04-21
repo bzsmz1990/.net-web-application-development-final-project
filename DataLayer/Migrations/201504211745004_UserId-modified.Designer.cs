@@ -7,13 +7,13 @@ namespace DataLayer.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class ColumnNamechanges : IMigrationMetadata
+    public sealed partial class UserIdmodified : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ColumnNamechanges));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UserIdmodified));
         
         string IMigrationMetadata.Id
         {
-            get { return "201504180458330_Column Name changes"; }
+            get { return "201504211745004_UserId-modified"; }
         }
         
         string IMigrationMetadata.Source

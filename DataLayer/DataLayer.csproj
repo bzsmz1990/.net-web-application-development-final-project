@@ -133,21 +133,17 @@
     <Compile Include="Cart.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="ManageViewModels.cs" />
-    <Compile Include="Migrations\201504171614339_CreateMigration.cs" />
-    <Compile Include="Migrations\201504171614339_CreateMigration.Designer.cs">
-      <DependentUpon>201504171614339_CreateMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201504211717040_Diego-4-21.cs" />
+    <Compile Include="Migrations\201504211717040_Diego-4-21.Designer.cs">
+      <DependentUpon>201504211717040_Diego-4-21.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201504180458330_Column Name changes.cs" />
-    <Compile Include="Migrations\201504180458330_Column Name changes.Designer.cs">
-      <DependentUpon>201504180458330_Column Name changes.cs</DependentUpon>
+    <Compile Include="Migrations\201504211736572_User-identity-generated.cs" />
+    <Compile Include="Migrations\201504211736572_User-identity-generated.Designer.cs">
+      <DependentUpon>201504211736572_User-identity-generated.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201504191929575_Correcting key for picture and adding hidden property.cs" />
-    <Compile Include="Migrations\201504191929575_Correcting key for picture and adding hidden property.Designer.cs">
-      <DependentUpon>201504191929575_Correcting key for picture and adding hidden property.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504192020063_Make album nullable.cs" />
-    <Compile Include="Migrations\201504192020063_Make album nullable.Designer.cs">
-      <DependentUpon>201504192020063_Make album nullable.cs</DependentUpon>
+    <Compile Include="Migrations\201504211745004_UserId-modified.cs" />
+    <Compile Include="Migrations\201504211745004_UserId-modified.Designer.cs">
+      <DependentUpon>201504211745004_UserId-modified.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PhotoContext.cs" />
@@ -162,17 +158,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201504171614339_CreateMigration.resx">
-      <DependentUpon>201504171614339_CreateMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201504211717040_Diego-4-21.resx">
+      <DependentUpon>201504211717040_Diego-4-21.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504180458330_Column Name changes.resx">
-      <DependentUpon>201504180458330_Column Name changes.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201504211736572_User-identity-generated.resx">
+      <DependentUpon>201504211736572_User-identity-generated.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504191929575_Correcting key for picture and adding hidden property.resx">
-      <DependentUpon>201504191929575_Correcting key for picture and adding hidden property.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504192020063_Make album nullable.resx">
-      <DependentUpon>201504192020063_Make album nullable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201504211745004_UserId-modified.resx">
+      <DependentUpon>201504211745004_UserId-modified.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
