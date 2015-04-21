@@ -29,6 +29,7 @@ namespace PhotoProject.Controllers
         public ActionResult Upload(FormCollection formcollection)
         {
             PictureProcess picPro = new PictureProcess();
+            PictureHelper picHelp = new PictureHelper(context);
 
             var userID = User.Identity.GetUserId();
             UserInfo currentUser = context.UserInfos.Single(emp => emp.UserId == userID);
@@ -36,24 +37,15 @@ namespace PhotoProject.Controllers
             HttpPostedFileBase file = Request.Files[0] as HttpPostedFileBase;
             string fileExtension = picPro.GetFileExtends(file.FileName);
             int size = file.ContentLength;
+            string validationStr = picPro.ValidatePicture(fileExtension, size);
 
-            Picture pic = new Picture();
-            pic.OwnerId = userID;
-            pic.Title = formcollection["Title"];
-            pic.Cost = Convert.ToDecimal(formcollection["Cost"]);
-            pic.Location = formcollection["Location"];
-            pic.Description = formcollection["Description"];
-            pic.UploadTime = DateTime.Now;
-            pic.PictureType = fileExtension;
-
-
-            string validationStr = picPro.ValidatePicture(pic.PictureType, size);
-            if (validationStr == "Valid")
+            if(validationStr == "Valid")
             {
+                //obtain image data
                 byte[] data = new byte[file.ContentLength];
                 file.InputStream.Read(data, 0, file.ContentLength);
-                pic.OriginalImg = data;
-                pic.CompressImg = data;
+                //create picture
+                Picture pic = picHelp.CreatPicture(userID, formcollection["Title"], Convert.ToDecimal(formcollection["Cost"]), formcollection["Location"], formcollection["Description"], DateTime.Now, fileExtension, data);
 
                 context.Pictures.Add(pic);
                 currentUser.OwnedPictures.Add(pic);

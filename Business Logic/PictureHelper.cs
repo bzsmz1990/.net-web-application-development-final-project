@@ -83,5 +83,22 @@ namespace Business_Logic
             //TODO: SEND NOTIFICATION
         }
 
+        public Picture CreatPicture(string userID, string title, decimal cost,
+            string location, string description, DateTime time, string type,
+            byte[] data)
+        {
+            Picture pic = new Picture();
+            pic.OwnerId = userID;
+            pic.Title = title;
+            pic.Cost = cost;
+            pic.Location = location;
+            pic.Description = description;
+            pic.UploadTime = time;
+            pic.PictureType = type;
+            pic.OriginalImg = data;
+            pic.CompressImg = data;
+            return pic;
+        }
+
     }
 }
