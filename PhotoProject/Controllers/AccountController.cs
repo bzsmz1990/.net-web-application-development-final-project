@@ -10,7 +10,6 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DataLayer;
 using Business_Logic;
-using System.Data.Entity.Validation;
 
 namespace PhotoProject.Controllers
 {
@@ -19,7 +18,6 @@ namespace PhotoProject.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -168,27 +166,9 @@ namespace PhotoProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                //TODO: ADD FIRST AND LAST NAME -- DONE (BY DIEGO)
-                var tuple = UserInfoHelper.CreateNewUser(model.Email, model.Email, model.FirstName, model.LastName);
-                var user = tuple.Item1;
-                UserInfo userInfo = tuple.Item2;
-                userInfo.User = user;
+                //TODO: ADD FIRST AND LAST NAME
+                var user = UserInfoHelper.CreateNewUser(model.Email, model.Email);
                 var result = await UserManager.CreateAsync(user, model.Password);
-                try
-                {
-                    db.UserInfos.Add(userInfo);
-                    db.SaveChanges();
-                }
-                catch (DbEntityValidationException dbEx)
-                {
-                    foreach (var validationErrors in dbEx.EntityValidationErrors)
-                    {
-                        foreach (var validationError in validationErrors.ValidationErrors)
-                        {
-                            System.Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
-                        }
-                    }
-                }
                 if (result.Succeeded)
                 {
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -207,7 +187,6 @@ namespace PhotoProject.Controllers
 
                     ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
                                     + "before you can log in.";
-
 
                     return View("Info");
                     //return RedirectToAction("Index", "Home");
@@ -415,13 +394,8 @@ namespace PhotoProject.Controllers
                     return View("ExternalLoginFailure");
                 }
                 //TODO: ADD FIRST AND LAST NAME
-                var tuple = UserInfoHelper.CreateNewUser(model.Email, model.Email, model.FirstName, model.LastName);
-                var user = tuple.Item1;
-                UserInfo userInfo = tuple.Item2;
+                var user = UserInfoHelper.CreateNewUser(model.Email, model.Email);
                 var result = await UserManager.CreateAsync(user);
-
-                db.UserInfos.Add(userInfo);
-                db.SaveChanges();
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
@@ -431,7 +405,6 @@ namespace PhotoProject.Controllers
                         return RedirectToLocal(returnUrl);
                     }
                 }
-                
                 AddErrors(result);
             }
 

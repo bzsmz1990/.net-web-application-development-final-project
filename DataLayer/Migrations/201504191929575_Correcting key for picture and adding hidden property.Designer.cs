@@ -7,13 +7,13 @@ namespace DataLayer.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Useridentitygenerated : IMigrationMetadata
+    public sealed partial class Correctingkeyforpictureandaddinghiddenproperty : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Useridentitygenerated));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Correctingkeyforpictureandaddinghiddenproperty));
         
         string IMigrationMetadata.Id
         {
-            get { return "201504211736572_User-identity-generated"; }
+            get { return "201504191929575_Correcting key for picture and adding hidden property"; }
         }
         
         string IMigrationMetadata.Source
