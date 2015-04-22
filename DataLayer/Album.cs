@@ -39,6 +39,11 @@ namespace DataLayer
         [DefaultValue(false)]
         public bool HasBeenReported { get; set; }
 
+        [Required]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "UploadTime")]
+        public DateTime UploadTime { get; set; }
+
         public virtual ICollection<Transaction> SaleTransactions  { get; set; }
 
         public virtual ICollection<Cart> CurrentCarts { get; set; }

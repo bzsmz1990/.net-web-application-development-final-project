@@ -15,7 +15,7 @@ namespace Business_Logic
     {
         private static ApplicationDbContext db = new ApplicationDbContext();
         private static PictureProcess picPro = new PictureProcess();
-        private static PictureHelper picHelp = new PictureHelper(db);
+        public static PictureHelper picHelp = new PictureHelper(db);
 
         public PictureHelper(ApplicationDbContext context)
         {
@@ -37,36 +37,45 @@ namespace Business_Logic
             return db.Pictures.OrderByDescending(p => p.UploadTime).ToList();
         }
 
-        public ICollection<Picture> GetPicturesWhereTitleHasWord(string searchString)
+        public List<Picture> GetPicturesWhereTitleHasWord(string searchString)
         {
+            
             if (String.IsNullOrEmpty(searchString) || String.IsNullOrWhiteSpace(searchString))
             {
-                return db.Pictures.ToList();
+                return db.Pictures.OrderBy(p => p.UploadTime).ToList();
             }
 
-            return db.Pictures.Where(p => p.Title.Contains(searchString)).ToList();
+            searchString = searchString.ToLower();
+
+            return db.Pictures.Where(p => p.Title.ToLower().Contains(searchString)).OrderBy(p => p.UploadTime).ToList();
         }
 
-        public ICollection<Picture> GetPicturesWhereDescriptionHasWord(string searchString)
+        public List<Picture> GetPicturesWhereDescriptionHasWord(string searchString)
         {
+            
             if (String.IsNullOrEmpty(searchString) || String.IsNullOrWhiteSpace(searchString))
             {
-                return db.Pictures.ToList();
+                return db.Pictures.OrderBy(p => p.UploadTime).ToList();
             }
 
-            return db.Pictures.Where(p => p.Description.Contains(searchString)).ToList();
+            searchString = searchString.ToLower();
+
+            return db.Pictures.Where(p => p.Description.ToLower().Contains(searchString)).OrderBy(p => p.UploadTime).ToList();
         }
 
-        public ICollection<Picture> GetPicturesWhereTagHasWord(string searchString)
+        public List<Picture> GetPicturesWhereTagHasWord(string searchString)
         {
+            
             if (String.IsNullOrEmpty(searchString) || String.IsNullOrWhiteSpace(searchString))
             {
-                return db.Pictures.ToList();
+                return db.Pictures.OrderBy(p => p.UploadTime).ToList();
             }
 
+            searchString = searchString.ToLower();
 
-            //TODO: can writ e aquery to reutnr based on relationships?
-            return null;
+            return db.Pictures
+                .Where(p => p.Tags != null && p.Tags.Any(t => t.Description.ToLower().Contains(searchString)))
+                .ToList();
         }
 
         public void LikePicture (Picture picture, UserInfo user)
