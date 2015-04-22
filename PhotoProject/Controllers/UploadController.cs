@@ -9,6 +9,7 @@ using Business_Logic;
 
 namespace PhotoProject.Controllers
 {
+    [Authorize]
     public class UploadController : Controller
     {
         private static ApplicationDbContext db = new ApplicationDbContext();
@@ -18,6 +19,7 @@ namespace PhotoProject.Controllers
         // GET: Upload
         public ActionResult Index()
         {
+            //should direct to RedirectToAction("Galary", "UserHome");
             return View();
         }
 
