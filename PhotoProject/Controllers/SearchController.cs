@@ -60,7 +60,7 @@ namespace PhotoProject.Controllers
             return View(viewModel);
         }
 
-        // GET: Search/Search
+        // GET: Search/SearchResults
         /* This method allows for pictures and albums to be searched by a search term.
          * For the picture, the search term will be matched against Title, Description or Tag.
          * For the album, the search term will be matched against its Name.
@@ -68,7 +68,7 @@ namespace PhotoProject.Controllers
          * Receive: search term, current page on the picture search results, current page in the album search result
          * Returns: SearchResultsViewModel with the pictures and albums that matched the search
          * */
-        public ActionResult Search(string searchTerm, int? picturePage, int? albumPage)
+        public ActionResult SearchResults(string searchTerm, int? picturePage, int? albumPage)
         {
             List<Picture> pictures = pictureHelper.GetPicturesWhereTitleHasWord(searchTerm);
             pictures.AddRange(pictureHelper.GetPicturesWhereDescriptionHasWord(searchTerm));
