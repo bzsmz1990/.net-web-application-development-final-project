@@ -101,5 +101,18 @@ namespace Business_Logic
             pic.CompressImg = picPro.ZoomAuto(data);
             return pic;
         }
+
+        public ICollection<Picture> GetOwnedPictures(string userID)
+        {
+            UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
+            return user.OwnedPictures.ToList();
+        }
+
+        public ICollection<Picture> GetLikedPictures(string userID)
+        {
+            UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
+            return user.LikedPictures.ToList();
+        }
+
     }
 }
