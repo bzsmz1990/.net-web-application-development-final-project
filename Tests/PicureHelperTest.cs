@@ -27,10 +27,7 @@ namespace Tests
             Tag tag1 = new Tag { Description = "NYU" };
             Tag tag2 = new Tag { Description = "Computer Science" };
 
-            ICollection<Transaction> firstTransactions = new List<Transaction>
-            {
-                new Transaction()
-            };
+            
             ICollection<Transaction> secondTransactions = new List<Transaction>
             {
                 new Transaction(),
@@ -43,7 +40,7 @@ namespace Tests
                 new Transaction()
             };
 
-            Picture picture1 = new Picture { Title = "Picture1", UploadTime = new DateTime(2015, 1, 18), SaleTransactions = firstTransactions, Tags = new List<Tag>{ tag1 } };
+            Picture picture1 = new Picture { Title = "Picture1", UploadTime = new DateTime(2015, 1, 18), Tags = new List<Tag>{ tag1 } };
             Picture picture2 = new Picture { Title = "Picture2", UploadTime = new DateTime(2015, 2, 18), SaleTransactions = secondTransactions, Tags = new List<Tag> { tag1, tag2 } };
             Picture picture3 = new Picture { Title = "Picture3", UploadTime = new DateTime(2015, 3, 18), SaleTransactions = thirdTransactions };
 
