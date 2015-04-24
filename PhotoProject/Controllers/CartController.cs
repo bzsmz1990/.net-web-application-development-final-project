@@ -31,15 +31,17 @@ namespace PhotoProject.Controllers
         {
             //Don't think Transactions are necessary
 
-            var ca = db.Carts.Include(c => c.User);
-            Cart cart = ca as Cart;
-            decimal grandTotal = CartHelper.getTotalFromCart(cart);
+            //var cart = db.Carts.Include(c => c.User).FirstOrDefault();
+            //decimal grandTotal = CartHelper.getTotalFromCart(cart);
+            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
+            ViewBag.CartTotal = 50;
+            ViewBag.Pictures = new List<string>() {
+                "carrots", "celery", "parsley"
+            };
+            //ViewBag.Pictures = cart.PicturesInCart.ToList();
+            //ViewBag.Albums = cart.AlbumsInCart.ToList();
 
-            ViewBag.CartTotal = grandTotal;
-            ViewBag.Pictures = cart.PicturesInCart.ToList();
-            ViewBag.Albums = cart.AlbumsInCart.ToList();
-
-            return View();
+            return View(user);
         }
 
 
