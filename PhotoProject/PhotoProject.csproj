@@ -219,6 +219,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PictureDetailsController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UserHomeController.cs" />
@@ -311,6 +312,11 @@
     <Content Include="Views\Search\Details.cshtml" />
     <Content Include="Views\Search\Edit.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\PictureDetails\Create.cshtml" />
+    <Content Include="Views\PictureDetails\Delete.cshtml" />
+    <Content Include="Views\PictureDetails\Details.cshtml" />
+    <Content Include="Views\PictureDetails\Edit.cshtml" />
+    <Content Include="Views\PictureDetails\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

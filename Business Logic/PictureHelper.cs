@@ -85,6 +85,7 @@ namespace Business_Logic
             {
                 picture.NumberOfLikes++;
                 picture.LikedBy.Add(user);
+                db.SaveChanges();
                 //TODO: ALSO ADD CREDIT TO OWNER
             }
         }
@@ -92,7 +93,7 @@ namespace Business_Logic
         public void ReportPicture(Picture picture, UserInfo user)
         {
             picture.HasBeenReported = true;
-            //TODO: SEND NOTIFICATION
+            db.SaveChanges();
         }
 
         public Picture CreatPicture(string userID, string title, decimal cost,
