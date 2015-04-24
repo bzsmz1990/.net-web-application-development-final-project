@@ -10,8 +10,8 @@ namespace Business_Logic
 {
     public class PictureProcess
     {
-        private static int targetWidth = 300;
-        private static int targetHeight = 200;
+        private static int targetWidth = 600;
+        private static int targetHeight = 400;
 
         //Valid file type
         //Since different companies has different file extension for their RAW file
