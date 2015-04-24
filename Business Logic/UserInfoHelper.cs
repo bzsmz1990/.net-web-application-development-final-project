@@ -24,6 +24,12 @@ namespace Business_Logic
         {
             UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
             return user.Following.ToList();
+        }
+
+        public void FollowUser(UserInfo currentUser, UserInfo followingUser)
+        {
+            currentUser.Following.Add(followingUser);
+            //TODO: ADD CREDIT
         } 
     }
 }

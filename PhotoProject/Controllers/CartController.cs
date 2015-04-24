@@ -39,7 +39,7 @@ namespace PhotoProject.Controllers
             ViewBag.Pictures = cart.PicturesInCart.ToList();
             ViewBag.Albums = cart.AlbumsInCart.ToList();
 
-            return View(cart);
+            return View();
         }
 
 

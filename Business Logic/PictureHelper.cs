@@ -29,7 +29,8 @@ namespace Business_Logic
 
         public ICollection<Picture> GetPicturesOrderedByMostPurchased()
         {
-            return db.Pictures.OrderByDescending(p => p.SaleTransactions.Count).ToList();
+             return (db.Pictures.Where(p => p.SaleTransactions != null).OrderByDescending(p => p.SaleTransactions.Count)
+                .Union(db.Pictures.Where(p => p.SaleTransactions == null).OrderByDescending(p => p.UploadTime))).ToList();
         }
 
         public ICollection<Picture> GetPicturesOrderedByMostRecent()
@@ -84,6 +85,7 @@ namespace Business_Logic
             {
                 picture.NumberOfLikes++;
                 picture.LikedBy.Add(user);
+                db.SaveChanges();
                 //TODO: ALSO ADD CREDIT TO OWNER
             }
         }
@@ -91,7 +93,7 @@ namespace Business_Logic
         public void ReportPicture(Picture picture, UserInfo user)
         {
             picture.HasBeenReported = true;
-            //TODO: SEND NOTIFICATION
+            db.SaveChanges();
         }
 
         public Picture CreatPicture(string userID, string title, decimal cost,
