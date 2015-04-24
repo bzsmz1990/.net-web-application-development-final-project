@@ -18,6 +18,12 @@ namespace PhotoProject
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Error",
+                url: "{controller}/{action}/{errorMessage}",
+                defaults: new { controller = "Home", action = "Index", errorMessage = UrlParameter.Optional }
+            );
         }
     }
 }

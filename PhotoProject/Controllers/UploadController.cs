@@ -23,6 +23,12 @@ namespace PhotoProject.Controllers
             return View();
         }
 
+        public ActionResult Error(string errorMessage)
+        {
+            ViewBag.Message = errorMessage;
+            return View();
+        }
+
         [HttpGet]
         public ActionResult Upload()
         {
@@ -60,7 +66,7 @@ namespace PhotoProject.Controllers
             else
             {
                 ModelState.AddModelError("CustomError", validationStr);
-                return View();
+                return RedirectToAction("Error", "Upload", new { errorMessage = validationStr });
             }   
         }
     }
