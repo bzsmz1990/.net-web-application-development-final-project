@@ -36,7 +36,7 @@ namespace PhotoProject.Controllers
             UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
 
             HttpPostedFileBase file = Request.Files[0] as HttpPostedFileBase;
-            string fileExtension = picPro.GetFileExtends(file.FileName);
+            string fileExtension = picPro.GetFileExtends(file.FileName).ToLower(); ;
             int size = file.ContentLength;
             string validationStr = picPro.ValidatePicture(fileExtension, size);
 
@@ -45,8 +45,11 @@ namespace PhotoProject.Controllers
                 //obtain image data
                 byte[] data = new byte[file.ContentLength];
                 file.InputStream.Read(data, 0, file.ContentLength);
+
+                Picture.ValidFileType type = (Picture.ValidFileType)Enum.Parse(typeof(Picture.ValidFileType), fileExtension);
+
                 //create picture
-                Picture pic = picHelp.CreatPicture(userID, formcollection["Title"], Convert.ToDecimal(formcollection["Cost"]), formcollection["Location"], formcollection["Description"], DateTime.Now, fileExtension, data);
+                Picture pic = picHelp.CreatPicture(userID, formcollection["Title"], Convert.ToDecimal(formcollection["Cost"]), formcollection["Location"], formcollection["Description"], DateTime.Now, type, data);
 
                 db.Pictures.Add(pic);
                 currentUser.OwnedPictures.Add(pic);

@@ -97,7 +97,7 @@ namespace Business_Logic
         }
 
         public Picture CreatPicture(string userID, string title, decimal cost,
-            string location, string description, DateTime time, string type,
+            string location, string description, DateTime time, Picture.ValidFileType type,
             byte[] data)
         {
             Picture pic = new Picture();

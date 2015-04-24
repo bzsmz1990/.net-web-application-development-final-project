@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.IO;
+using DataLayer;
 
 namespace Business_Logic
 {
@@ -12,14 +13,6 @@ namespace Business_Logic
     {
         private static int targetWidth = 600;
         private static int targetHeight = 400;
-
-        //Valid file type
-        //Since different companies has different file extension for their RAW file
-        //We only conside Nikon(.nef), Canon(.cr2), SONY(.arw), PENTAX(.pef) and LEICA(.dng)
-        public enum ValidFileType
-        {
-            jpg, bmp, cr2, nef, arw, pef, dng
-        }
 
         //Extract file extension
         public string GetFileExtends(string filename)
@@ -38,7 +31,7 @@ namespace Business_Logic
         {
             bool status = false;
             fileExtends = fileExtends.ToLower();
-            string[] fe = Enum.GetNames(typeof(ValidFileType));
+            string[] fe = Enum.GetNames(typeof(Picture.ValidFileType));
             for (int i = 0; i < fe.Length; i++)
             {
                 if (fe[i].ToLower() == fileExtends)
