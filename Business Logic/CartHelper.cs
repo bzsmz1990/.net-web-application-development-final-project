@@ -9,7 +9,7 @@ namespace Business_Logic
 {
     public class CartHelper
     {
-        private ApplicationDbContext db { get; set; }
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public CartHelper(ApplicationDbContext context)
         {
@@ -26,5 +26,20 @@ namespace Business_Logic
             cart.PicturesInCart.Remove(picture);
             db.SaveChanges();
         }
+
+        public static decimal getTotalFromCart(Cart cart)
+        {
+            decimal total = 0;
+            foreach (Picture pic in cart.PicturesInCart)
+            {
+                total += pic.Cost;
+            }
+            foreach (Album alb in cart.AlbumsInCart)
+            {
+                total += alb.Cost;
+            }
+            return total;
+        }
+
     }
 }

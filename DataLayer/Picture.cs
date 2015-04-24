@@ -54,7 +54,7 @@ namespace DataLayer
         public bool HasBeenReported { get; set; }
 
         [Required]
-        public byte[] OriginalImg { get; set; }  //The image as an url
+        public byte[] OriginalImg { get; set; }
 
         [Required]
         public byte[] CompressImg { get; set; }
