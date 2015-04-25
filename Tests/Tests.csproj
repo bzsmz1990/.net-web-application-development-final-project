@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="AlbumHelperTest.cs" />
     <Compile Include="CartHelperTest.cs" />
+    <Compile Include="UserInfoHelperTest.cs" />
     <Compile Include="PicureHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

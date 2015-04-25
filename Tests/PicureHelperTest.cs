@@ -172,16 +172,19 @@ namespace Tests
 
             Picture likedPicture = helper.LikePicture(pictureId, userId);
 
+            Assert.IsNotNull(likedPicture);
             Assert.AreEqual(1, pictureData.ElementAt(0).NumberOfLikes);
             Assert.AreEqual(1, userData.ElementAt(0).LikedPictures.Count);
             Assert.AreEqual(1, pictureData.ElementAt(0).LikedBy.Count);
 
             likedPicture = helper.LikePicture(pictureId, userData.ElementAt(1).UserId);
+            Assert.IsNotNull(likedPicture);
             Assert.AreEqual(2, pictureData.ElementAt(0).NumberOfLikes);
             Assert.AreEqual(1, userData.ElementAt(1).LikedPictures.Count);
             Assert.AreEqual(2, pictureData.ElementAt(0).LikedBy.Count);
 
             likedPicture = helper.LikePicture(pictureId, userId);
+            Assert.IsNotNull(likedPicture);
             Assert.AreEqual(1, pictureData.ElementAt(0).NumberOfLikes);
             Assert.AreEqual(0, userData.ElementAt(0).LikedPictures.Count);
             Assert.AreEqual(2, pictureData.ElementAt(0).LikedBy.Count);
@@ -194,6 +197,7 @@ namespace Tests
         {
             var helper = new PictureHelper(mockContext.Object);
             int pictureId = pictureData.ElementAt(0).Id;
+
             Assert.IsFalse(pictureData.ElementAt(0).HasBeenReported);
             Picture changedPicture = helper.ReportPicture(pictureData.ElementAt(0).Id);
             Assert.IsNotNull(changedPicture);

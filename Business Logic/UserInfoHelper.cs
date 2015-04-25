@@ -12,9 +12,15 @@ namespace Business_Logic
     {
 
         private static ApplicationDbContext db = new ApplicationDbContext();
-        private static UserInfoHelper userHelp = new UserInfoHelper();
+        private static UserInfoHelper userHelp = new UserInfoHelper(db);
 
         public static int NUM_POINTS_PER_FOLLOW = 20;
+
+        public UserInfoHelper(ApplicationDbContext context)
+        {
+            db = context;
+        }
+
 
         public static ApplicationUser CreateNewUser(string userName, string email) //TODO: ADD FIRST AND LAST NAME
         {
@@ -39,10 +45,21 @@ namespace Business_Logic
                 return null;
             }
 
+            currentUser.Following = (currentUser.Following ?? new List<UserInfo>());
+
+            if (currentUser.Following.Contains(followingUser))
+            {
+                currentUser.Following.Remove(followingUser);
+                return followingUser;
+            }
+
+
             currentUser.Following.Add(followingUser);
-            if (!followingUser.Followers.Contains(currentUser))
+
+            if (followingUser.Followers == null || !followingUser.Followers.Contains(currentUser))
             {
                 followingUser.AccountBalance += NUM_POINTS_PER_FOLLOW;
+                followingUser.Followers = (followingUser.Followers ?? new List<UserInfo>());
                 followingUser.Followers.Add(currentUser);
             }
 

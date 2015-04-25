@@ -15,7 +15,7 @@ namespace PhotoProject.Controllers
         private static ApplicationDbContext db = new ApplicationDbContext();
         private static PictureProcess picPro = new PictureProcess();
         private static PictureHelper picHelp = new PictureHelper(db);
-        private static UserInfoHelper userHelp = new UserInfoHelper();
+        private static UserInfoHelper userHelp = new UserInfoHelper(db);
 
         // GET: UserHome
         public ActionResult Index()
