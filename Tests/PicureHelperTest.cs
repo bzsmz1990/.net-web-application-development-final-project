@@ -40,9 +40,9 @@ namespace Tests
                 new Transaction()
             };
 
-            Picture picture1 = new Picture { Title = "Picture1", UploadTime = new DateTime(2015, 1, 18), Tags = new List<Tag>{ tag1 } };
-            Picture picture2 = new Picture { Title = "Picture2", UploadTime = new DateTime(2015, 2, 18), SaleTransactions = secondTransactions, Tags = new List<Tag> { tag1, tag2 } };
-            Picture picture3 = new Picture { Title = "Picture3", UploadTime = new DateTime(2015, 3, 18), SaleTransactions = thirdTransactions };
+            Picture picture1 = new Picture { Id = 1, Title = "Picture1", UploadTime = new DateTime(2015, 1, 18), Tags = new List<Tag>{ tag1 } };
+            Picture picture2 = new Picture { Id = 2, Title = "Picture2", UploadTime = new DateTime(2015, 2, 18), SaleTransactions = secondTransactions, Tags = new List<Tag> { tag1, tag2 } };
+            Picture picture3 = new Picture { Id = 3, Title = "Picture3", UploadTime = new DateTime(2015, 3, 18), SaleTransactions = thirdTransactions };
 
             tag1.Pictures = new List<Picture> { picture1, picture2 };
             tag2.Pictures = new List<Picture> { picture2 };
@@ -140,6 +140,18 @@ namespace Tests
 
             pictures = helper.GetPicturesWhereTagHasWord("    ");
             Assert.AreEqual(3, pictures.Count);
+
+        }
+
+        [TestMethod]
+        public void TestReportPicture()
+        {
+            var helper = new PictureHelper(mockContext.Object);
+            int pictureId = pictureData.ElementAt(0).Id;
+            Assert.IsFalse(pictureData.ElementAt(0).HasBeenReported);
+            Picture changedPicture = helper.ReportPicture(pictureData.ElementAt(0).Id);
+            Assert.IsNotNull(changedPicture);
+            Assert.IsTrue(pictureData.ElementAt(0).HasBeenReported);
 
         }
 

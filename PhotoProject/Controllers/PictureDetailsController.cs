@@ -33,20 +33,15 @@ namespace PhotoProject.Controllers
         }
 
         [Authorize]
-        // GET: PictureDetails/Details/5
-        public ActionResult LikePicture(int? id)
+        // GET: PictureDetails/LikePicture/5
+        public ActionResult LikePicture(int id)
         {
-            if (id == null)
+            Picture picture = picHelp.LikePicture(id, User.Identity.GetUserId());
+
+            if (picture == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture = db.Pictures.Find(id);
-            if (picture == null)
-            {
-                return HttpNotFound();
-            }
-
-            picHelp.LikePicture(picture, db.UserInfos.Find(User.Identity.GetUserId()));
 
             return View(picture);
         }
@@ -59,6 +54,7 @@ namespace PhotoProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Picture picture = db.Pictures.Find(id);
             if (picture == null)
             {
@@ -78,14 +74,9 @@ namespace PhotoProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture = db.Pictures.Find(id);
-            if (picture == null)
-            {
-                return HttpNotFound();
-            }
 
             //TODO: DO WE WANT TO SEND ANY EMAIL WITH THE REASON?
-            picHelp.ReportPicture(picture, db.UserInfos.Find(User.Identity.GetUserId()));
+            Picture picture = picHelp.ReportPicture(id);
 
             return View(picture);
         }
@@ -103,8 +94,7 @@ namespace PhotoProject.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AlbumId = new SelectList(db.Albums, "Id", "UserId", picture.AlbumId);
-            ViewBag.OwnerId = new SelectList(db.UserInfos, "UserId", "FirstName", picture.OwnerId);
+            
             return View(picture);
         }
 
@@ -119,37 +109,10 @@ namespace PhotoProject.Controllers
             {
                 db.Entry(picture).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", picture.Id);
             }
-            ViewBag.AlbumId = new SelectList(db.Albums, "Id", "UserId", picture.AlbumId);
-            ViewBag.OwnerId = new SelectList(db.UserInfos, "UserId", "FirstName", picture.OwnerId);
-            return View(picture);
-        }
 
-        // GET: PictureDetails/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Picture picture = db.Pictures.Find(id);
-            if (picture == null)
-            {
-                return HttpNotFound();
-            }
             return View(picture);
-        }
-
-        // POST: PictureDetails/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Picture picture = db.Pictures.Find(id);
-            db.Pictures.Remove(picture);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
