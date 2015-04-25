@@ -23,7 +23,7 @@
             {
                 for (int i = 0; i < ownpicList.Count(); i++)
                 {
-                    <a href='@Url.Action("ImageDetail", "PicPreview", new { id = @ownpicList[i].Id })'>
+                    <a href='@Url.Action("Details", "PictureDetails", new { id = @ownpicList[i].Id })'>
                         <img src="data:image/jpeg;base64, @Convert.ToBase64String(ownpicList[i].CompressImg, 0, ownpicList[i].CompressImg.Length)" />
                     </a>
                     <br />
@@ -42,7 +42,7 @@
     <tr>
         @{
             List<DataLayer.Picture> likedpicList = (List<DataLayer.Picture>)ViewBag.LikedPictures;
-            if (likedpicList == null)
+            if (likedpicList.Count == 0)
             {
                 <h4>The user doesn't like any picture.</h4>
             }
@@ -63,9 +63,10 @@
 <br />
 <br />
 <ul>
+    <h4>Users the user are following</h4>
     @{
         List<DataLayer.UserInfo> followinglist = (List<DataLayer.UserInfo>)ViewBag.Following;
-        if (followinglist == null)
+        if (followinglist.Count == 0)
         {
             <h4>There is no following user</h4>
         }
