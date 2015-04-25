@@ -61,7 +61,7 @@ namespace PhotoProject.Controllers
                 currentUser.OwnedPictures.Add(pic);
                 db.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Galary", "UserHome", new { id = userID });
             }
             else
             {
