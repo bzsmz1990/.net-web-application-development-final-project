@@ -16,8 +16,10 @@ namespace Tests
     {
         private IQueryable<Picture> pictureData;
         private IQueryable<Tag> tagsData;
+        private IQueryable<UserInfo> userData;
         private Mock<DbSet<Picture>> pictureMockSet;
         private Mock<DbSet<Tag>> tagsMockSet;
+        private Mock<DbSet<UserInfo>> userMockSet;
         private Mock<ApplicationDbContext> mockContext;
 
 
@@ -26,6 +28,9 @@ namespace Tests
         {
             Tag tag1 = new Tag { Description = "NYU" };
             Tag tag2 = new Tag { Description = "Computer Science" };
+
+            UserInfo user1 = new UserInfo { UserId = "User1" };
+            UserInfo user2 = new UserInfo { UserId = "User2" };
 
             
             ICollection<Transaction> secondTransactions = new List<Transaction>
@@ -46,6 +51,11 @@ namespace Tests
 
             tag1.Pictures = new List<Picture> { picture1, picture2 };
             tag2.Pictures = new List<Picture> { picture2 };
+
+            userData = new List<UserInfo>
+            {
+                user1, user2,
+            }.AsQueryable();
 
             pictureData = new List<Picture> 
             { 
@@ -72,9 +82,17 @@ namespace Tests
             tagsMockSet.As<IQueryable<Tag>>().Setup(m => m.ElementType).Returns(tagsData.ElementType);
             tagsMockSet.As<IQueryable<Tag>>().Setup(m => m.GetEnumerator()).Returns(tagsData.GetEnumerator());
 
+            userMockSet = new Mock<DbSet<UserInfo>>();
+            userMockSet.As<IQueryable<UserInfo>>().Setup(m => m.Provider).Returns(userData.Provider);
+            userMockSet.As<IQueryable<UserInfo>>().Setup(m => m.Expression).Returns(userData.Expression);
+            userMockSet.As<IQueryable<UserInfo>>().Setup(m => m.ElementType).Returns(userData.ElementType);
+            userMockSet.As<IQueryable<UserInfo>>().Setup(m => m.GetEnumerator()).Returns(userData.GetEnumerator());
+
+
             mockContext = new Mock<ApplicationDbContext>();
             mockContext.Setup(c => c.Pictures).Returns(pictureMockSet.Object);
             mockContext.Setup(c => c.Tags).Returns(tagsMockSet.Object);
+            mockContext.Setup(c => c.UserInfos).Returns(userMockSet.Object);
 
 
         }
@@ -142,6 +160,34 @@ namespace Tests
             Assert.AreEqual(3, pictures.Count);
 
         }
+        [TestMethod]
+        public void TestLikePicture()
+        {
+            var helper = new PictureHelper(mockContext.Object);
+            int pictureId = pictureData.ElementAt(0).Id;
+            string userId = userData.ElementAt(0).UserId;
+
+            Assert.AreEqual(0, pictureData.ElementAt(0).NumberOfLikes);
+            Assert.IsNull(userData.ElementAt(0).LikedPictures);
+
+            Picture likedPicture = helper.LikePicture(pictureId, userId);
+
+            Assert.AreEqual(1, pictureData.ElementAt(0).NumberOfLikes);
+            Assert.AreEqual(1, userData.ElementAt(0).LikedPictures.Count);
+            Assert.AreEqual(1, pictureData.ElementAt(0).LikedBy.Count);
+
+            likedPicture = helper.LikePicture(pictureId, userData.ElementAt(1).UserId);
+            Assert.AreEqual(2, pictureData.ElementAt(0).NumberOfLikes);
+            Assert.AreEqual(1, userData.ElementAt(1).LikedPictures.Count);
+            Assert.AreEqual(2, pictureData.ElementAt(0).LikedBy.Count);
+
+            likedPicture = helper.LikePicture(pictureId, userId);
+            Assert.AreEqual(1, pictureData.ElementAt(0).NumberOfLikes);
+            Assert.AreEqual(0, userData.ElementAt(0).LikedPictures.Count);
+            Assert.AreEqual(2, pictureData.ElementAt(0).LikedBy.Count);
+
+        }
+
 
         [TestMethod]
         public void TestReportPicture()

@@ -79,20 +79,31 @@ namespace Business_Logic
                 .ToList();
         }
 
-        public Picture LikePicture(int? pictureId, string userId)
+        public Picture LikePicture(int pictureId, string userId)
         {
-            Picture picture = db.Pictures.Find(pictureId);
-            UserInfo userInfo = db.UserInfos.Find(userId);
+            Picture picture = db.Pictures.Single(p => p.Id == pictureId);
+            UserInfo userInfo = db.UserInfos.Single(u => u.UserId == userId);
 
             if (picture == null || userInfo == null)
             {
                 return null;
             }
 
-            if (!picture.LikedBy.Contains(userInfo))
+            if (userInfo.LikedPictures != null && userInfo.LikedPictures.Contains(picture))
+            {
+                userInfo.LikedPictures.Remove(picture);
+                picture.NumberOfLikes--;
+                db.SaveChanges();
+                return picture;
+            }
+
+            if (picture.LikedBy == null || !picture.LikedBy.Contains(userInfo))
             {
                 picture.NumberOfLikes++;
+                picture.LikedBy = (picture.LikedBy ?? new List<UserInfo>());
                 picture.LikedBy.Add(userInfo);
+                userInfo.LikedPictures = (userInfo.LikedPictures ?? new List<Picture>());
+                userInfo.LikedPictures.Add(picture);
                 db.SaveChanges();
                 //TODO: ALSO ADD CREDIT TO OWNER
             }

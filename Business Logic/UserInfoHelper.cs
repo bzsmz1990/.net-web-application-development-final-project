@@ -10,8 +10,11 @@ namespace Business_Logic
 {
     public class UserInfoHelper
     {
+
         private static ApplicationDbContext db = new ApplicationDbContext();
         private static UserInfoHelper userHelp = new UserInfoHelper();
+
+        public static int NUM_POINTS_PER_FOLLOW = 20;
 
         public static ApplicationUser CreateNewUser(string userName, string email) //TODO: ADD FIRST AND LAST NAME
         {
@@ -26,10 +29,24 @@ namespace Business_Logic
             return user.Following.ToList();
         }
 
-        public void FollowUser(UserInfo currentUser, UserInfo followingUser)
+        public UserInfo FollowUser(string currentUserId, string followingUserId)
         {
+            UserInfo currentUser = db.UserInfos.Single(u => u.UserId == currentUserId);
+            UserInfo followingUser = db.UserInfos.Single(u => u.UserId == followingUserId);
+
+            if (currentUser == null || followingUser == null)
+            {
+                return null;
+            }
+
             currentUser.Following.Add(followingUser);
-            //TODO: ADD CREDIT
+            if (!followingUser.Followers.Contains(currentUser))
+            {
+                followingUser.AccountBalance += NUM_POINTS_PER_FOLLOW;
+                followingUser.Followers.Add(currentUser);
+            }
+
+            return followingUser;
         } 
     }
 }
