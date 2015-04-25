@@ -33,7 +33,8 @@ namespace PhotoProject.Controllers
         }
 
         [Authorize]
-        // GET: PictureDetails/LikePicture/5
+        [HttpPost]
+        // POST: PictureDetails/LikePicture
         public ActionResult LikePicture(int id)
         {
             Picture picture = picHelp.LikePicture(id, User.Identity.GetUserId());
@@ -47,36 +48,17 @@ namespace PhotoProject.Controllers
         }
 
         [Authorize]
-        // GET: PictureDetails/ReportPicture/5
-        public ActionResult ReportPicture(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Picture picture = db.Pictures.Find(id);
-            if (picture == null)
-            {
-                return HttpNotFound();
-            }
-
-            //TODO: DO I NEED TO DEFINE THAT VIEW NEEDS TO PROVIDE BOX FOR REASON?
-            return View(picture);
-        }
-
-        [Authorize]
         [HttpPost]
         // POST: PictureDetails/ReportPicture/5
         public ActionResult ReportPicture(int id, string reason)
         {
-            if (id == null)
+            //TODO: DO WE WANT TO SEND ANY EMAIL WITH THE REASON?
+            Picture picture = picHelp.ReportPicture(id);
+            if (picture == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            //TODO: DO WE WANT TO SEND ANY EMAIL WITH THE REASON?
-            Picture picture = picHelp.ReportPicture(id);
 
             return View(picture);
         }
