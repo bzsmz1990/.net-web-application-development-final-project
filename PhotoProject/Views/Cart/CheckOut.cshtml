@@ -1,0 +1,36 @@
+﻿@model DataLayer.UserInfo
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "CheckOut page";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<p>
+    @Html.ActionLink("Submit Order", "Submit")
+</p>
+
+
+<h2>Checkout</h2>
+
+<p>This is checkout.</p>
+
+<p>Your current Balance is: $@(Model.AccountBalance)</p>
+
+<p>
+    Cart Total: @ViewBag.CartTotal
+</p>
+
+@foreach (var item in ViewBag.Pictures)
+{
+    <p>
+        @item
+    </p>
+}
+

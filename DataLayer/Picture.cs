@@ -7,11 +7,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.ComponentModel;
+using DataLayer;
 
 namespace DataLayer
 {
     public class Picture
     {
+        //Valid file type
+        //Since different companies has different file extension for their RAW file
+        //We only conside Nikon(.nef), Canon(.cr2), SONY(.arw), PENTAX(.pef) and LEICA(.dng)
+        public enum ValidFileType
+        {
+            jpg, bmp, cr2, nef, arw, pef, dng
+        }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -53,13 +61,13 @@ namespace DataLayer
         public bool HasBeenReported { get; set; }
 
         [Required]
-        public byte[] OriginalImg { get; set; }  //The image as an url
+        public byte[] OriginalImg { get; set; }
 
         [Required]
         public byte[] CompressImg { get; set; }
 
         [Required]
-        public string PictureType { get; set; }
+        public ValidFileType PictureType { get; set; }
 
         public bool Hidden { get; set; }
 

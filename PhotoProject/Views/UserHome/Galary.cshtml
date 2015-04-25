@@ -1,0 +1,83 @@
+﻿@model DataLayer.Picture
+
+@{
+    ViewBag.Title = "Galary";
+}
+
+<h2>Galary</h2>
+<br />
+<br />
+
+<table>
+    <tr>
+        <h4>Pictures the user uploaded</h4>
+    </tr>
+    <tr>
+        @{
+            List<DataLayer.Picture> ownpicList = (List<DataLayer.Picture>)ViewBag.OwnedPictures;
+            if (ownpicList == null)
+            {
+                <h4>The user doesn't upload any picture.</h4>
+            }
+            else
+            {
+                for (int i = 0; i < ownpicList.Count(); i++)
+                {
+                    <a href='@Url.Action("Details", "PictureDetails", new { id = @ownpicList[i].Id })'>
+                        <img src="data:image/jpeg;base64, @Convert.ToBase64String(ownpicList[i].CompressImg, 0, ownpicList[i].CompressImg.Length)" />
+                    </a>
+                    <br />
+                    <br />
+                }
+            }
+        }
+    </tr>
+</table>
+<br />
+<br />
+<table>
+    <tr>
+        <h4>Pictures the user liked</h4>
+    </tr>
+    <tr>
+        @{
+            List<DataLayer.Picture> likedpicList = (List<DataLayer.Picture>)ViewBag.LikedPictures;
+            if (likedpicList.Count == 0)
+            {
+                <h4>The user doesn't like any picture.</h4>
+            }
+            else
+            {
+                for (int i = 0; i < likedpicList.Count(); i++)
+                {
+                    <a href='@Url.Action("Details", "PictureDetails", new { id = @likedpicList[i].Id })'>
+                        <img src="data:image/jpeg;base64, @Convert.ToBase64String(likedpicList[i].CompressImg, 0, likedpicList[i].CompressImg.Length)" />
+                    </a>
+                    <br />
+                    <br />
+                }
+            }
+        }
+    </tr>
+</table>
+<br />
+<br />
+<ul>
+    <h4>Users the user are following</h4>
+    @{
+        List<DataLayer.UserInfo> followinglist = (List<DataLayer.UserInfo>)ViewBag.Following;
+        if (followinglist.Count == 0)
+        {
+            <h4>There is no following user</h4>
+        }
+        else
+        {
+            foreach (DataLayer.UserInfo user in followinglist)
+            {
+                <li>
+                    @Html.ActionLink(user.FirstName + " " + user.LastName, "Galary", "UserHome", new { id = user.UserId })
+                </li>
+            }
+        }
+    }
+</ul>

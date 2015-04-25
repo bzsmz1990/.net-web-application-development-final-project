@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using PhotoProject.ViewModels;
 
 namespace PhotoProject.Controllers
 {
@@ -22,17 +23,36 @@ namespace PhotoProject.Controllers
             return View();
         }
 
+        public ActionResult Error(string errorMessage)
+        {
+            ViewBag.Message = errorMessage;
+            return View();
+        }
+
         [AllowAnonymous]
-        public ActionResult Galary(string ownId)
+        public ActionResult Galary(string id)
         {
             var userID = User.Identity.GetUserId();
             //define whether the visiter is the user of this home page
-            bool isOwner = userID == ownId ? true : false;
+            bool isOwner = userID == id ? true : false;
 
-            ViewData["ownedPictures"] = picHelp.GetOwnedPictures(ownId);
-            ViewData["likedPictures"] = picHelp.GetLikedPictures(ownId);
-            ViewData["Following"] = userHelp.GetFollowing(ownId);
-            return View();
+            if(id==null)    //if the parameter id is null
+            {
+                return RedirectToAction("Error", "Upload", new { errorMessage = "Didn't give user id parameter!" });
+            }
+            else
+            {
+                ViewBag.OwnedPictures = picHelp.GetOwnedPictures(id);
+                ViewBag.LikedPictures = picHelp.GetLikedPictures(id);
+                ViewBag.Following = userHelp.GetFollowing(id);
+                //UserHomeViewModel userhome = new UserHomeViewModel();
+                //userhome.userId = id;
+                //userhome.OwnedPictures = picHelp.GetOwnedPictures(id);
+                //userhome.LikedPictures = picHelp.GetLikedPictures(id);
+                //userhome.Following = userHelp.GetFollowing(id);
+                return View();
+            }
+            
         }
 
     }

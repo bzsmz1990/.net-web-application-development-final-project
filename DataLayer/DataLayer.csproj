@@ -149,6 +149,14 @@
     <Compile Include="Migrations\201504192020063_Make album nullable.Designer.cs">
       <DependentUpon>201504192020063_Make album nullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504241852071_Update database 4-24.cs" />
+    <Compile Include="Migrations\201504241852071_Update database 4-24.Designer.cs">
+      <DependentUpon>201504241852071_Update database 4-24.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504241902056_Change PictureType to enum from string.cs" />
+    <Compile Include="Migrations\201504241902056_Change PictureType to enum from string.Designer.cs">
+      <DependentUpon>201504241902056_Change PictureType to enum from string.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PhotoContext.cs" />
     <Compile Include="Picture.cs" />
@@ -173,6 +181,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504192020063_Make album nullable.resx">
       <DependentUpon>201504192020063_Make album nullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504241852071_Update database 4-24.resx">
+      <DependentUpon>201504241852071_Update database 4-24.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504241902056_Change PictureType to enum from string.resx">
+      <DependentUpon>201504241902056_Change PictureType to enum from string.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

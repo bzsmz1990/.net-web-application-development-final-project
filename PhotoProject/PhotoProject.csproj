@@ -217,6 +217,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PictureDetailsController.cs" />
@@ -317,12 +318,20 @@
     <Content Include="Views\PictureDetails\Details.cshtml" />
     <Content Include="Views\PictureDetails\Edit.cshtml" />
     <Content Include="Views\PictureDetails\Index.cshtml" />
+    <Content Include="Views\Cart\Create.cshtml" />
+    <Content Include="Views\Cart\Delete.cshtml" />
+    <Content Include="Views\Cart\Details.cshtml" />
+    <Content Include="Views\Cart\Edit.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Cart\CheckOut.cshtml" />
+    <Content Include="Views\Upload\Error.cshtml" />
+    <Content Include="Views\UserHome\Error.cshtml" />
+    <Content Include="Views\UserHome\Galary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Migrations\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\UserHome\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
