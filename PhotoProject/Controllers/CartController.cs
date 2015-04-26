@@ -24,6 +24,24 @@ namespace PhotoProject.Controllers
             {
                 return View(new List<Picture>());
             }
+            Cart cart = carts.FirstOrDefault();
+            bool isMoreExpensive = false;
+            foreach (Album al in cart.AlbumsInCart)
+            {
+                if (!CartHelper.checkIfAlbumIsMoreExpensive(al))
+                {
+                    isMoreExpensive = true;
+                    break;
+                }
+            }
+            if (isMoreExpensive)
+            {
+                ViewBag.AlbumFlag = true;
+            }
+            else
+            {
+                ViewBag.AlbumFlag = false;
+            }
             return View(carts.ToList());
         }
 
@@ -34,12 +52,10 @@ namespace PhotoProject.Controllers
             //var cart = db.Carts.Include(c => c.User).FirstOrDefault();
             //decimal grandTotal = CartHelper.getTotalFromCart(cart);
             UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
+            Cart cart = user.Cart;
             ViewBag.CartTotal = 50;
-            ViewBag.Pictures = new List<string>() {
-                "carrots", "celery", "parsley"
-            };
-            //ViewBag.Pictures = cart.PicturesInCart.ToList();
-            //ViewBag.Albums = cart.AlbumsInCart.ToList();
+            ViewBag.Pictures = cart.PicturesInCart.ToList();
+            ViewBag.Albums = cart.AlbumsInCart.ToList();
 
             return View(user);
         }

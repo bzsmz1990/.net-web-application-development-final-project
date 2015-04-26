@@ -42,5 +42,18 @@ namespace Business_Logic
             return db.Albums.Where(p => p.Name.Contains(searchString)).ToList();
         }
 
+        public Album createAlbum(List<Picture> pics, decimal cost, DateTime date) {
+            if (pics.Count == 0)
+            {
+                return null;
+            }
+            Album album = new Album {Pictures = new List<Picture>(), Cost = cost, UploadTime = date };
+            foreach (Picture p in pics)
+            {
+                album.Pictures.Add(p);
+            }
+            return album;
+        }
+
     }
 }

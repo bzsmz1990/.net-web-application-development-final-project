@@ -71,6 +71,23 @@ namespace Tests
 
         }
 
+        [TestMethod]
+        public void getTotalFromCart()
+        {
+            Cart cart = new Cart { UserId = "test_user" };
+            Picture firstPicture = new Picture { Id = 1, Cost = 10, Title = "First Picture" };
+            Picture secondPicture = new Picture { Id = 2, Cost = 15, Title = "Second Picture" };
+            Picture pic = new Picture { Title = "pic1", Cost = 1 };
+            Picture pic1 = new Picture { Title = "pic2", Cost = 2 };
+            Picture pic2 = new Picture { Title = "pic3", Cost = 3 };
+            List<Picture> pics = new List<Picture>() { pic, pic1, pic2 };
+            Album album = new Album { Cost = 25, Pictures = new List<Picture>() {firstPicture, secondPicture} };
+            cart.AlbumsInCart = new List<Album>() { album };
+            cart.PicturesInCart = new List<Picture>() { pic, pic1, pic2 };
+            decimal x = CartHelper.getTotalFromCart(cart);
+            Assert.AreEqual(31, x);
+
+        }
 
     }
 }

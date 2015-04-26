@@ -29,16 +29,40 @@ namespace Business_Logic
 
         public static decimal getTotalFromCart(Cart cart)
         {
-            decimal total = 0;
-            foreach (Picture pic in cart.PicturesInCart)
+            if (cart == null)
             {
-                total += pic.Cost;
+                throw new NullReferenceException();
             }
-            foreach (Album alb in cart.AlbumsInCart)
+            decimal total = 0;
+            if (cart.PicturesInCart != null)
             {
-                total += alb.Cost;
+                foreach (Picture pic in cart.PicturesInCart)
+                {
+                    total += pic.Cost;
+                }
+            }
+            if (cart.AlbumsInCart != null)
+            {
+                foreach (Album alb in cart.AlbumsInCart)
+                {
+                    total += alb.Cost;
+                }
             }
             return total;
+        }
+
+        public static Boolean checkIfAlbumIsMoreExpensive(Album al)
+        {
+            decimal sum = 0;
+            foreach (Picture pic in al.Pictures)
+            {
+                sum += pic.Cost;
+            }
+            if (sum <= al.Cost)
+            {
+                return true;
+            }
+            return false;
         }
 
     }

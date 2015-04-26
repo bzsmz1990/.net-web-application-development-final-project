@@ -84,5 +84,20 @@ namespace Tests
             Assert.AreEqual(3, albums.Count);
         }
 
+        [TestMethod]
+        public void createAlbumTest()
+        {
+            var helper = new AlbumHelper(albumMockContext.Object);
+            Picture pic = new Picture { Title = "pic1" };
+            Picture pic1 = new Picture { Title = "pic2" };
+            Picture pic2 = new Picture { Title = "pic3" };
+            List<Picture> pics = new List<Picture>() { pic, pic1, pic2 };
+            Album album = helper.createAlbum(pics, 10, DateTime.Now);
+
+            Assert.AreEqual(album.Pictures.Count, 3);
+
+
+        }
+
     }
 }
