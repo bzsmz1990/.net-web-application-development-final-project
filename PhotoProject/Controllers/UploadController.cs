@@ -41,33 +41,49 @@ namespace PhotoProject.Controllers
             var userID = User.Identity.GetUserId();
             UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
 
-            HttpPostedFileBase file = Request.Files[0] as HttpPostedFileBase;
-            string fileExtension = picPro.GetFileExtends(file.FileName).ToLower(); ;
-            int size = file.ContentLength;
-            string validationStr = picPro.ValidatePicture(fileExtension, size);
+            //based on user's level, define whether the user still have room to upload
+            bool havePositionToUpload = picHelp.VerifyUserLevel(currentUser);
+            //the string give to error action show what happens
+            string validationStr = null;
 
-            if(validationStr == "Valid")
+            //whether the user still have room to upload pictures
+            if(!havePositionToUpload)
             {
-                //obtain image data
-                byte[] data = new byte[file.ContentLength];
-                file.InputStream.Read(data, 0, file.ContentLength);
-
-                Picture.ValidFileType type = (Picture.ValidFileType)Enum.Parse(typeof(Picture.ValidFileType), fileExtension);
-
-                //create picture
-                Picture pic = picHelp.CreatPicture(userID, formcollection["Title"], Convert.ToDecimal(formcollection["Cost"]), formcollection["Location"], formcollection["Description"], DateTime.Now, type, data);
-
-                db.Pictures.Add(pic);
-                currentUser.OwnedPictures.Add(pic);
-                db.SaveChanges();
-
-                return RedirectToAction("Galary", "UserHome", new { id = userID });
+                validationStr = "You have no more room to upload pictures";
+                ModelState.AddModelError("CustomError", validationStr);
+                return RedirectToAction("Error", "Upload", new { errorMessage = validationStr });
             }
             else
             {
-                ModelState.AddModelError("CustomError", validationStr);
-                return RedirectToAction("Error", "Upload", new { errorMessage = validationStr });
-            }   
+                HttpPostedFileBase file = Request.Files[0] as HttpPostedFileBase;
+                string fileExtension = picPro.GetFileExtends(file.FileName).ToLower(); ;
+                int size = file.ContentLength;
+                validationStr = picPro.ValidatePicture(fileExtension, size);
+
+                //whether the picture's size and type is valid
+                if (validationStr == "Valid")
+                {
+                    //obtain image data
+                    byte[] data = new byte[file.ContentLength];
+                    file.InputStream.Read(data, 0, file.ContentLength);
+
+                    Picture.ValidFileType type = (Picture.ValidFileType)Enum.Parse(typeof(Picture.ValidFileType), fileExtension);
+
+                    //create picture
+                    Picture pic = picHelp.CreatPicture(userID, formcollection["Title"], Convert.ToDecimal(formcollection["Cost"]), formcollection["Location"], formcollection["Description"], DateTime.Now, type, data);
+
+                    db.Pictures.Add(pic);
+                    currentUser.OwnedPictures.Add(pic);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Galary", "UserHome", new { id = userID });
+                }
+                else
+                {
+                    ModelState.AddModelError("CustomError", validationStr);
+                    return RedirectToAction("Error", "Upload", new { errorMessage = validationStr });
+                }   
+            }
         }
     }
 }

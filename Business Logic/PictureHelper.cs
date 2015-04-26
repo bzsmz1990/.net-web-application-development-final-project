@@ -155,5 +155,31 @@ namespace Business_Logic
             return user.LikedPictures.ToList();
         }
 
+        public int NumPicNotHidden(List<Picture> pictures)
+        {
+            int num=0;
+            foreach(Picture pic in pictures)
+            {
+                if (!pic.Hidden)
+                    num++;
+            }
+            return num;
+        }
+
+        public bool VerifyUserLevel(UserInfo user)
+        {
+            bool status = true;
+            //level 1 <= 10 pictures
+            //level 2 <= 20 pictures
+            //level 3 <= 30 pictures
+            if (user.Level == 1 && NumPicNotHidden(user.OwnedPictures.ToList()) >= 10)
+                status = false;
+            if (user.Level == 2 && NumPicNotHidden(user.OwnedPictures.ToList()) >= 20)
+                status = false;
+            if (user.Level == 3 && NumPicNotHidden(user.OwnedPictures.ToList()) >= 30)
+                status = false;
+            return status;
+        }
+
     }
 }
