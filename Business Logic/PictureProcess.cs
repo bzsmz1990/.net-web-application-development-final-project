@@ -87,6 +87,9 @@ namespace Business_Logic
         //Compress picture
         public byte[] ZoomAuto(byte[] originalImg)
         {
+            if (originalImg == null)
+                return null;
+
             Image initImage = byteArrayToImage(originalImg);
 
             //Calculat compressImg's width and height

@@ -205,6 +205,18 @@ namespace Tests
 
         }
 
-
+        [TestMethod]
+        public void TestCreatPicture()
+        {
+            var helper = new PictureHelper(mockContext.Object);
+            Picture pic = helper.CreatPicture("123", "testPi", (decimal)1.0, "NYU", "It's a test", DateTime.MinValue, Picture.ValidFileType.jpg, null);
+            Assert.AreEqual("123", pic.OwnerId);
+            Assert.AreEqual("testPi", pic.Title);
+            Assert.AreEqual((decimal)1.0, pic.Cost);
+            Assert.AreEqual(DateTime.MinValue, pic.UploadTime);
+            Assert.AreEqual(Picture.ValidFileType.jpg, pic.PictureType);
+            Assert.IsNull(pic.OriginalImg);
+            Assert.IsNull(pic.CompressImg);
+        }
     }
 }
