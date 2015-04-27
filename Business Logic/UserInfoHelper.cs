@@ -21,12 +21,16 @@ namespace Business_Logic
             db = context;
         }
 
-
         public static ApplicationUser CreateNewUser(string userName, string email) //TODO: ADD FIRST AND LAST NAME
         {
             UserInfo userInfo = new UserInfo { FirstName = "Test Name", LastName = "Test Last Name" };
             return new ApplicationUser { UserName = userName, Email = email, Info = userInfo };
 
+        }
+        public UserInfo GetUser(string userID)
+        {
+            UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
+            return user;
         }
 
         public ICollection<UserInfo> GetFollowing(string userID)
