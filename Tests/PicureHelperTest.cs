@@ -201,7 +201,6 @@ namespace Tests
 
         }
 
-
         [TestMethod]
         public void TestReportPicture()
         {

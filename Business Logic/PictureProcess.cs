@@ -22,8 +22,10 @@ namespace Business_Logic
             {
                 string[] fs = filename.Split('.');
                 ext = fs[fs.Length - 1];
+                return ext.ToLower();
             }
-            return ext;
+            else
+                return null;
         }
 
         //Check whether file's extension is valid
@@ -45,6 +47,9 @@ namespace Business_Logic
 
         public Image byteArrayToImage(byte[] byteArrayIn)
         {
+            if (byteArrayIn == null)
+                return null;
+
             MemoryStream ms = new MemoryStream(byteArrayIn);
             Image returnImage = Image.FromStream(ms);
             return returnImage;
@@ -52,6 +57,9 @@ namespace Business_Logic
 
         public byte[] ImageJPGToByteArray(Image imageIn)
         {
+            if (imageIn == null)
+                return null;
+
             MemoryStream ms = new MemoryStream();
             imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
             return ms.ToArray();
@@ -59,6 +67,9 @@ namespace Business_Logic
 
         public byte[] ImageBMPToByteArray(Image imageIn)
         {
+            if (imageIn == null)
+                return null;
+
             MemoryStream ms = new MemoryStream();
             imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
             return ms.ToArray();
@@ -79,7 +90,7 @@ namespace Business_Logic
 
             if (picSize < (2 * 1024 * 1024))
             {
-                validation = "File size shoud be bigger than 2MB";
+                validation = "File size shoud be bigger than 2MB and less than 20MB";
             }
             return validation;
         }
@@ -117,7 +128,7 @@ namespace Business_Logic
                 {
                     if (initImage.Height > targetHeight)
                     {
-                        newHeight = targetHeight;
+                        newHeight = targetWidth;
                         newWidth = (double)initImage.Width * ((double)targetHeight / (double)initImage.Height);
                     }
                 }
@@ -138,7 +149,6 @@ namespace Business_Logic
 
                 return ImageBMPToByteArray(compressImg);
             }
-            
         }
     }
 }

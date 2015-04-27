@@ -76,6 +76,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -92,6 +93,7 @@
   <ItemGroup>
     <Compile Include="AlbumHelperTest.cs" />
     <Compile Include="CartHelperTest.cs" />
+    <Compile Include="PictureProcessTest.cs" />
     <Compile Include="UserInfoHelperTest.cs" />
     <Compile Include="PicureHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -112,6 +114,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ImageData\Test1.jpg" />
+    <Content Include="ImageData\Test2.JPG" />
+    <Content Include="ImageData\Test3.bmp" />
+    <Content Include="ImageData\Test4.png" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
