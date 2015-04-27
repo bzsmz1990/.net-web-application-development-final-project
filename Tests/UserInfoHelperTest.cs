@@ -77,6 +77,14 @@ namespace Tests
 
         }
 
-
+        [TestMethod]
+        public void TestGetUser()
+        {
+            var helper = new UserInfoHelper(mockContext.Object);
+            string userId = userData.ElementAt(0).UserId;
+            var temp = helper.GetUser(userId);
+            Assert.AreEqual("DataLayer.UserInfo", temp.GetType().ToString());
+            Assert.AreEqual("User1", temp.UserId);
+        }
     }
 }
