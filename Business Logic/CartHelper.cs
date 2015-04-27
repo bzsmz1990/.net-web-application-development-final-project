@@ -65,5 +65,42 @@ namespace Business_Logic
             return false;
         }
 
+        public Boolean buyPicture(int picId, string cartId)
+        {
+            if (cartId == null)
+            {
+                return false;
+            }
+            Cart cart = db.Carts.SingleOrDefault(c => c.UserId == cartId);
+            Picture picture = db.Pictures.SingleOrDefault(p => p.Id == picId);
+            if (picture == null || cart == null)
+            {
+                return false;
+            }
+            
+            cart.PicturesInCart = (cart.PicturesInCart ?? new List<Picture>());
+            cart.PicturesInCart.Add(picture);
+            db.SaveChanges();
+            return true;
+        }
+
+        public Boolean buyAlbum(int albumId, string userId) {
+            if (userId == null)
+            {
+                return false;
+            }
+            UserInfo user = db.UserInfos.SingleOrDefault(c => c.UserId == userId);
+            Album album = db.Albums.SingleOrDefault(a => a.Id == albumId);
+            if (album == null || user == null)
+            {
+                return false;
+            }
+            user.Cart = (user.Cart ?? new Cart());
+            user.Cart.AlbumsInCart = (user.Cart.AlbumsInCart ?? new List<Album>());
+            user.Cart.AlbumsInCart.Add(album);
+            db.SaveChanges();
+            return true;
+        }
+
     }
 }
