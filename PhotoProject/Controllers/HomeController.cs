@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Business_Logic;
+using DataLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +11,9 @@ namespace PhotoProject.Controllers
     [RequireHttps]
     public class HomeController : Controller
     {
+        private static ApplicationDbContext db = new ApplicationDbContext();
+        private static PictureHelper picHelp = new PictureHelper(db);
+
         public ActionResult Index()
         {
             return View();
@@ -26,6 +31,12 @@ namespace PhotoProject.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+
+        public ActionResult AllPicture()
+        {
+            ViewBag.AllPictures = picHelp.GetPicturesOrderedByTitle();
             return View();
         }
     }

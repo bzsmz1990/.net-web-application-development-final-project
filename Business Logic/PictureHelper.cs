@@ -27,6 +27,11 @@ namespace Business_Logic
             return db.Pictures.Where(p => p.Hidden == false).ToList();
         }
 
+        public ICollection<Picture> GetPicturesOrderedByTitle()
+        {
+            return db.Pictures.Where(p => p.Hidden == false).OrderBy(p=>p.Title).ToList();
+        }
+
         public ICollection<Picture> GetPicturesOrderedByMostPurchased()
         {
             return (db.Pictures.Where(p => p.SaleTransactions != null && p.Hidden == false).OrderByDescending(p => p.SaleTransactions.Count)
@@ -146,13 +151,17 @@ namespace Business_Logic
         public ICollection<Picture> GetOwnedPictures(string userID)
         {
             UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
-            return user.OwnedPictures.ToList();
+            List<Picture> NoHiddenOwnedPictures = user.OwnedPictures.Where(p => p.Hidden == false).ToList();
+
+            return NoHiddenOwnedPictures;
         }
 
         public ICollection<Picture> GetLikedPictures(string userID)
         {
             UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
-            return user.LikedPictures.ToList();
+            List<Picture> NoHiddenLikedPictures = user.LikedPictures.Where(p => p.Hidden == false).ToList();
+            
+            return NoHiddenLikedPictures;
         }
 
         public int NumPicNotHidden(List<Picture> pictures)
@@ -180,6 +189,22 @@ namespace Business_Logic
             if (user.Level == 3 && NumPicNotHidden(user.OwnedPictures.ToList()) >= UserInfoHelper.UserLevelToPictureLimit[3])
                 status = false;
             return status;
+        }
+
+        public ICollection<Picture> FilterListByPictureType(string searchTerm, DataLayer.Picture.ValidFileType PictureType)
+        {
+            if (searchTerm == null)
+            {
+                return null;
+            }
+
+            List<Picture> pictures = GetPicturesWhereTitleHasWord(searchTerm);
+            pictures.AddRange(GetPicturesWhereDescriptionHasWord(searchTerm));
+            pictures.AddRange(GetPicturesWhereTagHasWord(searchTerm));
+
+            pictures.RemoveAll(p => p.PictureType == PictureType);
+
+            return pictures;
         }
     }
 }

@@ -55,5 +55,19 @@ namespace Business_Logic
             return album;
         }
 
+        public ICollection<Album> FilterListByPictureType(string searchTerm, DataLayer.Picture.ValidFileType PictureType)
+        {
+            if (searchTerm == null)
+            {
+                return null;
+            }
+
+            List<Album> pictures = GetAlbumsWhereTitleHasWord(searchTerm);
+
+            pictures.RemoveAll(a => a.Pictures != null && a.Pictures.Any(p => p.PictureType == PictureType));
+
+            return pictures;
+        }
+
     }
 }
