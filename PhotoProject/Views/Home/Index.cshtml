@@ -1,31 +1,52 @@
-﻿@{
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<header class=" content">
+    <div class="wrapper">
+        <h1>PhotoBucket</h1>
+        <p>Photography is an art, PhotoBucket is a platform for you to exhibit your own works for sale. Start with few easy steps and share your beauty with the rest of the world. </p>
+        <div class="row">
+            <div class="boxes1">
+                <img src="image14.jpg" style="width:304px;height:228px">
+            </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
+            <div class="boxes2">
+                <asp:Image ID="Image1" runat="server" ImageUrl="~/Views/Images/image15.jpg" />
+            </div>
+            <div class="boxes3">
+                <img src="image16.jpg" style="width:304px;height:228px">
+            </div>
+        </div>
+    </div>
+</header>
+<section class="content" id="oil">
+    <div class="wrapper">
+        <h1>It's only three easy steps:</h1>
+        <h2>1. &nbsp; Create your own account</h2>
+        <h3>2. &nbsp; Upload your images</h3>
+        <h4>3. &nbsp; Sell your art to others</h4>
+        <div class="fadein">
+            <img src="image20.jpg" style="width:454px;height:288px">
+            <img src="image24.jpg" style="width:454px;height:288px">
+            <img src="image26.jpg" style="width:454px;height:288px">
+            <img src="image30.jpg" style="width:454px;height:288px">
+            <img src="image19.jpg" style="width:454px;height:288px">
+            <img src="image22.jpg" style="width:454px;height:288px">
+            <img src="image29.jpg" style="width:454px;height:288px">
+            <img src="image25.jpg" style="width:454px;height:288px">
+        </div>
+    </div>
+</section>
+<section class="content " id="culinary">
+    <div class="wrapper">
+        <p> Or just register and enjoy the art of other photographers. Pick your favorite works, add them to your cart and purchase by placing order and receiving email with HD versions of images. </p>
+    </div>
+</section>
+<section class="content " id="dried">
+    <div class="wrapper">
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            Start now and join the community of photographers who appreciate the art.
         </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+</section>
