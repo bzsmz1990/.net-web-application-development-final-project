@@ -139,6 +139,19 @@ namespace Business_Logic
             return picture;
         }
 
+        public string[] TagSplit(string tagsStr)
+        {
+            string temp = "";
+            foreach (var ch in tagsStr)
+            {
+                if (!(char.IsLetter(ch)) && !(char.IsDigit(ch)))
+                    temp += " ";
+                else
+                    temp += ch;
+            }
+            return System.Text.RegularExpressions.Regex.Split(temp, @"[ ]+");
+        }
+
         public Picture CreatPicture(string userID, string title, 
             decimal cost, string location, string description, 
             string tags, DateTime time, Picture.ValidFileType type,
@@ -159,14 +172,7 @@ namespace Business_Logic
                 pic.Tags = null;
             else
             {
-                foreach (var ch in tags)
-                {
-                    if (!(char.IsLetter(ch)) && !(char.IsDigit(ch)))
-                    {
-                        tags.Replace(ch, ' ');
-                    }
-                }
-                string[] tagsStr = System.Text.RegularExpressions.Regex.Split(tags, @"[ ]+");
+                string[] tagsStr = TagSplit(tags);
                 foreach (var tagstr in tagsStr)
                 {
                     bool flag = db.Tags.Any(emp => emp.Description == tagstr);
@@ -185,7 +191,6 @@ namespace Business_Logic
                     }
                 }
             }
-
             return pic;
         }
 

@@ -227,16 +227,34 @@ namespace Tests
         }
 
         [TestMethod]
+        public void TestTagSplit()
+        {
+            var helper = new PictureHelper(mockContext.Object);
+            string[] temp = helper.TagSplit("NYU, Tibet     Test");
+            Assert.AreEqual(3, temp.Count());
+            Assert.AreEqual("NYU", temp[0]);
+            Assert.AreEqual("Tibet", temp[1]);
+            Assert.AreEqual("Test", temp[2]);
+        }
+
+        [TestMethod]
         public void TestCreatPicture()
         {
             var helper = new PictureHelper(mockContext.Object);
-            Picture pic = helper.CreatPicture("123", "testPi", (decimal)1.0, "NYU", "It's a test", DateTime.MinValue, Picture.ValidFileType.jpg, null);
+            Picture pic = helper.CreatPicture("123", "testPi", (decimal)1.0, "NYU", "It's a test", "NYU Tibet Test", DateTime.MinValue, Picture.ValidFileType.jpg, null);
             Assert.IsNotNull(pic);
             Assert.AreEqual("123", pic.OwnerId);
             Assert.AreEqual("testPi", pic.Title);
             Assert.AreEqual((decimal)1.0, pic.Cost);
             Assert.AreEqual(DateTime.MinValue, pic.UploadTime);
             Assert.AreEqual(Picture.ValidFileType.jpg, pic.PictureType);
+            Assert.AreEqual("NYU", pic.Location);
+            Assert.AreEqual("It's a test", pic.Description);
+            Assert.AreEqual(3, pic.Tags.Count());
+            Assert.AreEqual("NYU", pic.Tags.ToList()[0].Description);
+            Assert.AreEqual("Tibet", pic.Tags.ToList()[1].Description);
+            Assert.AreEqual("Test", pic.Tags.ToList()[2].Description);
+            Assert.AreEqual(3, pic.Tags.Count());
             Assert.IsNull(pic.OriginalImg);
             Assert.IsNull(pic.CompressImg);
         }
