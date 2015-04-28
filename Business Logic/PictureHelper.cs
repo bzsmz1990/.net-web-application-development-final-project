@@ -27,6 +27,11 @@ namespace Business_Logic
             return db.Pictures.Where(p => p.Hidden == false).ToList();
         }
 
+        public ICollection<Picture> GetPicturesOrderedByTitle()
+        {
+            return db.Pictures.Where(p => p.Hidden == false).OrderBy(p=>p.Title).ToList();
+        }
+
         public ICollection<Picture> GetPicturesOrderedByMostPurchased()
         {
             return (db.Pictures.Where(p => p.SaleTransactions != null && p.Hidden == false).OrderByDescending(p => p.SaleTransactions.Count)
