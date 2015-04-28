@@ -102,5 +102,132 @@ namespace Business_Logic
             return true;
         }
 
+        public static List<Transaction> generatePictureTransactions(UserInfo user)
+        {
+            
+            Cart cart = user.Cart;
+            if (cart == null)
+            {
+                throw new NullReferenceException();
+            }
+            if (cart.PicturesInCart == null)
+            {
+                return null;
+            }
+
+            List<Transaction> transactions = new List<Transaction>();
+            List<Picture> pics = cart.PicturesInCart.ToList();
+            for (int i = 0; i < cart.PicturesInCart.Count; i++)
+            {
+                Transaction transaction = new Transaction
+                {
+                    Buyer = user,
+                    Seller = pics[i].Owner,
+                    TotalAmount = pics[i].Cost,
+                    PicturesBeingSold = new List<Picture>() { pics[i] }
+                };
+                transactions.Add(transaction);
+            }
+
+            for (int i = 0; i < transactions.Count; i++)
+            {
+                Transaction t = transactions[i];
+                string seller = t.Seller.UserId;
+                for (int j = i + 1; j < transactions.Count; j++)
+                {
+                    Transaction tr = transactions[j];
+                    string otherseller = tr.Seller.UserId;
+                    if (seller.Equals(otherseller))
+                    {
+                        t.PicturesBeingSold.Add(tr.PicturesBeingSold.FirstOrDefault());
+                        t.TotalAmount += tr.TotalAmount;
+                        transactions.RemoveAt(j);
+                    }
+                }
+            }
+            return transactions;
+        }
+
+        public static List<Transaction> generateAlbumTransactions(UserInfo user)
+        {
+            Cart cart = user.Cart;
+            if (cart.AlbumsInCart == null)
+            {
+                return null;
+            }
+
+            if (cart == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            List<Transaction> transactions = new List<Transaction>();
+            List<Album> albums = cart.AlbumsInCart.ToList();
+            for (int i = 0; i < cart.AlbumsInCart.Count; i++)
+            {
+                Transaction transaction = new Transaction
+                {
+                    Buyer = user,
+                    Seller = albums[i].User,
+                    TotalAmount = albums[i].Cost,
+                    AlbumsBeingSold = new List<Album>() { albums[i] }
+                };
+                transactions.Add(transaction);
+            }
+
+            for (int i = 0; i < transactions.Count; i++)
+            {
+                Transaction t = transactions[i];
+                string seller = t.Seller.UserId;
+                for (int j = i + 1; j < transactions.Count; j++)
+                {
+                    Transaction tr = transactions[j];
+                    string otherseller = tr.Seller.UserId;
+                    if (seller.Equals(otherseller))
+                    {
+                        t.AlbumsBeingSold.Add(tr.AlbumsBeingSold.FirstOrDefault());
+                        t.TotalAmount += tr.TotalAmount;
+                        transactions.RemoveAt(j);
+                    }
+                }
+            }
+            return transactions;
+        }
+
+        public static List<Transaction> mergeLists(List<Transaction> picTrans, List<Transaction> albumTrans)
+        {
+            //Merge picTrans and AlbumTrans
+            for (int i = 0; i < picTrans.Count; i++)
+            {
+                Transaction t = picTrans[i];
+                string seller = t.Seller.UserId;
+                for (int j = 0; j < albumTrans.Count; j++)
+                {
+                    Transaction albumTr = albumTrans[j];
+                    string otherSeller = albumTr.Seller.UserId;
+                    if (seller.Equals(otherSeller))
+                    {
+                        t.AlbumsBeingSold = (t.AlbumsBeingSold ?? new List<Album>());
+                        foreach (Album al in albumTr.AlbumsBeingSold)
+                        {
+                            t.AlbumsBeingSold.Add(al);
+                        }
+                        t.TotalAmount += albumTr.TotalAmount;
+                        albumTrans.RemoveAt(j);
+                    }
+                }
+            }
+            List<Transaction> allTrans = new List<Transaction>();
+            foreach (Transaction trans in picTrans)
+            {
+                allTrans.Add(trans);
+            }
+            foreach (Transaction trans in albumTrans)
+            {
+                allTrans.Add(trans);
+            }
+            return allTrans;
+        }
+
     }
 }

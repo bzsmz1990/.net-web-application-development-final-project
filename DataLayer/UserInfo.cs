@@ -46,9 +46,7 @@ namespace DataLayer
         } 
         
         }
-
-
-
+                
         [DefaultValue(0)]
         public decimal AccountBalance { get; set; }
 

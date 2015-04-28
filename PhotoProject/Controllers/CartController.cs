@@ -47,17 +47,45 @@ namespace PhotoProject.Controllers
 
         public ActionResult CheckOut()
         {
-            //Don't think Transactions are necessary
-
-            //var cart = db.Carts.Include(c => c.User).FirstOrDefault();
-            //decimal grandTotal = CartHelper.getTotalFromCart(cart);
+       
             UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
             Cart cart = user.Cart;
-            ViewBag.CartTotal = 50;
+            if (cart.PicturesInCart == null && cart.AlbumsInCart == null)
+            {
+                ViewBag.Message = "No items in cart";
+                return RedirectToAction("Index", "Cart");
+            }
+            ViewBag.CartTotal = CartHelper.getTotalFromCart(cart);
             ViewBag.Pictures = cart.PicturesInCart.ToList();
             ViewBag.Albums = cart.AlbumsInCart.ToList();
 
             return View(user);
+        }
+
+        public ActionResult Submit()
+        {           
+            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
+            List<Transaction> picTrans = CartHelper.generatePictureTransactions(user);
+            List<Transaction> albumTrans = CartHelper.generateAlbumTransactions(user);
+
+            //Put album and picture transactions in one list
+            List<Transaction> AllTransactions = CartHelper.mergeLists(picTrans, albumTrans);
+            foreach (Transaction trans in albumTrans)
+            {
+                AllTransactions.Add(trans);
+            }
+
+            //Update Account Balances and add Transactions to the db
+            foreach(Transaction trans in AllTransactions) {
+                decimal total = trans.TotalAmount;
+                user.AccountBalance -= total;
+                trans.Seller.AccountBalance += total;
+                db.Transactions.Add(trans);
+            }
+
+            return View();
+
+
         }
 
 
