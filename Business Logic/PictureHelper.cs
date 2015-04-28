@@ -197,17 +197,21 @@ namespace Business_Logic
         public ICollection<Picture> GetOwnedPictures(string userID)
         {
             UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
-            List<Picture> NoHiddenOwnedPictures = user.OwnedPictures.Where(p => p.Hidden == false).ToList();
-
-            return NoHiddenOwnedPictures;
+            bool flag = user.OwnedPictures.Any(p => p.Hidden == false);
+            if (flag)
+                return user.OwnedPictures.Where(p => p.Hidden == false).ToList();
+            else
+                return null;
         }
 
         public ICollection<Picture> GetLikedPictures(string userID)
         {
             UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
-            List<Picture> NoHiddenLikedPictures = user.LikedPictures.Where(p => p.Hidden == false).ToList();
-            
-            return NoHiddenLikedPictures;
+            bool flag = user.LikedPictures.Any(p => p.Hidden == false);
+            if (flag)
+                return user.LikedPictures.Where(p => p.Hidden == false).ToList();
+            else
+                return null;
         }
 
         public int NumPicNotHidden(List<Picture> pictures)
