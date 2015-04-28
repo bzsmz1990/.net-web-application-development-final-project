@@ -146,13 +146,25 @@ namespace Business_Logic
         public ICollection<Picture> GetOwnedPictures(string userID)
         {
             UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
-            return user.OwnedPictures.ToList();
+            List<Picture> NoHiddenOwnedPictures = new List<Picture>();
+            foreach (Picture pic in user.OwnedPictures)
+            {
+                if (!pic.Hidden)
+                    NoHiddenOwnedPictures.Add(pic);
+            }
+            return NoHiddenOwnedPictures;
         }
 
         public ICollection<Picture> GetLikedPictures(string userID)
         {
             UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
-            return user.LikedPictures.ToList();
+            List<Picture> NoHiddenLikedPictures = new List<Picture>();
+            foreach (Picture pic in user.LikedPictures)
+            {
+                if (!pic.Hidden)
+                    NoHiddenLikedPictures.Add(pic);
+            }
+            return NoHiddenLikedPictures;
         }
 
         public int NumPicNotHidden(List<Picture> pictures)

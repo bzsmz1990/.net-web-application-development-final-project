@@ -10,7 +10,7 @@
 @using (Html.BeginForm("Upload", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Picture</h4>
         <hr />
@@ -50,7 +50,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="file" name="Picture" id="Picture" /> <br />
+                <input type="file" name="Picture" id="Picture" accept="image/*" onchange="loadFile(event)" /> <br />
+                <img id="output" width="60%" height="60%"/>
+                <script>
+                    var loadFile = function (event) {
+                        var output = document.getElementById('output');
+                        output.src = URL.createObjectURL(event.target.files[0]);
+                    };
+                </script>
             </div>
         </div>
 

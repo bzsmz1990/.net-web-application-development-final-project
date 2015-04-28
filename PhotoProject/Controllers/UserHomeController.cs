@@ -30,7 +30,7 @@ namespace PhotoProject.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Galary(string id)
+        public ActionResult Gallery(string id)
         {
             var userID = User.Identity.GetUserId();
             //define whether the visiter is the user of this home page

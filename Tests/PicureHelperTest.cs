@@ -51,8 +51,8 @@ namespace Tests
             Picture picture1 = new Picture { Id = 1, Title = "Picture1", UploadTime = new DateTime(2015, 1, 18), Tags = new List<Tag>{ tag1 } };
             Picture picture2 = new Picture { Id = 2, Title = "Picture2", UploadTime = new DateTime(2015, 2, 18), SaleTransactions = secondTransactions, Tags = new List<Tag> { tag1, tag2 } };
             Picture picture3 = new Picture { Id = 3, Title = "Picture3", UploadTime = new DateTime(2015, 3, 18), SaleTransactions = thirdTransactions };
-            Picture picture4 = new Picture { Id = 4, Title = "Picture4", UploadTime = new DateTime(2015, 4, 18)};
-            Picture picture5 = new Picture { Id = 5, Title = "Picture5", UploadTime = new DateTime(2015, 5, 18) };
+            Picture picture4 = new Picture { Id = 4, Title = "Picture4", UploadTime = new DateTime(2015, 4, 18), Hidden=false};
+            Picture picture5 = new Picture { Id = 5, Title = "Picture5", UploadTime = new DateTime(2015, 5, 18), Hidden=true};
 
             user4.OwnedPictures = new List<Picture> { picture4, picture5 };
             user5.LikedPictures = new List<Picture> { picture4, picture5 };
@@ -236,10 +236,10 @@ namespace Tests
             string userId = userData.ElementAt(3).UserId;
             Assert.IsNotNull(userId);
             List<Picture> ownPics = helper.GetOwnedPictures(userId).ToList();
-            Assert.AreEqual(2, ownPics.Count());
+            Assert.AreEqual(1, ownPics.Count());
             Assert.AreEqual(4, ownPics[0].Id);
-            Assert.AreEqual("Picture5", ownPics[1].Title);
-            Assert.AreEqual(new DateTime(2015, 5, 18), ownPics[1].UploadTime);
+            Assert.AreEqual("Picture4", ownPics[0].Title);
+            Assert.AreEqual(new DateTime(2015, 4, 18), ownPics[0].UploadTime);
         }
 
         [TestMethod]
@@ -249,10 +249,10 @@ namespace Tests
             string userId = userData.ElementAt(4).UserId;
             Assert.IsNotNull(userId);
             List<Picture> likePics = helper.GetLikedPictures(userId).ToList();
-            Assert.AreEqual(2, likePics.Count());
+            Assert.AreEqual(1, likePics.Count());
             Assert.AreEqual(4, likePics[0].Id);
-            Assert.AreEqual("Picture5", likePics[1].Title);
-            Assert.AreEqual(new DateTime(2015, 5, 18), likePics[1].UploadTime);
+            Assert.AreEqual("Picture4", likePics[0].Title);
+            Assert.AreEqual(new DateTime(2015, 4, 18), likePics[0].UploadTime);
         }
 
         [TestMethod]

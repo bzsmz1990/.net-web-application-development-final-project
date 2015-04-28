@@ -19,7 +19,7 @@ namespace PhotoProject.Controllers
         // GET: Upload
         public ActionResult Index()
         {
-            //should direct to RedirectToAction("Galary", "UserHome");
+            //should direct to RedirectToAction("Gallery", "UserHome");
             return View();
         }
 
@@ -76,7 +76,7 @@ namespace PhotoProject.Controllers
                     currentUser.OwnedPictures.Add(pic);
                     db.SaveChanges();
 
-                    return RedirectToAction("Galary", "UserHome", new { id = userID });
+                    return RedirectToAction("Gallery", "UserHome", new { id = userID });
                 }
                 else
                 {
