@@ -27,6 +27,7 @@ namespace Tests
             UserInfo user2 = new UserInfo { UserId = "User2" };
             UserInfo user3 = new UserInfo { UserId = "User3" };
 
+
             userData = new List<UserInfo>
             {
                 user1, user2, user3
@@ -85,6 +86,53 @@ namespace Tests
             var temp = helper.GetUser(userId);
             Assert.AreEqual("DataLayer.UserInfo", temp.GetType().ToString());
             Assert.AreEqual("User1", temp.UserId);
+        }
+
+        [TestMethod]
+        public void TestSetLevel()
+        {
+            UserInfo info = userData.ElementAt(0);
+            var helper = new UserInfoHelper(mockContext.Object);
+
+            Assert.AreEqual(1, info.Level);
+            helper.SetLevel(info);
+            Assert.AreEqual(1, info.Level);
+
+            info.SaleTransactions = new List<Transaction>()
+            {
+                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
+                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
+            };
+
+            helper.SetLevel(info);
+            Assert.AreEqual(2, info.Level);
+
+            info.SaleTransactions = new List<Transaction>()
+            {
+                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
+                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
+                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
+                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
+            };
+
+            helper.SetLevel(info);
+            Assert.AreEqual(3, info.Level);
+
+            info.SaleTransactions = new List<Transaction>()
+            {
+                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
+                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
+                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
+                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
+                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
+                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
+                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
+                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
+            };
+
+            helper.SetLevel(info);
+            Assert.AreEqual(4, info.Level);
+
         }
     }
 }

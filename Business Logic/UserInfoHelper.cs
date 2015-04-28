@@ -79,7 +79,7 @@ namespace Business_Logic
         } 
 
         //TODO: NEEDS TO BE CALLED FROM THE CHECKOUT
-        public void setLevel (UserInfo user)
+        public void SetLevel (UserInfo user)
         {
             int soldPictures = (user.SaleTransactions == null) ? 0 : user.SaleTransactions.Count;
             if (soldPictures > UserLevelToPictureLimit[3])

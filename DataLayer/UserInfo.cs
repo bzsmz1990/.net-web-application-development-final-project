@@ -55,8 +55,9 @@ namespace DataLayer
         [DefaultValue(false)]
         public Boolean isDeleted { get; set; }
 
+        private int _lvl = 1;
         [DefaultValue(1), Required]
-        public int Level { get; set; }
+        public int Level { get { return _lvl; } set { _lvl = value; } }
 
         public virtual ICollection<Picture> OwnedPictures { get; set; }
 
