@@ -9,6 +9,9 @@ using System.Web.Mvc;
 using DataLayer;
 using Microsoft.AspNet.Identity;
 using Business_Logic;
+using SendGrid;
+using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace PhotoProject.Controllers
 {
@@ -16,6 +19,8 @@ namespace PhotoProject.Controllers
     {
         private static ApplicationDbContext db = new ApplicationDbContext();
         private static PictureHelper picHelp = new PictureHelper(db);
+
+        private string PHOTO_PROJECT_EMAIL = "alo270@nyu.edu";
 
         // GET: PictureDetails/Details/5
         public ActionResult Details(int? id)
@@ -50,15 +55,31 @@ namespace PhotoProject.Controllers
         [Authorize]
         [HttpPost]
         // POST: PictureDetails/ReportPicture/5
-        public ActionResult ReportPicture(int id, string reason)
+        public async Task<ActionResult> ReportPicture(int id, string reason)
         {
-            //TODO: DO WE WANT TO SEND ANY EMAIL WITH THE REASON?
+            //TODO: ADD USERNAME AND PASSWORD FOR EMAIL
             Picture picture = picHelp.ReportPicture(id);
             if (picture == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            var userID = User.Identity.GetUserId();
+            UserInfo userInfo = db.UserInfos.Single(i => i.UserId == userID);
+
+            SendGridMessage myMessage = new SendGridMessage();
+            myMessage.AddTo(PHOTO_PROJECT_EMAIL);
+            myMessage.From = new MailAddress(userInfo.User.Email, userInfo.FullName);
+            myMessage.Subject = "Reported Picture: " + picture.Id + " Created By " + picture.Owner.FullName;
+            myMessage.Text = reason;
+
+            var credentials = new NetworkCredential("username", "password");
+
+            // Create an Web transport for sending email.
+            var transportWeb = new Web(credentials);
+
+            // Send the email.
+            await transportWeb.DeliverAsync(myMessage);
 
             return View(picture);
         }

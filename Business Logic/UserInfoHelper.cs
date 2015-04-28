@@ -16,6 +16,15 @@ namespace Business_Logic
 
         public static int NUM_POINTS_PER_FOLLOW = 20;
 
+        public static readonly Dictionary<int, int> UserLevelToPictureLimit
+            = new Dictionary<int, int>
+            {
+                { 1, 10 },
+                { 2, 20 },
+                { 3, 30 }
+            };
+
+        
         public UserInfoHelper(ApplicationDbContext context)
         {
             db = context;
@@ -57,7 +66,6 @@ namespace Business_Logic
                 return followingUser;
             }
 
-
             currentUser.Following.Add(followingUser);
 
             if (followingUser.Followers == null || !followingUser.Followers.Contains(currentUser))
@@ -69,5 +77,25 @@ namespace Business_Logic
 
             return followingUser;
         } 
+
+        //TODO: NEEDS TO BE CALLED FROM THE CHECKOUT
+        public void SetLevel (UserInfo user)
+        {
+            int soldPictures = (user.SaleTransactions == null) ? 0 : user.SaleTransactions.Count;
+            if (soldPictures > UserLevelToPictureLimit[3])
+            {
+                user.Level = 4;
+            }
+            else if (soldPictures > UserLevelToPictureLimit[2])
+            {
+                user.Level = 3;
+            }
+            else if (soldPictures > UserLevelToPictureLimit[1])
+            {
+                user.Level = 2;
+            }
+
+            db.SaveChanges();
+        }
     }
 }

@@ -24,18 +24,18 @@ namespace Business_Logic
 
         public ICollection<Picture> GetAllPictures()
         {
-            return db.Pictures.ToList();
+            return db.Pictures.Where(p => p.Hidden == false).ToList();
         }
 
         public ICollection<Picture> GetPicturesOrderedByMostPurchased()
         {
-             return (db.Pictures.Where(p => p.SaleTransactions != null).OrderByDescending(p => p.SaleTransactions.Count)
-                .Union(db.Pictures.Where(p => p.SaleTransactions == null).OrderByDescending(p => p.UploadTime))).ToList();
+            return (db.Pictures.Where(p => p.SaleTransactions != null && p.Hidden == false).OrderByDescending(p => p.SaleTransactions.Count)
+                .Union(db.Pictures.Where(p => p.SaleTransactions == null && p.Hidden == false).OrderByDescending(p => p.UploadTime))).ToList();
         }
 
         public ICollection<Picture> GetPicturesOrderedByMostRecent()
         {
-            return db.Pictures.OrderByDescending(p => p.UploadTime).ToList();
+            return db.Pictures.Where(p => p.Hidden == false).OrderByDescending(p => p.UploadTime).ToList();
         }
 
         public List<Picture> GetPicturesWhereTitleHasWord(string searchString)
@@ -43,12 +43,12 @@ namespace Business_Logic
             
             if (String.IsNullOrEmpty(searchString) || String.IsNullOrWhiteSpace(searchString))
             {
-                return db.Pictures.OrderBy(p => p.UploadTime).ToList();
+                return db.Pictures.Where(p => p.Hidden == false).OrderBy(p => p.UploadTime).ToList();
             }
 
             searchString = searchString.ToLower();
 
-            return db.Pictures.Where(p => p.Title.ToLower().Contains(searchString)).OrderBy(p => p.UploadTime).ToList();
+            return db.Pictures.Where(p => p.Title.ToLower().Contains(searchString) && p.Hidden == false).OrderBy(p => p.UploadTime).ToList();
         }
 
         public List<Picture> GetPicturesWhereDescriptionHasWord(string searchString)
@@ -56,12 +56,12 @@ namespace Business_Logic
             
             if (String.IsNullOrEmpty(searchString) || String.IsNullOrWhiteSpace(searchString))
             {
-                return db.Pictures.OrderBy(p => p.UploadTime).ToList();
+                return db.Pictures.Where(p => p.Hidden == false).OrderBy(p => p.UploadTime).ToList();
             }
 
             searchString = searchString.ToLower();
 
-            return db.Pictures.Where(p => p.Description.ToLower().Contains(searchString)).OrderBy(p => p.UploadTime).ToList();
+            return db.Pictures.Where(p => p.Description.ToLower().Contains(searchString) && p.Hidden == false).OrderBy(p => p.UploadTime).ToList();
         }
 
         public List<Picture> GetPicturesWhereTagHasWord(string searchString)
@@ -69,13 +69,13 @@ namespace Business_Logic
             
             if (String.IsNullOrEmpty(searchString) || String.IsNullOrWhiteSpace(searchString))
             {
-                return db.Pictures.OrderBy(p => p.UploadTime).ToList();
+                return db.Pictures.Where(p => p.Hidden == false).OrderBy(p => p.UploadTime).ToList();
             }
 
             searchString = searchString.ToLower();
 
             return db.Pictures
-                .Where(p => p.Tags != null && p.Tags.Any(t => t.Description.ToLower().Contains(searchString)))
+                .Where(p => p.Tags != null && p.Hidden == false && p.Tags.Any(t => t.Description.ToLower().Contains(searchString)))
                 .ToList();
         }
 
@@ -84,7 +84,7 @@ namespace Business_Logic
             Picture picture = db.Pictures.Single(p => p.Id == pictureId);
             UserInfo userInfo = db.UserInfos.Single(u => u.UserId == userId);
 
-            if (picture == null || userInfo == null)
+            if (picture == null || userInfo == null || picture.Hidden == true)
             {
                 return null;
             }
@@ -184,13 +184,30 @@ namespace Business_Logic
             //level 1 <= 10 pictures
             //level 2 <= 20 pictures
             //level 3 <= 30 pictures
-            if (user.Level == 1 && NumPicNotHidden(user.OwnedPictures.ToList()) >= 10)
+            //level 4 unlimited
+            if (user.Level == 1 && NumPicNotHidden(user.OwnedPictures.ToList()) >= UserInfoHelper.UserLevelToPictureLimit[1])
                 status = false;
-            if (user.Level == 2 && NumPicNotHidden(user.OwnedPictures.ToList()) >= 20)
+            if (user.Level == 2 && NumPicNotHidden(user.OwnedPictures.ToList()) >= UserInfoHelper.UserLevelToPictureLimit[2])
                 status = false;
-            if (user.Level == 3 && NumPicNotHidden(user.OwnedPictures.ToList()) >= 30)
+            if (user.Level == 3 && NumPicNotHidden(user.OwnedPictures.ToList()) >= UserInfoHelper.UserLevelToPictureLimit[3])
                 status = false;
             return status;
+        }
+
+        public ICollection<Picture> FilterListByPictureType(string searchTerm, DataLayer.Picture.ValidFileType PictureType)
+        {
+            if (searchTerm == null)
+            {
+                return null;
+            }
+
+            List<Picture> pictures = GetPicturesWhereTitleHasWord(searchTerm);
+            pictures.AddRange(GetPicturesWhereDescriptionHasWord(searchTerm));
+            pictures.AddRange(GetPicturesWhereTagHasWord(searchTerm));
+
+            pictures.RemoveAll(p => p.PictureType == PictureType);
+
+            return pictures;
         }
     }
 }

@@ -32,6 +32,11 @@ namespace PhotoProject.Controllers
          * */
         public ActionResult Index(string sortOrder, int? picturePage, int? albumPage)
         {
+            if (sortOrder == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             ICollection<Picture> pictures = null;
             ICollection<Album> albums = null;
             switch (sortOrder)
@@ -70,6 +75,11 @@ namespace PhotoProject.Controllers
          * */
         public ActionResult SearchResults(string searchTerm, int? picturePage, int? albumPage)
         {
+            if (searchTerm == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             List<Picture> pictures = pictureHelper.GetPicturesWhereTitleHasWord(searchTerm);
             pictures.AddRange(pictureHelper.GetPicturesWhereDescriptionHasWord(searchTerm));
             pictures.AddRange(pictureHelper.GetPicturesWhereTagHasWord(searchTerm));
@@ -85,110 +95,26 @@ namespace PhotoProject.Controllers
 
             return View(viewModel);
         }
-
-
-        // GET: Search/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult FilterSearchResults(string searchTerm, DataLayer.Picture.ValidFileType pictureType, int? picturePage, int? albumPage)
         {
-            if (id == null)
+            if (searchTerm == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture = db.Pictures.Find(id);
-            if (picture == null)
-            {
-                return HttpNotFound();
-            }
-            return View(picture);
+
+            int picturePageNumber = (picturePage ?? 1);
+            int albumPageNumber = (albumPage ?? 1);
+
+            //TODO: Remove need to re-do search
+            SearchResultsViewModel viewModel = new SearchResultsViewModel();
+            viewModel.Pictures = pictureHelper.FilterListByPictureType(searchTerm, pictureType).ToPagedList(picturePageNumber, LIST_SIZE);
+            viewModel.Albums = albumHelper.FilterListByPictureType(searchTerm, pictureType).ToPagedList(albumPageNumber, LIST_SIZE);
+
+
+            return View(viewModel);
         }
 
-        // GET: Search/Create
-        public ActionResult Create()
-        {
-            ViewBag.AlbumId = new SelectList(db.Albums, "Id", "UserId");
-            ViewBag.OwnerId = new SelectList(db.UserInfos, "UserId", "FirstName");
-            return View();
-        }
 
-        // POST: Search/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,OwnerId,Title,Cost,Location,Description,UploadTime,NumberOfLikes,HasBeenReported,OriginalImg,CompressImg,PictureType,Hidden,AlbumId")] Picture picture)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Pictures.Add(picture);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.AlbumId = new SelectList(db.Albums, "Id", "UserId", picture.AlbumId);
-            ViewBag.OwnerId = new SelectList(db.UserInfos, "UserId", "FirstName", picture.OwnerId);
-            return View(picture);
-        }
-
-        // GET: Search/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Picture picture = db.Pictures.Find(id);
-            if (picture == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.AlbumId = new SelectList(db.Albums, "Id", "UserId", picture.AlbumId);
-            ViewBag.OwnerId = new SelectList(db.UserInfos, "UserId", "FirstName", picture.OwnerId);
-            return View(picture);
-        }
-
-        // POST: Search/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,OwnerId,Title,Cost,Location,Description,UploadTime,NumberOfLikes,HasBeenReported,OriginalImg,CompressImg,PictureType,Hidden,AlbumId")] Picture picture)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(picture).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.AlbumId = new SelectList(db.Albums, "Id", "UserId", picture.AlbumId);
-            ViewBag.OwnerId = new SelectList(db.UserInfos, "UserId", "FirstName", picture.OwnerId);
-            return View(picture);
-        }
-
-        // GET: Search/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Picture picture = db.Pictures.Find(id);
-            if (picture == null)
-            {
-                return HttpNotFound();
-            }
-            return View(picture);
-        }
-
-        // POST: Search/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Picture picture = db.Pictures.Find(id);
-            db.Pictures.Remove(picture);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
         protected override void Dispose(bool disposing)
         {
