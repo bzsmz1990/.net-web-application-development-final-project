@@ -24,12 +24,20 @@ namespace Business_Logic
 
         public ICollection<Picture> GetAllPictures()
         {
-            return db.Pictures.Where(p => p.Hidden == false).ToList();
+            bool flag = db.Pictures.Any(p => p.Hidden == false);
+            if (flag)
+                return db.Pictures.Where(p => p.Hidden == false).ToList();
+            else
+                return null;
         }
 
         public ICollection<Picture> GetPicturesOrderedByTitle()
         {
-            return db.Pictures.Where(p => p.Hidden == false).OrderBy(p=>p.Title).ToList();
+            bool flag = db.Pictures.Any(p => p.Hidden == false);
+            if (flag)
+                return db.Pictures.Where(p => p.Hidden == false).OrderBy(p => p.Title).ToList();
+            else
+                return null;
         }
 
         public ICollection<Picture> GetPicturesOrderedByMostPurchased()
@@ -131,8 +139,9 @@ namespace Business_Logic
             return picture;
         }
 
-        public Picture CreatPicture(string userID, string title, decimal cost,
-            string location, string description, DateTime time, Picture.ValidFileType type,
+        public Picture CreatPicture(string userID, string title, 
+            decimal cost, string location, string description, 
+            string tags, DateTime time, Picture.ValidFileType type,
             byte[] data)
         {
             Picture pic = new Picture();
@@ -145,6 +154,38 @@ namespace Business_Logic
             pic.PictureType = type;
             pic.OriginalImg = data;
             pic.CompressImg = picPro.ZoomAuto(data);
+            pic.Tags = new List<Tag>();
+            if (tags == null)
+                pic.Tags = null;
+            else
+            {
+                foreach (var ch in tags)
+                {
+                    if (!(char.IsLetter(ch)) && !(char.IsDigit(ch)))
+                    {
+                        tags.Replace(ch, ' ');
+                    }
+                }
+                string[] tagsStr = System.Text.RegularExpressions.Regex.Split(tags, @"[ ]+");
+                foreach (var tagstr in tagsStr)
+                {
+                    bool flag = db.Tags.Any(emp => emp.Description == tagstr);
+
+                    if (flag)
+                    {
+                        Tag tag = db.Tags.Single(emp => emp.Description == tagstr);
+                        pic.Tags.Add(tag);
+                    }
+                    else
+                    {
+                        Tag tag = new Tag { Description = tagstr };
+                        tag.Pictures = new List<Picture>();
+                        pic.Tags.Add(tag);
+                        tag.Pictures.Add(pic);
+                    }
+                }
+            }
+
             return pic;
         }
 

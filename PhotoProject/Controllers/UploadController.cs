@@ -70,7 +70,7 @@ namespace PhotoProject.Controllers
                     Picture.ValidFileType type = (Picture.ValidFileType)Enum.Parse(typeof(Picture.ValidFileType), fileExtension);
 
                     //create picture
-                    Picture pic = picHelp.CreatPicture(userID, formcollection["Title"], Convert.ToDecimal(formcollection["Cost"]), formcollection["Location"], formcollection["Description"], DateTime.Now, type, data);
+                    Picture pic = picHelp.CreatPicture(userID, formcollection["Title"], Convert.ToDecimal(formcollection["Cost"]), formcollection["Location"], formcollection["Description"], formcollection["Tags"], DateTime.Now, type, data);
 
                     db.Pictures.Add(pic);
                     currentUser.OwnedPictures.Add(pic);
@@ -82,7 +82,7 @@ namespace PhotoProject.Controllers
                 {
                     ModelState.AddModelError("CustomError", validationStr);
                     return RedirectToAction("Error", "Upload", new { errorMessage = validationStr });
-                }   
+                }
             }
         }
     }
