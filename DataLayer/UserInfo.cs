@@ -27,6 +27,28 @@ namespace DataLayer
         [StringLength(25, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
         public string LastName { get; set; }
 
+        [NotMapped]
+        public string FullName { get 
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.Append(FirstName);
+            sb.Append(" ");
+
+            if (MiddleInitial != null)
+            {
+                sb.Append(MiddleInitial);
+                sb.Append(" ");
+            }
+
+            sb.Append(LastName);
+
+            return sb.ToString();
+        } 
+        
+        }
+
+
+
         [DefaultValue(0)]
         public decimal AccountBalance { get; set; }
 

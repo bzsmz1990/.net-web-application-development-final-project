@@ -172,11 +172,12 @@ namespace Business_Logic
             //level 1 <= 10 pictures
             //level 2 <= 20 pictures
             //level 3 <= 30 pictures
-            if (user.Level == 1 && NumPicNotHidden(user.OwnedPictures.ToList()) >= 10)
+            //level 4 unlimited
+            if (user.Level == 1 && NumPicNotHidden(user.OwnedPictures.ToList()) >= UserInfoHelper.UserLevelToPictureLimit[1])
                 status = false;
-            if (user.Level == 2 && NumPicNotHidden(user.OwnedPictures.ToList()) >= 20)
+            if (user.Level == 2 && NumPicNotHidden(user.OwnedPictures.ToList()) >= UserInfoHelper.UserLevelToPictureLimit[2])
                 status = false;
-            if (user.Level == 3 && NumPicNotHidden(user.OwnedPictures.ToList()) >= 30)
+            if (user.Level == 3 && NumPicNotHidden(user.OwnedPictures.ToList()) >= UserInfoHelper.UserLevelToPictureLimit[3])
                 status = false;
             return status;
         }

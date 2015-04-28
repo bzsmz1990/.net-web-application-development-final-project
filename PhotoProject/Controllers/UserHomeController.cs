@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using PhotoProject.ViewModels;
+using System.Net;
 
 namespace PhotoProject.Controllers
 {
@@ -53,6 +54,20 @@ namespace PhotoProject.Controllers
                 return View();
             }
             
+        }
+
+        public ActionResult FollowUser(string id)
+        {
+            if (id == null)   
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            UserInfo userInfo = userHelp.FollowUser(User.Identity.GetUserId(), id);
+
+            return View(userInfo);
+
+
         }
 
     }
