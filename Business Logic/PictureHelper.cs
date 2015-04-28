@@ -181,5 +181,21 @@ namespace Business_Logic
                 status = false;
             return status;
         }
+
+        public ICollection<Picture> FilterListByPictureType(string searchTerm, DataLayer.Picture.ValidFileType PictureType)
+        {
+            if (searchTerm == null)
+            {
+                return null;
+            }
+
+            List<Picture> pictures = GetPicturesWhereTitleHasWord(searchTerm);
+            pictures.AddRange(GetPicturesWhereDescriptionHasWord(searchTerm));
+            pictures.AddRange(GetPicturesWhereTagHasWord(searchTerm));
+
+            pictures.RemoveAll(p => p.PictureType == PictureType);
+
+            return pictures;
+        }
     }
 }

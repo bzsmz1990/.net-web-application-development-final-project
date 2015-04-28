@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="AlbumHelper.cs" />
     <Compile Include="CartHelper.cs" />
+    <Compile Include="IPagedList.cs" />
     <Compile Include="PictureHelper.cs" />
     <Compile Include="PictureProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

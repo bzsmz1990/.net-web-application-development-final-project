@@ -32,6 +32,11 @@ namespace PhotoProject.Controllers
          * */
         public ActionResult Index(string sortOrder, int? picturePage, int? albumPage)
         {
+            if (sortOrder == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             ICollection<Picture> pictures = null;
             ICollection<Album> albums = null;
             switch (sortOrder)
@@ -70,6 +75,11 @@ namespace PhotoProject.Controllers
          * */
         public ActionResult SearchResults(string searchTerm, int? picturePage, int? albumPage)
         {
+            if (searchTerm == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             List<Picture> pictures = pictureHelper.GetPicturesWhereTitleHasWord(searchTerm);
             pictures.AddRange(pictureHelper.GetPicturesWhereDescriptionHasWord(searchTerm));
             pictures.AddRange(pictureHelper.GetPicturesWhereTagHasWord(searchTerm));
@@ -85,6 +95,25 @@ namespace PhotoProject.Controllers
 
             return View(viewModel);
         }
+        public ActionResult FilterSearchResults(string searchTerm, DataLayer.Picture.ValidFileType pictureType, int? picturePage, int? albumPage)
+        {
+            if (searchTerm == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            int picturePageNumber = (picturePage ?? 1);
+            int albumPageNumber = (albumPage ?? 1);
+
+            //TODO: Remove need to re-do search
+            SearchResultsViewModel viewModel = new SearchResultsViewModel();
+            viewModel.Pictures = pictureHelper.FilterListByPictureType(searchTerm, pictureType).ToPagedList(picturePageNumber, LIST_SIZE);
+            viewModel.Albums = albumHelper.FilterListByPictureType(searchTerm, pictureType).ToPagedList(albumPageNumber, LIST_SIZE);
+
+
+            return View(viewModel);
+        }
+
 
 
         protected override void Dispose(bool disposing)
