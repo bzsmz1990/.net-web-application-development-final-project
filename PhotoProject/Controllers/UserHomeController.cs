@@ -43,15 +43,15 @@ namespace PhotoProject.Controllers
             }
             else
             {
-                ViewBag.OwnedPictures = picHelp.GetOwnedPictures(id);
-                ViewBag.LikedPictures = picHelp.GetLikedPictures(id);
-                ViewBag.Following = userHelp.GetFollowing(id);
-                return View();
-                //GalleryViewModel userhome = new GalleryViewModel();
-                //userhome.OwnedPictures = picHelp.GetOwnedPictures(id);
-                //userhome.LikedPictures = picHelp.GetLikedPictures(id);
-                //userhome.Following = userHelp.GetFollowing(id);
-                //return View(userhome);
+                //ViewBag.OwnedPictures = picHelp.GetOwnedPictures(id);
+                //ViewBag.LikedPictures = picHelp.GetLikedPictures(id);
+                //ViewBag.Following = userHelp.GetFollowing(id);
+                //return View();
+                GalleryViewModel userhome = new GalleryViewModel();
+                userhome.OwnedPictures = picHelp.GetOwnedPictures(id);
+                userhome.LikedPictures = picHelp.GetLikedPictures(id);
+                userhome.Following = userHelp.GetFollowing(id);
+                return View(userhome);
             }
             
         }
