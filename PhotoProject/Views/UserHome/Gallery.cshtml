@@ -1,12 +1,10 @@
-﻿@model DataLayer.Picture
+﻿@model PhotoProject.ViewModels.GalleryViewModel
 
 @{
-    ViewBag.Title = "Galary";
+    ViewBag.Title = "Gallery";
 }
 
-<h2>Galary</h2>
-<br />
-<br />
+<h2>Gallery</h2>
 
 <table>
     <tr>
@@ -42,7 +40,7 @@
     <tr>
         @{
             List<DataLayer.Picture> likedpicList = (List<DataLayer.Picture>)ViewBag.LikedPictures;
-            if (likedpicList.Count == 0)
+            if (likedpicList == null)
             {
                 <h4>The user doesn't like any picture.</h4>
             }
@@ -66,7 +64,7 @@
     <h4>Users the user are following</h4>
     @{
         List<DataLayer.UserInfo> followinglist = (List<DataLayer.UserInfo>)ViewBag.Following;
-        if (followinglist.Count == 0)
+        if (followinglist== null)
         {
             <h4>There is no following user</h4>
         }
@@ -75,7 +73,7 @@
             foreach (DataLayer.UserInfo user in followinglist)
             {
                 <li>
-                    @Html.ActionLink(user.FirstName + " " + user.LastName, "Galary", "UserHome", new { id = user.UserId })
+                    @Html.ActionLink(user.FirstName + " " + user.LastName, "Gallery", "UserHome", new { id = user.UserId })
                 </li>
             }
         }

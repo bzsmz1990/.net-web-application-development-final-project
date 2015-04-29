@@ -79,7 +79,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Gallery", "UserHome", new { id=Model.OwnerId })
 </div>
 
 @section Scripts {

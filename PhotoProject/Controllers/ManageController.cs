@@ -81,8 +81,6 @@ namespace PhotoProject.Controllers
             ViewBag.user = user;
 
 
-
-
             return View(model);
         }
 
