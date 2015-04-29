@@ -28,6 +28,14 @@
             @Model.Logins.Count [
             @Html.ActionLink("Manage", "ManageLogins") ]
         </dd>
+        <dt> First Name</dt>
+        <dd>
+            @Model.FirstName
+        </dd>
+        <dt> Last Name</dt>
+        <dd>
+            @Model.LastName
+        </dd>
 
         @*
             Phone Numbers can used as a second factor of verification in a two-factor authentication system.

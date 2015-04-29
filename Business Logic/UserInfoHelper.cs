@@ -30,9 +30,9 @@ namespace Business_Logic
             db = context;
         }
 
-        public static ApplicationUser CreateNewUser(string userName, string email) //TODO: ADD FIRST AND LAST NAME
+        public static ApplicationUser CreateNewUser(string userName, string email, string FirstName, string LastName) //TODO: ADD FIRST AND LAST NAME
         {
-            UserInfo userInfo = new UserInfo { FirstName = "Test Name", LastName = "Test Last Name" };
+            UserInfo userInfo = new UserInfo { Cart = new Cart(), FirstName = FirstName, LastName = LastName };
             return new ApplicationUser { UserName = userName, Email = email, Info = userInfo };
 
         }

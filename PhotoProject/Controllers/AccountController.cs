@@ -167,7 +167,7 @@ namespace PhotoProject.Controllers
             if (ModelState.IsValid)
             {
                 //TODO: ADD FIRST AND LAST NAME
-                var user = UserInfoHelper.CreateNewUser(model.Email, model.Email);
+                var user = UserInfoHelper.CreateNewUser(model.Email, model.Email, model.FirstName, model.LastName);
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -384,7 +384,7 @@ namespace PhotoProject.Controllers
                     return View("ExternalLoginFailure");
                 }
                 //TODO: ADD FIRST AND LAST NAME
-                var user = UserInfoHelper.CreateNewUser(model.Email, model.Email);
+                var user = UserInfoHelper.CreateNewUser(model.Email, model.Email, model.FirstName, model.LastName);
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

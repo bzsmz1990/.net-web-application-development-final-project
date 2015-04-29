@@ -19,19 +19,24 @@ namespace PhotoProject.Controllers
         // GET: Cart
         public ActionResult Index()
         {
-            var carts = db.Carts.Include(c => c.User);
-            if (carts == null)
+            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
+            user.Cart = (user.Cart ?? new Cart());
+            Cart cart = user.Cart;
+            
+            if (cart == null)
             {
-                return View(new List<Picture>());
+                
             }
-            Cart cart = carts.FirstOrDefault();
             bool isMoreExpensive = false;
-            foreach (Album al in cart.AlbumsInCart)
+            if (cart.AlbumsInCart != null)
             {
-                if (!CartHelper.checkIfAlbumIsMoreExpensive(al))
+                foreach (Album al in cart.AlbumsInCart)
                 {
-                    isMoreExpensive = true;
-                    break;
+                    if (!CartHelper.checkIfAlbumIsMoreExpensive(al))
+                    {
+                        isMoreExpensive = true;
+                        break;
+                    }
                 }
             }
             if (isMoreExpensive)
@@ -42,7 +47,7 @@ namespace PhotoProject.Controllers
             {
                 ViewBag.AlbumFlag = false;
             }
-            return View(carts.ToList());
+            return View(cart);
         }
 
         public ActionResult CheckOut()
