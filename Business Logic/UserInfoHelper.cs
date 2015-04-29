@@ -82,15 +82,15 @@ namespace Business_Logic
         public void SetLevel (UserInfo user)
         {
             int soldPictures = (user.SaleTransactions == null) ? 0 : user.SaleTransactions.Count;
-            if (soldPictures > UserLevelToPictureLimit[3])
+            if (soldPictures >= UserLevelToPictureLimit[3] / 2)
             {
                 user.Level = 4;
             }
-            else if (soldPictures > UserLevelToPictureLimit[2])
+            else if (soldPictures >= UserLevelToPictureLimit[2] / 2)
             {
                 user.Level = 3;
             }
-            else if (soldPictures > UserLevelToPictureLimit[1])
+            else if (soldPictures >= UserLevelToPictureLimit[1] / 2)
             {
                 user.Level = 2;
             }
