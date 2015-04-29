@@ -78,7 +78,6 @@ namespace Business_Logic
             return followingUser;
         } 
 
-        //TODO: NEEDS TO BE CALLED FROM THE CHECKOUT
         public void SetLevel (UserInfo user)
         {
             int soldPictures = (user.SaleTransactions == null) ? 0 : user.SaleTransactions.Count;
