@@ -606,57 +606,15 @@ background: #000000; }
           transition: all 0.5s; }
        
 
-/* dorpdown login menu */
-/*.site-header .header-top .dropdown .dd-list {
-position: absolute;
-right:0px;
-top: 70px;
-width: 200% !important; }*/
-/* dorpdown login menu */
-@charset "UTF-8";
-@font-face {
-  font-family: "NeutraBold";
-  src: url("sass/webfonts/NeutraText-Bold.eot");
-  src: url("sass/webfonts/NeutraText-Bold.eot?#iefix") format("embeddedopentype"), url("sass/webfonts/NeutraText-Bold.woff") format("woff"), url("sass/webfonts/NeutraText-Bold.svg") format("svg");
-  font-style: normal;
-  font-weight: 300;
-  font-stretch: normal; }
-@font-face {
-  font-family: "NeutraDemi";
-  src: url("sass/webfonts/NeutraText-Demi.eot");
-  src: url("sass/webfonts/NeutraText-Demi.eot?#iefix") format("embeddedopentype"), url("sass/webfonts/NeutraText-Demi.woff") format("woff"), url("sass/webfonts/NeutraText-Demi.svg") format("svg");
-  font-style: normal;
-  font-weight: 300;
-  font-stretch: normal; }
-@font-face {
-  font-family: "Kaufmann";
-  src: url("sass/webfonts/Kaufmann.eot");
-  src: url("sass/webfonts/Kaufmann.eot?#iefix") format("embeddedopentype"), url("sass/webfonts/Kaufmann.woff") format("woff"), url("sass/webfonts/Kaufmann.svg") format("svg"), url("sass/webfonts/Kaufmann.ttf") format("ttf");
-  font-style: normal;
-  font-weight: 300;
-  font-stretch: normal; }
-@font-face {
-  font-family: 'ProximaLight';
-  src: url("sass/webfonts/proxima_nova_light-webfont.eot");
-  src: url("sass/webfonts/proxima_nova_light-webfont.eot?#iefix") format("embedded-opentype"), url("sass/webfonts/proxima_nova_light-webfont.woff") format("woff"), url("sass/webfonts/proxima_nova_light-webfont.ttf") format("truetype"), url("sass/webfonts/proxima_nova_light-webfont.svg#proxima_novalight") format("svg");
-  font-weight: normal;
-  font-style: normal; }
-@font-face {
-  font-family: 'ProximaRegular';
-  src: url("sass/webfonts/proxima_nova_reg-webfont.eot");
-  src: url("sass/webfonts/proxima_nova_reg-webfont.eot?#iefix") format("embedded-opentype"), url("sass/webfonts/proxima_nova_reg-webfont.woff") format("woff"), url("sass/webfonts/proxima_nova_reg-webfont.ttf") format("truetype"), url("sass/webfonts/proxima_nova_reg-webfont.svg#proxima_nova_rgregular") format("svg");
-  font-weight: normal;
-  font-style: normal; }
-@font-face {
-  font-family: 'ProximaBold';
-  src: url("sass/webfonts/ProximaNova-Bold-webfont.eot");
-  src: url("sass/webfonts/ProximaNova-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("sass/webfonts/ProximaNova-Bold-webfont.woff") format("woff"), url("sass/webfonts/ProximaNova-Bold-webfont.ttf") format("truetype"), url("sass/webfonts/ProximaNova-Bold-webfont.svg#proxima_nova_rgregular") format("svg");
-  font-weight: normal;
-  font-style: normal; }
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
+.registrationheader h2 {
+    padding-bottom:10px;
+}
+.form-horizontal {
+    height: 700px;
+}
+
+
+
 html, button, body, div, span, applet, object, iframe,
 h1, h2, .wysiwyg h1, .wysiwyg h2, .wysiwyg h3, .wysiwyg h4, .wysiwyg h5, .wysiwyg #payment .method-label, #payment .wysiwyg .method-label, h3, h4, h5, #payment .method-label, h6, p, .woocommerce-account .customer_details dt, .woocommerce-account .customer_details dd, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -3692,17 +3650,10 @@ height: 55px;
 /* register page */
 .footer-bottom2 { 
 
-clear: both;
-    position: relative;
-    z-index: 10;
-    height: 3em;
-    margin-top: -3em;
-background: #000000;
-bottom:0;
-width: 100%;
-height:100%;
-padding: 20px; 
-height: 30px;
+position: relative;
+  margin-top: -180px; /* negative value of footer height */
+  height: 180px;
+  clear:both;
 }
 
 .footer-bottom1 .logo-container, .footer-bottom2 .logo-container {	
