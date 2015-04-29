@@ -1,0 +1,52 @@
+﻿<!-- Modify popup window #1 -->
+@using DataLayer
+@using Microsoft.AspNet.Identity
+@model LoginViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <!-- popup form #1 -->
+    <a href="#x" class="overlay" id="login_form"></a>
+    <div class="popup">
+        <h2>Welcome Guest!</h2>
+        <p>Please enter your login and password here</p>
+
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <p class="pw-lost righted">
+                @Html.ActionLink("Forgot your password?", "ForgotPassword", "Account")
+            </p>
+            <input type="submit" value="Log in" class="btn btn-default" style="background-color: #F12C2C;" />
+            <a class="close" href="#close"></a>
+            <p class="register all-caps bolded centered top-spaced mini-spaced">
+                @Html.ActionLink("Don't have an account? Register!", "Register", "Account")
+            </p>
+
+        }
+    </div>
+
+</body>
+</html>

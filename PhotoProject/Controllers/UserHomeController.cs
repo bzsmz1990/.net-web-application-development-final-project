@@ -19,10 +19,10 @@ namespace PhotoProject.Controllers
         private static UserInfoHelper userHelp = new UserInfoHelper(db);
 
         // GET: UserHome
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
 
         public ActionResult Error(string errorMessage)
         {
@@ -39,19 +39,19 @@ namespace PhotoProject.Controllers
 
             if(id==null)    //if the parameter id is null
             {
-                return RedirectToAction("Error", "Upload", new { errorMessage = "Didn't give user id parameter!" });
+                return RedirectToAction("Error", "UserHome", new { errorMessage = "Didn't give user id parameter!" });
             }
             else
             {
-                ViewBag.OwnedPictures = picHelp.GetOwnedPictures(id);
-                ViewBag.LikedPictures = picHelp.GetLikedPictures(id);
-                ViewBag.Following = userHelp.GetFollowing(id);
-                //UserHomeViewModel userhome = new UserHomeViewModel();
-                //userhome.userId = id;
-                //userhome.OwnedPictures = picHelp.GetOwnedPictures(id);
-                //userhome.LikedPictures = picHelp.GetLikedPictures(id);
-                //userhome.Following = userHelp.GetFollowing(id);
-                return View();
+                //ViewBag.OwnedPictures = picHelp.GetOwnedPictures(id);
+                //ViewBag.LikedPictures = picHelp.GetLikedPictures(id);
+                //ViewBag.Following = userHelp.GetFollowing(id);
+                //return View();
+                GalleryViewModel userhome = new GalleryViewModel();
+                userhome.OwnedPictures = picHelp.GetOwnedPictures(id);
+                userhome.LikedPictures = picHelp.GetLikedPictures(id);
+                userhome.Following = userHelp.GetFollowing(id);
+                return View(userhome);
             }
             
         }
@@ -66,9 +66,7 @@ namespace PhotoProject.Controllers
             UserInfo userInfo = userHelp.FollowUser(User.Identity.GetUserId(), id);
 
             return View(userInfo);
-
-
         }
-
+       
     }
 }

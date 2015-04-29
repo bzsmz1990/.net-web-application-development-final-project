@@ -101,7 +101,6 @@ namespace Tests
             info.SaleTransactions = new List<Transaction>()
             {
                 new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
-                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
             };
 
             helper.SetLevel(info);
@@ -111,8 +110,6 @@ namespace Tests
             {
                 new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
                 new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
-                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
-                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
             };
 
             helper.SetLevel(info);
@@ -123,11 +120,6 @@ namespace Tests
                 new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
                 new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
                 new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
-                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
-                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
-                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
-                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
-                new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), new Transaction(), 
             };
 
             helper.SetLevel(info);

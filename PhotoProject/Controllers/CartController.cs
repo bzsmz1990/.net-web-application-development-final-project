@@ -14,7 +14,8 @@ namespace PhotoProject.Controllers
     [Authorize]
     public class CartController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private static ApplicationDbContext db = new ApplicationDbContext();
+        private UserInfoHelper userHelp = new UserInfoHelper(db);
 
         // GET: Cart
         public ActionResult Index()
@@ -87,6 +88,8 @@ namespace PhotoProject.Controllers
                 user.AccountBalance -= total;
                 trans.Seller.AccountBalance += total;
                 db.Transactions.Add(trans);
+                db.SaveChanges();
+                userHelp.SetLevel(trans.Seller);
             }
 
             return View();
