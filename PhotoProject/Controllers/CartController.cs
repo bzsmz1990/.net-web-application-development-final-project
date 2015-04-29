@@ -19,14 +19,15 @@ namespace PhotoProject.Controllers
         // GET: Cart
         public ActionResult Index()
         {
+            var carts = db.Carts.Include(c => c.User);
+            if (carts == null)
+            {
+                return View(new List<Picture>());
+            }
             UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
             user.Cart = (user.Cart ?? new Cart());
             Cart cart = user.Cart;
-            
-            if (cart == null)
-            {
-                
-            }
+
             bool isMoreExpensive = false;
             if (cart.AlbumsInCart != null)
             {
@@ -47,7 +48,7 @@ namespace PhotoProject.Controllers
             {
                 ViewBag.AlbumFlag = false;
             }
-            return View(cart);
+            return View(carts.ToList());
         }
 
         public ActionResult CheckOut()
@@ -93,6 +94,31 @@ namespace PhotoProject.Controllers
 
         }
 
+        public ActionResult BuyPicture(int picId)
+        {
+            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
+            user.Cart = (user.Cart ?? new Cart());
+            Cart cart = user.Cart;
+            CartHelper helper = new CartHelper(db);
+            if (helper.buyPicture(picId, cart.UserId) == false)
+            {
+                //TODO: REDIRECT TO ERROR
+            }
+            return RedirectToAction("Index", "Cart");
+        }
+
+        public ActionResult BuyAlbum(int albumId)
+        {
+            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
+            user.Cart = (user.Cart ?? new Cart());
+            Cart cart = user.Cart;
+            CartHelper helper = new CartHelper(db);
+            if (!helper.buyAlbum(albumId, cart.UserId))
+            {
+                //TODO: REDIRECT TO ERROR
+            }
+            return RedirectToAction("Index", "Cart");
+        }
 
         // GET: Cart/Details/5
         public ActionResult Details(string id)
