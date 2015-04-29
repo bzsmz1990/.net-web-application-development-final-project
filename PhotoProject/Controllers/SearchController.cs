@@ -23,7 +23,7 @@ namespace PhotoProject.Controllers
 
         // GET: Search
         /* This method will be used to get all pictures/abums, or get them by a certain order.
-        /* The allowed orders are: most_recent and most_purchased. This method also allows for 
+        /* The allowed orders are: most_recent (default behavior if no order is provided and most_purchased. This method also allows for 
         /* pagination. Please see: http://www.asp.net/mvc/overview/getting-started/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application
         /* for instructions of how to do a paged view. The results are stored on SearchResultsViewModel
          * 
@@ -32,26 +32,21 @@ namespace PhotoProject.Controllers
          * */
         public ActionResult Index(string sortOrder, int? picturePage, int? albumPage)
         {
-            if (sortOrder == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
 
             ICollection<Picture> pictures = null;
             ICollection<Album> albums = null;
+
             switch (sortOrder)
             {
-                case "most_recent":
-                    pictures = PictureHelper.picHelp.GetPicturesOrderedByMostRecent();
-                    albums = AlbumHelper.albumHelp.GetAlbumsOrderedByMostRecent();
-                    break;
                 case "most_purchased":
                     pictures = pictureHelper.GetPicturesOrderedByMostPurchased();
                     albums = AlbumHelper.albumHelp.GetAlbumsOrderedByMostPurchased();
                     break;
-                default: //All Pictures and Albums
-                    pictures = pictureHelper.GetAllPictures();
-                    albums = AlbumHelper.albumHelp.GetAllAlbums();
+                case "most_recent":
+                case null:
+                default:
+                    pictures = PictureHelper.picHelp.GetPicturesOrderedByMostRecent();
+                    albums = AlbumHelper.albumHelp.GetAlbumsOrderedByMostRecent();
                     break;
             }
 

@@ -10,6 +10,7 @@ namespace Business_Logic
     public class CartHelper
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        
 
         public CartHelper(ApplicationDbContext context)
         {
@@ -145,6 +146,9 @@ namespace Business_Logic
                     }
                 }
             }
+
+            
+
             return transactions;
         }
 
