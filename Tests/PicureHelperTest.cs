@@ -48,8 +48,8 @@ namespace Tests
                 new Transaction()
             };
 
-            Picture picture1 = new Picture { Id = 1, Title = "Picture1", UploadTime = new DateTime(2015, 1, 18), Tags = new List<Tag> { tag1 }, Owner = user1 };
-            Picture picture2 = new Picture { Id = 2, Title = "Picture2", UploadTime = new DateTime(2015, 2, 18), SaleTransactions = secondTransactions, Tags = new List<Tag> { tag1, tag2 }, Owner = user1 };
+            Picture picture1 = new Picture { Id = 1, Title = "Picture1", UploadTime = new DateTime(2015, 1, 18), Tags = new List<Tag>{ tag1 } };
+            Picture picture2 = new Picture { Id = 2, Title = "Picture2", UploadTime = new DateTime(2015, 2, 18), SaleTransactions = secondTransactions, Tags = new List<Tag> { tag1, tag2 } };
             Picture picture3 = new Picture { Id = 3, Title = "Picture3", UploadTime = new DateTime(2015, 3, 18), SaleTransactions = thirdTransactions };
             Picture picture4 = new Picture { Id = 4, Title = "Picture4", UploadTime = new DateTime(2015, 4, 18), Hidden=false};
             Picture picture5 = new Picture { Id = 5, Title = "Picture5", UploadTime = new DateTime(2015, 5, 18), Hidden=false};
@@ -191,7 +191,6 @@ namespace Tests
 
             Assert.AreEqual(0, pictureData.ElementAt(0).NumberOfLikes);
             Assert.IsNull(userData.ElementAt(0).LikedPictures);
-            Assert.AreEqual(0, pictureData.ElementAt(0).Owner.AccountBalance);
 
             Picture likedPicture = helper.LikePicture(pictureId, userId);
 
@@ -199,28 +198,18 @@ namespace Tests
             Assert.AreEqual(1, pictureData.ElementAt(0).NumberOfLikes);
             Assert.AreEqual(1, userData.ElementAt(0).LikedPictures.Count);
             Assert.AreEqual(1, pictureData.ElementAt(0).LikedBy.Count);
-            Assert.AreEqual(PictureHelper.NUM_POINTS_PER_LIKE, pictureData.ElementAt(0).Owner.AccountBalance);
 
             likedPicture = helper.LikePicture(pictureId, userData.ElementAt(1).UserId);
             Assert.IsNotNull(likedPicture);
             Assert.AreEqual(2, pictureData.ElementAt(0).NumberOfLikes);
             Assert.AreEqual(1, userData.ElementAt(1).LikedPictures.Count);
             Assert.AreEqual(2, pictureData.ElementAt(0).LikedBy.Count);
-            Assert.AreEqual(PictureHelper.NUM_POINTS_PER_LIKE * 2, pictureData.ElementAt(0).Owner.AccountBalance);
 
             likedPicture = helper.LikePicture(pictureId, userId);
             Assert.IsNotNull(likedPicture);
             Assert.AreEqual(1, pictureData.ElementAt(0).NumberOfLikes);
             Assert.AreEqual(0, userData.ElementAt(0).LikedPictures.Count);
             Assert.AreEqual(2, pictureData.ElementAt(0).LikedBy.Count);
-            Assert.AreEqual(PictureHelper.NUM_POINTS_PER_LIKE * 2, pictureData.ElementAt(0).Owner.AccountBalance);
-
-            likedPicture = helper.LikePicture(pictureId, userId);
-            Assert.IsNotNull(likedPicture);
-            Assert.AreEqual(2, pictureData.ElementAt(0).NumberOfLikes);
-            Assert.AreEqual(1, userData.ElementAt(0).LikedPictures.Count);
-            Assert.AreEqual(2, pictureData.ElementAt(0).LikedBy.Count);
-            Assert.AreEqual(PictureHelper.NUM_POINTS_PER_LIKE * 2, pictureData.ElementAt(0).Owner.AccountBalance);
 
         }
 
@@ -231,11 +220,10 @@ namespace Tests
             int pictureId = pictureData.ElementAt(0).Id;
 
             Assert.IsFalse(pictureData.ElementAt(0).HasBeenReported);
-            Assert.IsFalse(pictureData.ElementAt(0).Hidden);
             Picture changedPicture = helper.ReportPicture(pictureData.ElementAt(0).Id);
             Assert.IsNotNull(changedPicture);
             Assert.IsTrue(pictureData.ElementAt(0).HasBeenReported);
-            Assert.IsTrue(pictureData.ElementAt(0).Hidden);
+
         }
 
         [TestMethod]

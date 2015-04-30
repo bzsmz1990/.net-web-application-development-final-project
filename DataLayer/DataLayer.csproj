@@ -161,10 +161,6 @@
     <Compile Include="Migrations\201504290158178_firstname_and_lastname.Designer.cs">
       <DependentUpon>201504290158178_firstname_and_lastname.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201504300211042_removedNamesFromAppUser.cs" />
-    <Compile Include="Migrations\201504300211042_removedNamesFromAppUser.Designer.cs">
-      <DependentUpon>201504300211042_removedNamesFromAppUser.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PhotoContext.cs" />
     <Compile Include="Picture.cs" />
@@ -198,9 +194,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504290158178_firstname_and_lastname.resx">
       <DependentUpon>201504290158178_firstname_and_lastname.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504300211042_removedNamesFromAppUser.resx">
-      <DependentUpon>201504300211042_removedNamesFromAppUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -32,19 +32,14 @@ namespace PhotoProject.Controllers
         [HttpGet]
         public ActionResult Upload()
         {
-            var userID = User.Identity.GetUserId();
-            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
-            Picture pic = new Picture();
-            pic.Owner = currentUser;
-            pic.OwnerId = userID;
-            return View(pic);
+            return View();
         }
 
         [HttpPost]
         public ActionResult Upload(FormCollection formcollection)
         {
             var userID = User.Identity.GetUserId();
-            UserInfo currentUser = (UserInfo)db.UserInfos.Where(emp => emp.UserId == userID);
+            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
 
             //based on user's level, define whether the user still have room to upload
             bool havePositionToUpload = picHelp.VerifyUserLevel(currentUser);

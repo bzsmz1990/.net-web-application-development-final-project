@@ -88,7 +88,7 @@ namespace Business_Logic
                 }
             }
 
-            if (picSize < (2 * 1024 * 1024))
+            if (picSize < (2 * 1024 * 1024) || picSize>(20*1024*1024))
             {
                 validation = "File size shoud be bigger than 2MB and less than 20MB";
             }

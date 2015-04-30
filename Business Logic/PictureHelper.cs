@@ -16,8 +16,6 @@ namespace Business_Logic
         private static ApplicationDbContext db = new ApplicationDbContext();
         private static PictureProcess picPro = new PictureProcess();
         public static PictureHelper picHelp = new PictureHelper(db);
-        public static int NUM_POINTS_PER_LIKE = 10;
-
 
         public PictureHelper(ApplicationDbContext context)
         {
@@ -111,22 +109,17 @@ namespace Business_Logic
                 db.SaveChanges();
                 return picture;
             }
-            else
+
+            if (picture.LikedBy == null || !picture.LikedBy.Contains(userInfo))
             {
                 picture.NumberOfLikes++;
                 picture.LikedBy = (picture.LikedBy ?? new List<UserInfo>());
-
-                if (!picture.LikedBy.Contains(userInfo))
-                {
-                    picture.Owner.AccountBalance += NUM_POINTS_PER_LIKE;
-                    picture.LikedBy.Add(userInfo);
-                }
-                
+                picture.LikedBy.Add(userInfo);
                 userInfo.LikedPictures = (userInfo.LikedPictures ?? new List<Picture>());
                 userInfo.LikedPictures.Add(picture);
                 db.SaveChanges();
+                //TODO: ALSO ADD CREDIT TO OWNER
             }
-
 
             return picture;
         }
@@ -141,7 +134,6 @@ namespace Business_Logic
             }
 
             picture.HasBeenReported = true;
-            picture.Hidden = true;
             db.SaveChanges();
 
             return picture;

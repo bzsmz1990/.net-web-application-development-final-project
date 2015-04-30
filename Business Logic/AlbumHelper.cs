@@ -42,7 +42,7 @@ namespace Business_Logic
             return db.Albums.Where(p => p.Name.Contains(searchString)).ToList();
         }
 
-        public static Album createAlbum(List<Picture> pics, decimal cost, DateTime date) {
+        public Album createAlbum(List<Picture> pics, decimal cost, DateTime date) {
             if (pics.Count == 0)
             {
                 return null;
