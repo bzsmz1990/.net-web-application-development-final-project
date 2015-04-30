@@ -127,18 +127,6 @@ namespace Business_Logic
                 db.SaveChanges();
             }
 
-            
-
-            if (picture.LikedBy == null || !picture.LikedBy.Contains(userInfo))
-            {
-                picture.NumberOfLikes++;
-                picture.LikedBy = (picture.LikedBy ?? new List<UserInfo>());
-                picture.LikedBy.Add(userInfo);
-                userInfo.LikedPictures = (userInfo.LikedPictures ?? new List<Picture>());
-                userInfo.LikedPictures.Add(picture);
-                db.SaveChanges();
-                //TODO: ALSO ADD CREDIT TO OWNER
-            }
 
             return picture;
         }
@@ -153,6 +141,7 @@ namespace Business_Logic
             }
 
             picture.HasBeenReported = true;
+            picture.Hidden = true;
             db.SaveChanges();
 
             return picture;

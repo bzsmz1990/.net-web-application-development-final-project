@@ -231,10 +231,11 @@ namespace Tests
             int pictureId = pictureData.ElementAt(0).Id;
 
             Assert.IsFalse(pictureData.ElementAt(0).HasBeenReported);
+            Assert.IsFalse(pictureData.ElementAt(0).Hidden);
             Picture changedPicture = helper.ReportPicture(pictureData.ElementAt(0).Id);
             Assert.IsNotNull(changedPicture);
             Assert.IsTrue(pictureData.ElementAt(0).HasBeenReported);
-
+            Assert.IsTrue(pictureData.ElementAt(0).Hidden);
         }
 
         [TestMethod]
