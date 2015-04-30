@@ -25,9 +25,8 @@ namespace PhotoProject.Controllers
             {
                 return View(new List<Picture>());
             }
-            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
-            user.Cart = (user.Cart ?? new Cart());
-            Cart cart = user.Cart;
+
+            Cart cart = carts.FirstOrDefault();
 
             bool isMoreExpensive = false;
             if (cart.AlbumsInCart != null)
@@ -103,6 +102,18 @@ namespace PhotoProject.Controllers
             user.Cart = (user.Cart ?? new Cart());
             Cart cart = user.Cart;
             CartHelper helper = new CartHelper(db);
+            if (user.OwnedPictures != null)
+            {
+                foreach (Picture pic in user.OwnedPictures)
+                {
+                    if (pic.Id == picId)
+                    {
+                        ViewBag.Error = "Already owned picture";
+                        //PERHAPS REDIRECT TO SOMEPLACE ELSE
+                        return RedirectToAction("Index", "UserHome");
+                    }
+                }
+            }
             if (helper.buyPicture(picId, cart.UserId) == false)
             {
                 //TODO: REDIRECT TO ERROR
@@ -118,7 +129,7 @@ namespace PhotoProject.Controllers
             CartHelper helper = new CartHelper(db);
             if (!helper.buyAlbum(albumId, cart.UserId))
             {
-                //TODO: REDIRECT TO ERROR
+                return HttpNotFound();
             }
             return RedirectToAction("Index", "Cart");
         }

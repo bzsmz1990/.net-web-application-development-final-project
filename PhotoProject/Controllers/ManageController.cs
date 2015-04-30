@@ -72,8 +72,8 @@ namespace PhotoProject.Controllers
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
-                FirstName = UserManager.FindById(userId).FirstName,
-                LastName = UserManager.FindById(userId).LastName
+                FirstName = UserManager.FindById(userId).Info.FirstName,
+                LastName = UserManager.FindById(userId).Info.LastName
             };
 
             Business_Logic.UserInfoHelper helper = new Business_Logic.UserInfoHelper(db);

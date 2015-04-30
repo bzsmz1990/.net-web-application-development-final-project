@@ -126,5 +126,16 @@ namespace PhotoProject.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult createAlbum(List<Picture> pics, decimal cost)
+        {
+            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
+            user.Cart = (user.Cart ?? new Cart());
+            Album album = AlbumHelper.createAlbum(pics, cost, DateTime.Now);
+            user.Albums = (user.Albums ?? new List<Album>());
+            user.Albums.Add(album);
+            db.SaveChanges();
+            return RedirectToAction("Index", "UserHome");
+        }
     }
 }
