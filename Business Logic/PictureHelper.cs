@@ -141,6 +141,7 @@ namespace Business_Logic
             }
 
             picture.HasBeenReported = true;
+            picture.Hidden = true;
             db.SaveChanges();
 
             return picture;
