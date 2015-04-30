@@ -696,7 +696,9 @@ label {
     display:inline-block;
 }
 
-
+.gallery {
+    height: 600px;
+}
 
 
 

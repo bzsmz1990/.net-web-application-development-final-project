@@ -1,81 +1,86 @@
 ﻿@model PhotoProject.ViewModels.GalleryViewModel
-
+@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Gallery";
 }
-
-<h2>Gallery</h2>
-
-<table>
-    <tr>
-        <h4>Pictures the user uploaded</h4>
-    </tr>
-    <tr>
-        @{
-            List<DataLayer.Picture> ownpicList = (List<DataLayer.Picture>)Model.OwnedPictures;
-            if (ownpicList == null)
-            {
-                <h4>The user doesn't upload any picture.</h4>
-            }
-            else
-            {
-                for (int i = 0; i < ownpicList.Count(); i++)
+<div class="gallery">
+    <div class="col-2">
+        <h2>Gallery</h2>
+        <table>
+            <tr>
+                <h4>Pictures the user uploaded</h4>
+                <h1>
+                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </h1>
+            </tr>
+            <tr>
+                @{
+                    List<DataLayer.Picture> ownpicList = (List<DataLayer.Picture>)Model.OwnedPictures;
+                    if (ownpicList == null)
+                    {
+                        <h4>The user doesn't upload any picture.</h4>
+                    }
+                    else
+                    {
+                        for (int i = 0; i < ownpicList.Count(); i++)
+                        {
+                            <a href='@Url.Action("Details", "PictureDetails", new { id = @ownpicList[i].Id })'>
+                                <img src="data:image/jpeg;base64, @Convert.ToBase64String(ownpicList[i].CompressImg, 0, ownpicList[i].CompressImg.Length)" />
+                            </a>
+                            <br />
+                            <br />
+                        }
+                    }
+                }
+            </tr>
+        </table>
+        <br />
+        <br />
+        <table>
+            <tr>
+                <h4>Pictures the user liked</h4>
+            </tr>
+            <tr>
+                @{
+                    List<DataLayer.Picture> likedpicList = (List<DataLayer.Picture>)Model.LikedPictures;
+                    if (likedpicList == null)
+                    {
+                        <h4>The user doesn't like any picture.</h4>
+                    }
+                    else
+                    {
+                        for (int i = 0; i < likedpicList.Count(); i++)
+                        {
+                            <a href='@Url.Action("Details", "PictureDetails", new { id = @likedpicList[i].Id })'>
+                                <img src="data:image/jpeg;base64, @Convert.ToBase64String(likedpicList[i].CompressImg, 0, likedpicList[i].CompressImg.Length)" />
+                            </a>
+                            <br />
+                            <br />
+                        }
+                    }
+                }
+            </tr>
+        </table>
+        <br />
+        <br />
+        <ul>
+            <h4>Users the user are following</h4>
+            @{
+                List<DataLayer.UserInfo> followinglist = (List<DataLayer.UserInfo>)Model.Following;
+                if (followinglist == null)
                 {
-                    <a href='@Url.Action("Details", "PictureDetails", new { id = @ownpicList[i].Id })'>
-                        <img src="data:image/jpeg;base64, @Convert.ToBase64String(ownpicList[i].CompressImg, 0, ownpicList[i].CompressImg.Length)" />
-                    </a>
-                    <br />
-                    <br />
+                    <h4>There is no following user</h4>
+                }
+                else
+                {
+                    foreach (DataLayer.UserInfo user in followinglist)
+                    {
+                        <li>
+                            @Html.ActionLink(user.FirstName + " " + user.LastName, "Gallery", "UserHome", new { id = user.UserId })
+                        </li>
+                    }
                 }
             }
-        }
-    </tr>
-</table>
-<br />
-<br />
-<table>
-    <tr>
-        <h4>Pictures the user liked</h4>
-    </tr>
-    <tr>
-        @{
-            List<DataLayer.Picture> likedpicList = (List<DataLayer.Picture>)Model.LikedPictures;
-            if (likedpicList == null)
-            {
-                <h4>The user doesn't like any picture.</h4>
-            }
-            else
-            {
-                for (int i = 0; i < likedpicList.Count(); i++)
-                {
-                    <a href='@Url.Action("Details", "PictureDetails", new { id = @likedpicList[i].Id })'>
-                        <img src="data:image/jpeg;base64, @Convert.ToBase64String(likedpicList[i].CompressImg, 0, likedpicList[i].CompressImg.Length)" />
-                    </a>
-                    <br />
-                    <br />
-                }
-            }
-        }
-    </tr>
-</table>
-<br />
-<br />
-<ul>
-    <h4>Users the user are following</h4>
-    @{
-        List<DataLayer.UserInfo> followinglist = (List<DataLayer.UserInfo>)Model.Following;
-        if (followinglist== null)
-        {
-            <h4>There is no following user</h4>
-        }
-        else
-        {
-            foreach (DataLayer.UserInfo user in followinglist)
-            {
-                <li>
-                    @Html.ActionLink(user.FirstName + " " + user.LastName, "Gallery", "UserHome", new { id = user.UserId })
-                </li>
-            }
-        }
-    }
-</ul>
+        </ul>
+    </div>
+</div>
