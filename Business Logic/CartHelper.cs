@@ -85,20 +85,19 @@ namespace Business_Logic
             return true;
         }
 
-        public Boolean buyAlbum(int albumId, string userId) {
-            if (userId == null)
+        public Boolean buyAlbum(int albumId, string cartId) {
+            if (cartId == null)
             {
                 return false;
             }
-            UserInfo user = db.UserInfos.SingleOrDefault(c => c.UserId == userId);
+            Cart cart = db.Carts.SingleOrDefault(c => c.UserId == cartId);
             Album album = db.Albums.SingleOrDefault(a => a.Id == albumId);
-            if (album == null || user == null)
+            if (album == null || cart == null)
             {
                 return false;
             }
-            user.Cart = (user.Cart ?? new Cart());
-            user.Cart.AlbumsInCart = (user.Cart.AlbumsInCart ?? new List<Album>());
-            user.Cart.AlbumsInCart.Add(album);
+            cart.AlbumsInCart = (cart.AlbumsInCart ?? new List<Album>());
+            cart.AlbumsInCart.Add(album);
             db.SaveChanges();
             return true;
         }

@@ -132,9 +132,74 @@ namespace Tests
             mockContext.Setup(p => p.Pictures).Returns(pictureMockSet.Object);
 
             var helper = new CartHelper(mockContext.Object);
-            helper.buyPicture(2, "test_user");
+            Assert.IsTrue(helper.buyPicture(2, "test_user"));
             ICollection<Cart> carts = mockContext.Object.Carts.ToList();
             Assert.AreEqual(3, carts.ElementAt(0).PicturesInCart.Count);
+            mockContext.Verify(m => m.SaveChanges(), Times.Once());
+        }
+
+        [TestMethod]
+        public void buyAlbumTest()
+        {
+            Cart cart = new Cart { UserId = "test_user" };
+            Picture firstPicture = new Picture { Id = 1, Title = "First Picture" };
+            Picture secondPicture = new Picture { Id = 2, Title = "Second Picture" };
+            Picture pictureToBuy = new Picture { Id = 3, Title = "Picture to buy" };
+            Album album = new Album { Id = 5, Pictures = new List<Picture>() { firstPicture, secondPicture, pictureToBuy }, UploadTime = DateTime.Now };
+
+            cart.PicturesInCart = new List<Picture> { firstPicture, secondPicture };
+            cart.AlbumsInCart = new List<Album>();
+
+            Cart secondCart = new Cart { UserId = "test_user2" };
+            secondCart.PicturesInCart = new List<Picture> { firstPicture };
+
+            var cartData = new List<Cart> 
+            { 
+                cart,
+                secondCart,
+            }.AsQueryable();
+
+            var albumData = new List<Album>
+            {
+                album
+            }.AsQueryable();
+
+            var pictureData = new List<Picture> 
+            { 
+                firstPicture,
+                secondPicture,
+                pictureToBuy
+            }.AsQueryable();
+
+            var cartMockSet = new Mock<DbSet<Cart>>();
+            cartMockSet.As<IQueryable<Cart>>().Setup(m => m.Provider).Returns(cartData.Provider);
+            cartMockSet.As<IQueryable<Cart>>().Setup(m => m.Expression).Returns(cartData.Expression);
+            cartMockSet.As<IQueryable<Cart>>().Setup(m => m.ElementType).Returns(cartData.ElementType);
+            cartMockSet.As<IQueryable<Cart>>().Setup(m => m.GetEnumerator()).Returns(cartData.GetEnumerator());
+
+            var albumMockSet = new Mock<DbSet<Album>>();
+            albumMockSet.As<IQueryable<Album>>().Setup(m => m.Provider).Returns(albumData.Provider);
+            albumMockSet.As<IQueryable<Album>>().Setup(m => m.Expression).Returns(albumData.Expression);
+            albumMockSet.As<IQueryable<Album>>().Setup(m => m.ElementType).Returns(albumData.ElementType);
+            albumMockSet.As<IQueryable<Album>>().Setup(m => m.GetEnumerator()).Returns(albumData.GetEnumerator());
+
+            var pictureMockSet = new Mock<DbSet<Picture>>();
+            pictureMockSet.As<IQueryable<Picture>>().Setup(m => m.Provider).Returns(pictureData.Provider);
+            pictureMockSet.As<IQueryable<Picture>>().Setup(m => m.Expression).Returns(pictureData.Expression);
+            pictureMockSet.As<IQueryable<Picture>>().Setup(m => m.ElementType).Returns(pictureData.ElementType);
+            pictureMockSet.As<IQueryable<Picture>>().Setup(m => m.GetEnumerator()).Returns(pictureData.GetEnumerator());
+
+            var mockContext = new Mock<ApplicationDbContext>();
+            mockContext.Setup(m => m.Carts).Returns(cartMockSet.Object);
+            mockContext.Setup(p => p.Pictures).Returns(pictureMockSet.Object);
+            mockContext.Setup(a => a.Albums).Returns(albumMockSet.Object);
+
+            var helper = new CartHelper(mockContext.Object);
+            Assert.IsTrue(helper.buyAlbum(5, "test_user"));
+            //Assert.IsTrue(helper.buyPicture(2, "test_user"));
+            ICollection<Cart> carts = mockContext.Object.Carts.ToList();
+            Assert.AreEqual(1, carts.ElementAt(0).AlbumsInCart.Count);
+            //Assert.AreEqual(3, carts.ElementAt(0).PicturesInCart.Count);
             mockContext.Verify(m => m.SaveChanges(), Times.Once());
         }
 
