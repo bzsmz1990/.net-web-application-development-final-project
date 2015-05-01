@@ -1,0 +1,31 @@
+﻿@model DataLayer.IndexViewModel
+@{
+    ViewBag.Title = "UserPage";
+}
+<h2>@ViewBag.Title.</h2>
+<div class="uploadpage">
+    <h4>Change your account settings</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        
+        <dt> First Name</dt>
+        <dd>
+            @Model.FirstName
+        </dd>
+        <dt> Last Name</dt>
+        <dd>
+            @Model.LastName
+        </dd>
+        
+        <dt>User Name:</dt>
+        <dd>
+            @{string name = ViewBag.user.FirstName + " " + ViewBag.user.MiddleInitial + "" + ViewBag.user.LastName;}
+            @name
+        </dd>
+        <dt>Account Balance:</dt>
+        <dd>
+            @ViewBag.user.AccountBalance
+        </dd>
+    </dl>
+    
+</div>
