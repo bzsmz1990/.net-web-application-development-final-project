@@ -161,14 +161,23 @@ namespace Business_Logic
             pic.OwnerId = userID;
             pic.Title = title;
             pic.Cost = cost;
-            pic.Location = location;
-            pic.Description = description;
+
+            if (location == "")
+                pic.Location = null;
+            else
+                pic.Location = location;
+
+            if (description == "")
+                pic.Description = null;
+            else
+                pic.Description = description;
+
             pic.UploadTime = time;
             pic.PictureType = type;
             pic.OriginalImg = data;
             pic.CompressImg = picPro.ZoomAuto(data);
             pic.Tags = new List<Tag>();
-            if (tags == null)
+            if (tags == "")
                 pic.Tags = null;
             else
             {
