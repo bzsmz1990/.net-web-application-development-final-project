@@ -92,7 +92,7 @@ namespace Tests
             Picture pic1 = new Picture { Title = "pic2" };
             Picture pic2 = new Picture { Title = "pic3" };
             List<Picture> pics = new List<Picture>() { pic, pic1, pic2 };
-            Album album = helper.createAlbum(pics, 10, DateTime.Now);
+            Album album = helper.createAlbumWithPicturesAndCost(pics, 10, DateTime.Now);
 
             Assert.AreEqual(album.Pictures.Count, 3);
 
