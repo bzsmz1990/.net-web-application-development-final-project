@@ -25,7 +25,7 @@ html {
 
 
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
-  display: block; }
+  display: inline; }
 
 body {
   background: white;
@@ -647,6 +647,29 @@ background: #000000; }
     margin-bottom: 100px;
 }
 
+.uploadpage2 {
+    height: 500px;
+    position:center;
+    text-align:center;
+    margin-top: 120px;
+    margin-bottom: 100px;
+}
+
+.uploadpage2 h2{
+    margin-bottom: 60px;
+}
+
+.uploadpage2 h3{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.uploadpage2 .col-2 h2 {
+    text-align:center;
+    position:center;
+}
+
+
 label {
     text-align: left;
 }
@@ -692,6 +715,12 @@ label {
 }
 .socialLoginList p button{
     width: 130px; 
+    margin-right: 17%;
+    display:inline-block;
+}
+
+.socialLoginList input{
+    width: 60px; 
     margin-right: 17%;
     display:inline-block;
 }
@@ -827,23 +856,95 @@ label {
 
 .uploadedimages{
     margin-top: 30px;
+    height: 150px;
 
 }
 
 .uploadedimages h4{
     font-size: 20px;
-    margin-bottom: 20px;
+    margin-top: 8px;
 }
-.uploadimages1 h4{
+
+.uploadedimages h3{
+    font-size: 15px;
+    margin-top: 28px;
+}
+.uploadedimages1 h4{
     font-size: 14px;
     margin-top: 8px;
 }
-.uploadimages1 img{
+.uploadedimages1{
+    
+    
     width:100px;
-    height:100px;
+    height:30%;
+    float: left; 
+    margin: 0px 0px 15px 15px;
+}
+.uploadedimages1 div {
+    display: inline;
+}
+
+.uploadedimages1 .pg img {
+    align-items:baseline;
+    display:inline;
+    float: left;
+    margin-right: 5px;
+    clear:left;
+	}
+
+.col-3  h4 {
+    text-align:center;
+    margin-bottom: 20px;
+}
+.dl-horizontal h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.col-2 .text-info {
+    margin-bottom: 30px;
+}
+
+.uploadpage2 .col-2 .form-group input {
+    margin-bottom: 20px;
+}
+
+.col-3 {
+    width:66%;
+    margin-left:17%;
+}
+.col-3  h4 {
+    text-align:center;
+    margin-bottom: 20px;
 }
 
 
+.managepage {
+    position:center;
+    text-align:center;
+    margin-top: 120px;
+    margin-bottom: 100px;
+    width: 70%;
+    margin-left: 15%;
+    text-align:left;
+}
+
+.dl-horizontal p {
+    margin-bottom: 10px;
+}
+
+.dl-horizontal h3 {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.mydiv {
+    display:inline;
+    clear:none;
+    font-size: 20px;
+    color: #7E61FF;
+}
 
 
 

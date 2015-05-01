@@ -6,106 +6,116 @@
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
-<div class="gallerypage">
+<div class="managepage">
     <div class="col-3">
 
         <h4>Change your account settings</h4>
-        <dl class="dl-horizontal">
-            <dt>Password:</dt>
-            <dd>
-                [
-                @if (Model.HasPassword)
-                {
-                    @Html.ActionLink("Change your password", "ChangePassword")
-                }
-                else
-                {
-                    @Html.ActionLink("Create", "SetPassword")
-                }
-                ]
-            </dd>
-            <dt>External Logins:</dt>
-            <dd>
-                @Model.Logins.Count [
-                @Html.ActionLink("Manage", "ManageLogins") ]
-            </dd>
-            <dt> First Name</dt>
-            <dd>
-                @Model.FirstName
-            </dd>
-            <dt> Last Name</dt>
-            <dd>
-                @Model.LastName
-            </dd>
-            @*
-                Phone Numbers can used as a second factor of verification in a two-factor authentication system.
-
-                 See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                    for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-
-                 Uncomment the following block after you have set up two-factor authentication
-            *@
-            @*
-                <dt>Phone Number:</dt>
-                <dd>
-                    @(Model.PhoneNumber ?? "None") [
-                    @if (Model.PhoneNumber != null)
+        <div class="dl-horizontal">
+            <h1>Password: &thinsp;&thinsp;&thinsp;
+                <div class="mydiv">
+                    [
+                    @if (Model.HasPassword)
                     {
-                        @Html.ActionLink("Change", "AddPhoneNumber")
-                        @: &nbsp;|&nbsp;
-                        @Html.ActionLink("Remove", "RemovePhoneNumber")
+                        @Html.ActionLink("Change your password", "ChangePassword")
                     }
                     else
                     {
-                        @Html.ActionLink("Add", "AddPhoneNumber")
+                        @Html.ActionLink("Create", "SetPassword")
                     }
                     ]
-                </dd>
+                </div>
+                </h1>
+            <h1>
+                External Logins: &thinsp;&thinsp;&thinsp;
+                <div class="mydiv">
+                    @Model.Logins.Count [
+                    @Html.ActionLink("Manage", "ManageLogins") ]
+                    </div>
+
+</h1>
+            <h1>
+                First Name:&thinsp;&thinsp;&thinsp;
+           
+                    @Model.FirstName
+     
+            </h1>
+            <h1>
+                Last Name:&thinsp;&thinsp;&thinsp;
+
+                    @Model.LastName
+       
+            </h1>
+            @*
+            Phone Numbers can used as a second factor of verification in a two-factor authentication system.
+
+             See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                for details on setting up this ASP.NET application to support two-factor authentication using SMS.
+
+             Uncomment the following block after you have set up two-factor authentication
             *@
-            <dt>Two-Factor Authentication:</dt>
+            @*
+            <dt>Phone Number:</dt>
+            <dd>
+                @(Model.PhoneNumber ?? "None") [
+                @if (Model.PhoneNumber != null)
+                {
+                    @Html.ActionLink("Change", "AddPhoneNumber")
+                    @: &nbsp;|&nbsp;
+                    @Html.ActionLink("Remove", "RemovePhoneNumber")
+                }
+                else
+                {
+                    @Html.ActionLink("Add", "AddPhoneNumber")
+                }
+                ]
+            </dd>
+            *@
+            <h1>Two-Factor Authentication:</h1>
             <dd>
                 <p>
                     There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
                     for details on setting up this ASP.NET application to support two-factor authentication.
                 </p>
                 @*@if (Model.TwoFactor)
+                {
+                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
-                        using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <text>Enabled
-                            <input type="submit" value="Disable" class="btn btn-link" />
-                            </text>
-                        }
+                        @Html.AntiForgeryToken()
+                        <text>Enabled
+                        <input type="submit" value="Disable" class="btn btn-link" />
+                        </text>
                     }
-                    else
+                }
+                else
+                {
+                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
-                        using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <text>Disabled
-                            <input type="submit" value="Enable" class="btn btn-link" />
-                            </text>
-                        }
-                    }*@
+                        @Html.AntiForgeryToken()
+                        <text>Disabled
+                        <input type="submit" value="Enable" class="btn btn-link" />
+                        </text>
+                    }
+                }*@
             </dd>
-            <dt>User Name:</dt>
-            <dd>
+            <h1>
+                User Name:
+
                 @{string name = ViewBag.user.FirstName + " " + ViewBag.user.MiddleInitial + "" + ViewBag.user.LastName;}
                 @name
-            </dd>
-            <dt>Account Balance:</dt>
-            <dd>
+            </h1>
+            <h1>
+                Account Balance:
+
                 @ViewBag.user.AccountBalance
-            </dd>
-        </dl>
-        <ul>
+            </h1>
+
+
             @{
-                <h4>Purchase Transaction</h4>
+                <h1>Purchase Transactions: </h1>
                 HashSet<DataLayer.Transaction> purchtrans = (HashSet<DataLayer.Transaction>)ViewBag.user.PurchaseTransactions;
                 if (purchtrans.Count == 0)
                 {
-                    <h4>There is no PurchaseTransaction</h4>
+                    <p>There is no PurchaseTransaction</p>
                 }
                 else
                 {
@@ -117,14 +127,13 @@
                     }
                 }
             }
-        </ul>
-        <ul>
+
             @{
-                <h4>Sale Transaction</h4>
+                <h1>Sale Transactions: </h1>
                 HashSet<DataLayer.Transaction> saletrans = (HashSet<DataLayer.Transaction>)ViewBag.user.SaleTransactions;
                 if (saletrans.Count == 0)
                 {
-                    <h4>There is no SaleTransactions</h4>
+                    <p>There are no SaleTransactions</p>
                 }
                 else
                 {
@@ -136,6 +145,6 @@
                     }
                 }
             }
-        </ul>
+        </div>
     </div>
 </div>
