@@ -18,7 +18,8 @@ using System.Diagnostics;
 
 namespace PhotoProject
 {
-    public class EmailService : IIdentityMessageService
+    public class 
+        Service : IIdentityMessageService
     {
         public async Task SendAsync(IdentityMessage message)
         {

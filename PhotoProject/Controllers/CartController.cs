@@ -114,7 +114,7 @@ namespace PhotoProject.Controllers
             var transportWeb = new Web(credentials);
 
             // Send the email.
-            transportWeb.Deliver(message);
+            transportWeb.DeliverAsync(message);
 
             return View();
 

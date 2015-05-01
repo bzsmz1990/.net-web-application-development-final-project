@@ -32,7 +32,7 @@ namespace DataLayer
         public virtual ICollection<Album> AlbumsBeingSold { get; set; }
 
         public decimal TotalAmount { get; set; }
-        
+
         public override string ToString()
         {
             string s = "Seller: " + this.Seller.FullName;
@@ -44,6 +44,8 @@ namespace DataLayer
                     s += pic.Title + "\n";
                 }
             }
+            return s;
+        }
 
     }
 }
