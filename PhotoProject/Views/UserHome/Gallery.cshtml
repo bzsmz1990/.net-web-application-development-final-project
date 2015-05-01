@@ -3,17 +3,27 @@
 @{
     ViewBag.Title = "Gallery";
 }
-<div class="gallery">
+<div class="gallerypage">
     <div class="col-2">
-        <h2>Gallery</h2>
-        <table>
-            <tr>
-                <h4>Pictures the user uploaded</h4>
-                <h1>
-                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-                </h1>
-            </tr>
-            <tr>
+        <div class="profileinfo">
+            <div class="userinfo">
+                <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRVOdD-sjx4UA-Mym9oOQ8hQRrmCm8imPkYXWefj9a_dsnvXuzZ" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px">
+                <h1>@User.Identity.GetUserName()</h1>
+                <h2>@User.Identity.GetUserName()</h2>
+            </div>
+            <div class="userbuttons">
+                <p class="userpagebutton">
+                    @Html.ActionLink("Manage Account", "Index", "Manage", routeValues: null, htmlAttributes: new { @class = "button1" })
+                </p>
+                <p class="userpagebutton">
+                    @Html.ActionLink("Upload Image", "Upload", "Upload", routeValues: null, htmlAttributes: new { @class = "button1" })
+                </p>
+            </div>
+        </div>
+        <div class="uploadedimages">
+            <h4>Pictures the user uploaded</h4>
+
+            <div class="uploadedimages1">
                 @{
                     List<DataLayer.Picture> ownpicList = (List<DataLayer.Picture>)Model.OwnedPictures;
                     if (ownpicList == null)
@@ -25,15 +35,16 @@
                         for (int i = 0; i < ownpicList.Count(); i++)
                         {
                             <a href='@Url.Action("Details", "PictureDetails", new { id = @ownpicList[i].Id })'>
-                                <img src="data:image/jpeg;base64, @Convert.ToBase64String(ownpicList[i].CompressImg, 0, ownpicList[i].CompressImg.Length)" />
+                                <img src="data:image/jpeg;base64, @Convert.ToBase64String(ownpicList[i].CompressImg, 0, ownpicList[i].CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px" />
                             </a>
                             <br />
                             <br />
                         }
                     }
                 }
-            </tr>
-        </table>
+            </div>
+        </div>
+
         <br />
         <br />
         <table>
