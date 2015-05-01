@@ -6,137 +6,136 @@
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
-<div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Password:</dt>
-        <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Change your password", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Create", "SetPassword")
-            }
-            ]
-        </dd>
-        <dt>External Logins:</dt>
-        <dd>
-            @Model.Logins.Count [
-            @Html.ActionLink("Manage", "ManageLogins") ]
-        </dd>
-        <dt> First Name</dt>
-        <dd>
-            @Model.FirstName
-        </dd>
-        <dt> Last Name</dt>
-        <dd>
-            @Model.LastName
-        </dd>
+<div class="gallerypage">
+    <div class="col-3">
 
-        @*
-            Phone Numbers can used as a second factor of verification in a two-factor authentication system.
-
-             See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-
-             Uncomment the following block after you have set up two-factor authentication
-        *@
-        @*
-            <dt>Phone Number:</dt>
+        <h4>Change your account settings</h4>
+        <dl class="dl-horizontal">
+            <dt>Password:</dt>
             <dd>
-                @(Model.PhoneNumber ?? "None") [
-                @if (Model.PhoneNumber != null)
+                [
+                @if (Model.HasPassword)
                 {
-                    @Html.ActionLink("Change", "AddPhoneNumber")
-                    @: &nbsp;|&nbsp;
-                    @Html.ActionLink("Remove", "RemovePhoneNumber")
+                    @Html.ActionLink("Change your password", "ChangePassword")
                 }
                 else
                 {
-                    @Html.ActionLink("Add", "AddPhoneNumber")
+                    @Html.ActionLink("Create", "SetPassword")
                 }
                 ]
             </dd>
-        *@
-        <dt>Two-Factor Authentication:</dt>
-        <dd>
-            <p>
-                There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication.
-            </p>
-            @*@if (Model.TwoFactor)
-                {
-                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            <dt>External Logins:</dt>
+            <dd>
+                @Model.Logins.Count [
+                @Html.ActionLink("Manage", "ManageLogins") ]
+            </dd>
+            <dt> First Name</dt>
+            <dd>
+                @Model.FirstName
+            </dd>
+            <dt> Last Name</dt>
+            <dd>
+                @Model.LastName
+            </dd>
+            @*
+                Phone Numbers can used as a second factor of verification in a two-factor authentication system.
+
+                 See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                    for details on setting up this ASP.NET application to support two-factor authentication using SMS.
+
+                 Uncomment the following block after you have set up two-factor authentication
+            *@
+            @*
+                <dt>Phone Number:</dt>
+                <dd>
+                    @(Model.PhoneNumber ?? "None") [
+                    @if (Model.PhoneNumber != null)
                     {
-                        @Html.AntiForgeryToken()
-                        <text>Enabled
-                        <input type="submit" value="Disable" class="btn btn-link" />
-                        </text>
+                        @Html.ActionLink("Change", "AddPhoneNumber")
+                        @: &nbsp;|&nbsp;
+                        @Html.ActionLink("Remove", "RemovePhoneNumber")
                     }
+                    else
+                    {
+                        @Html.ActionLink("Add", "AddPhoneNumber")
+                    }
+                    ]
+                </dd>
+            *@
+            <dt>Two-Factor Authentication:</dt>
+            <dd>
+                <p>
+                    There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                    for details on setting up this ASP.NET application to support two-factor authentication.
+                </p>
+                @*@if (Model.TwoFactor)
+                    {
+                        using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <text>Enabled
+                            <input type="submit" value="Disable" class="btn btn-link" />
+                            </text>
+                        }
+                    }
+                    else
+                    {
+                        using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <text>Disabled
+                            <input type="submit" value="Enable" class="btn btn-link" />
+                            </text>
+                        }
+                    }*@
+            </dd>
+            <dt>User Name:</dt>
+            <dd>
+                @{string name = ViewBag.user.FirstName + " " + ViewBag.user.MiddleInitial + "" + ViewBag.user.LastName;}
+                @name
+            </dd>
+            <dt>Account Balance:</dt>
+            <dd>
+                @ViewBag.user.AccountBalance
+            </dd>
+        </dl>
+        <ul>
+            @{
+                <h4>Purchase Transaction</h4>
+                HashSet<DataLayer.Transaction> purchtrans = (HashSet<DataLayer.Transaction>)ViewBag.user.PurchaseTransactions;
+                if (purchtrans.Count == 0)
+                {
+                    <h4>There is no PurchaseTransaction</h4>
                 }
                 else
                 {
-                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    foreach (DataLayer.Transaction tran in purchtrans)
                     {
-                        @Html.AntiForgeryToken()
-                        <text>Disabled
-                        <input type="submit" value="Enable" class="btn btn-link" />
-                        </text>
+                        <li>
+                            Purchase Transaction ID: @tran.Id
+                        </li>
                     }
-                }*@
-        </dd>
-
-        <dt>User Name:</dt>
-        <dd>
-            @{string name = ViewBag.user.FirstName + " " + ViewBag.user.MiddleInitial + "" + ViewBag.user.LastName;}
-            @name
-        </dd>
-
-        <dt>Account Balance:</dt>
-        <dd>
-            @ViewBag.user.AccountBalance
-        </dd>
-    </dl>
-    <ul>
-        @{
-            <h4>Purchase Transaction</h4>
-            HashSet<DataLayer.Transaction> purchtrans = (HashSet<DataLayer.Transaction>)ViewBag.user.PurchaseTransactions;
-            if (purchtrans.Count == 0)
-            {
-                <h4>There is no PurchaseTransaction</h4>
-            }
-            else
-            {
-                foreach (DataLayer.Transaction tran in purchtrans)
-                {
-                    <li>
-                        Purchase Transaction ID: @tran.Id
-                    </li>
                 }
             }
-        }
-    </ul>
-    <ul>
-        @{
-            <h4>Sale Transaction</h4>
-            HashSet<DataLayer.Transaction> saletrans = (HashSet<DataLayer.Transaction>)ViewBag.user.SaleTransactions;
-            if (saletrans.Count == 0)
-            {
-                <h4>There is no SaleTransactions</h4>
-            }
-            else
-            {
-                foreach (DataLayer.Transaction tran in saletrans)
+        </ul>
+        <ul>
+            @{
+                <h4>Sale Transaction</h4>
+                HashSet<DataLayer.Transaction> saletrans = (HashSet<DataLayer.Transaction>)ViewBag.user.SaleTransactions;
+                if (saletrans.Count == 0)
                 {
-                    <li>
-                        Sale Transaction ID: @tran.Id
-                    </li>
+                    <h4>There is no SaleTransactions</h4>
+                }
+                else
+                {
+                    foreach (DataLayer.Transaction tran in saletrans)
+                    {
+                        <li>
+                            Sale Transaction ID: @tran.Id
+                        </li>
+                    }
                 }
             }
-        }
-    </ul>
+        </ul>
+    </div>
 </div>

@@ -23,14 +23,14 @@ namespace PhotoProject.Controllers
         // GET: Cart
         public ActionResult Index()
         {
-            var carts = db.Carts.Include(c => c.User);
-            if (carts == null)
+            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
+            user.Cart = (user.Cart ?? new Cart());
+            Cart cart = user.Cart;
+            
+            if (cart == null)
             {
-                return View(new List<Picture>());
+                
             }
-
-            Cart cart = carts.FirstOrDefault();
-
             bool isMoreExpensive = false;
             if (cart.AlbumsInCart != null)
             {
@@ -51,7 +51,7 @@ namespace PhotoProject.Controllers
             {
                 ViewBag.AlbumFlag = false;
             }
-            return View(carts.ToList());
+            return View(cart);
         }
 
         public ActionResult CheckOut()
@@ -121,43 +121,6 @@ namespace PhotoProject.Controllers
 
         }
 
-        public ActionResult BuyPicture(int picId)
-        {
-            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
-            user.Cart = (user.Cart ?? new Cart());
-            Cart cart = user.Cart;
-            CartHelper helper = new CartHelper(db);
-            if (user.OwnedPictures != null)
-            {
-                foreach (Picture pic in user.OwnedPictures)
-                {
-                    if (pic.Id == picId)
-                    {
-                        ViewBag.Error = "Already owned picture";
-                        //PERHAPS REDIRECT TO SOMEPLACE ELSE
-                        return RedirectToAction("Index", "UserHome");
-                    }
-                }
-            }
-            if (helper.buyPicture(picId, cart.UserId) == false)
-            {
-                //TODO: REDIRECT TO ERROR
-            }
-            return RedirectToAction("Index", "Cart");
-        }
-
-        public ActionResult BuyAlbum(int albumId)
-        {
-            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
-            user.Cart = (user.Cart ?? new Cart());
-            Cart cart = user.Cart;
-            CartHelper helper = new CartHelper(db);
-            if (!helper.buyAlbum(albumId, cart.UserId))
-            {
-                return HttpNotFound();
-            }
-            return RedirectToAction("Index", "Cart");
-        }
 
         // GET: Cart/Details/5
         public ActionResult Details(string id)

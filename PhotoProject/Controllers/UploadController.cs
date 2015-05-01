@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Business_Logic;
+using System.Data.Entity.Validation;
 
 namespace PhotoProject.Controllers
 {
@@ -32,19 +33,14 @@ namespace PhotoProject.Controllers
         [HttpGet]
         public ActionResult Upload()
         {
-            var userID = User.Identity.GetUserId();
-            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
-            Picture pic = new Picture();
-            pic.Owner = currentUser;
-            pic.OwnerId = userID;
-            return View(pic);
+            return View();
         }
 
         [HttpPost]
         public ActionResult Upload(FormCollection formcollection)
         {
             var userID = User.Identity.GetUserId();
-            UserInfo currentUser = (UserInfo)db.UserInfos.Where(emp => emp.UserId == userID);
+            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
 
             //based on user's level, define whether the user still have room to upload
             bool havePositionToUpload = picHelp.VerifyUserLevel(currentUser);
@@ -52,7 +48,7 @@ namespace PhotoProject.Controllers
             string validationStr = null;
 
             //whether the user still have room to upload pictures
-            if(!havePositionToUpload)
+            if (!havePositionToUpload)
             {
                 validationStr = "You have no more room to upload pictures";
                 ModelState.AddModelError("CustomError", validationStr);
@@ -79,8 +75,27 @@ namespace PhotoProject.Controllers
 
                     db.Pictures.Add(pic);
                     currentUser.OwnedPictures.Add(pic);
-                    db.SaveChanges();
 
+                    //try
+                    //{
+                    //    db.SaveChanges();
+                    //}
+                    //catch (DbEntityValidationException e)
+                    //{
+                    //    foreach (var eve in e.EntityValidationErrors)
+                    //    {
+                    //        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                    //            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    //        foreach (var ve in eve.ValidationErrors)
+                    //        {
+                    //            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                    //                ve.PropertyName, ve.ErrorMessage);
+                    //        }
+                    //    }
+                    //    throw;
+                    //}
+
+                    db.SaveChanges();
                     return RedirectToAction("Gallery", "UserHome", new { id = userID });
                 }
                 else

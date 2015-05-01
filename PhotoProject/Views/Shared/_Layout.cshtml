@@ -1,7 +1,6 @@
 ﻿@using DataLayer
 @using Microsoft.AspNet.Identity
 
-
 <!DOCTYPE html>
 
 
@@ -53,14 +52,12 @@
                         {
                             @Html.AntiForgeryToken()
 
-                            <div class="nav navbar-nav navbar-right">
-                                <div>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
                                     @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-                                </div>
-                                <div>
-                                    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-                                </div>
-                            </div>
+                                </li>
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
+                            </ul>
                         }
                     }
                     else
@@ -69,8 +66,6 @@
                         Html.RenderPartial("_LoginPopUp", new DataLayer.LoginViewModel());
                     }
 
-
-                    
 
 
 
