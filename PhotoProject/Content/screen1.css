@@ -946,6 +946,74 @@ label {
     color: #7E61FF;
 }
 
+#myWorkContent{
+width:730px;
+height:210px;
+border: 13px solid #bed5cd;
+overflow-x: scroll;
+overflow-y: hidden;
+}
+#myWorkContent a {
+display: inline-block;
+float:left;
+}
+#myWorkContent img{
+width:120px;
+}
+div#insideDiv{
+margin-top: 30px;
+width:800px;
+background:none;
+}
+
+#insideDiv img:hover {
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+
+.myWorkContent {
+  /* The width of your document, I suppose */
+  width:270%;
+  margin: 0 auto;
+  white-space:nowrap; 
+  overflow: scroll;
+  overflow: hidden;
+}
+#insideDive {
+ /* As large as it needs to be */
+  width: 1500px;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+#content browser {
+ margin-right: -14px !important;
+ overflow-y: scroll;
+ overflow-x: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

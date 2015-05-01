@@ -23,29 +23,31 @@
         <div class="uploadedimages">
             <h4>Pictures the user uploaded</h4>
 
-            <div class="uploadedimages1">
-                @{
-                    List<DataLayer.Picture> ownpicList = (List<DataLayer.Picture>)Model.OwnedPictures;
-                    if (ownpicList == null)
-                    {
-                        <h4>The user doesn't upload any picture.</h4>
-                    }
-                    else
-                    {
-                        for (int i = 0; i < ownpicList.Count(); i++)
-                        {
-                            <div class="pg">
-                                <a href='@Url.Action("Details", "PictureDetails", new { id = @ownpicList[i].Id })'>
-                                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(ownpicList[i].CompressImg, 0, ownpicList[i].CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
-                                </a>
-                            </div>
-                            <br />
-                            <br />
+           
+            
+                <div class="myWorkContent">
+                    <div id="insideDiv">
+                        @{
+                            List<DataLayer.Picture> ownpicList = (List<DataLayer.Picture>)Model.OwnedPictures;
+                            if (ownpicList == null)
+                            {
+                                <h4>The user doesn't upload any picture.</h4>
+                            }
+                            else
+                            {
+                                for (int i = 0; i < ownpicList.Count(); i++)
+                                {
+                               
+                                        <a href='@Url.Action("Details", "PictureDetails", new { id = @ownpicList[i].Id })'>
+                                            <img src="data:image/jpeg;base64, @Convert.ToBase64String(ownpicList[i].CompressImg, 0, ownpicList[i].CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
+                                        </a>
+                     
+                                }
+                            }
                         }
-                    }
-                }
+                    </div>
+                </div>
             </div>
-        </div>
 
         <br />
         <br />
@@ -95,3 +97,5 @@
         </div>
 
 </div>
+
+
