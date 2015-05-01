@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using DataLayer;
 using Business_Logic;
+using System.Text;
+using SendGrid;
+using System.Net.Mail;
 
 namespace PhotoProject.Controllers
 {
@@ -53,7 +56,7 @@ namespace PhotoProject.Controllers
 
         public ActionResult CheckOut()
         {
-       
+
             UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
             Cart cart = user.Cart;
             if (cart.PicturesInCart == null && cart.AlbumsInCart == null)
@@ -69,7 +72,7 @@ namespace PhotoProject.Controllers
         }
 
         public ActionResult Submit()
-        {           
+        {
             UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
             List<Transaction> picTrans = CartHelper.generatePictureTransactions(user);
             List<Transaction> albumTrans = CartHelper.generateAlbumTransactions(user);
@@ -80,9 +83,11 @@ namespace PhotoProject.Controllers
             {
                 AllTransactions.Add(trans);
             }
-
+            string email_msg = "Your Recent Order\n";
             //Update Account Balances and add Transactions to the db
-            foreach(Transaction trans in AllTransactions) {
+            foreach (Transaction trans in AllTransactions)
+            {
+                email_msg += trans.ToString();
                 decimal total = trans.TotalAmount;
                 user.AccountBalance -= total;
                 trans.Seller.AccountBalance += total;
@@ -90,6 +95,26 @@ namespace PhotoProject.Controllers
                 db.SaveChanges();
                 userHelp.SetLevel(trans.Seller);
             }
+
+            email_msg += "Your current balance: " + user.AccountBalance;
+
+            //Send email
+            var message = new SendGridMessage();
+            message.AddTo(user.User.Email);
+            message.From = new MailAddress("NoReply@photobucket", "Photo Bucket");
+            message.Subject = "Transaction Confirmation";
+            message.Text = email_msg;
+
+            var username = "azure_3637600ffcd6eff02a904908c19238f9@azure.com";
+            var pswd = "DbsCchzC1i21kvr";
+
+            var credentials = new NetworkCredential(username, pswd);
+
+            // Create a Web transport for sending email.
+            var transportWeb = new Web(credentials);
+
+            // Send the email.
+            transportWeb.DeliverAsync(message);
 
             return View();
 
