@@ -193,7 +193,8 @@ namespace Business_Logic
                     }
                     else
                     {
-                        Tag tag = new Tag { Description = tagstr };
+                        Tag tag = new Tag();
+                        tag.Description = tagstr;
                         tag.Pictures = new List<Picture>();
                         pic.Tags.Add(tag);
                         tag.Pictures.Add(pic);
