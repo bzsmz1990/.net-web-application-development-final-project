@@ -33,5 +33,17 @@ namespace DataLayer
 
         public decimal TotalAmount { get; set; }
         
+        public override string ToString()
+        {
+            string s = "Seller: " + this.Seller.FullName;
+            if (PicturesBeingSold != null || PicturesBeingSold.Count != 0)
+            {
+                s += "Pictures bought:\n";
+                foreach (Picture pic in PicturesBeingSold)
+                {
+                    s += pic.Title + "\n";
+                }
+            }
+
     }
 }
