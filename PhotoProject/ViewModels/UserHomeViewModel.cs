@@ -11,6 +11,6 @@ namespace PhotoProject.ViewModels
         public ICollection<Picture> OwnedPictures { get; set; }
         public ICollection<Picture> LikedPictures { get; set; }
         public ICollection<UserInfo> Following { get; set; }
-
+        public UserInfo Owner { get; set; }
     }
 }

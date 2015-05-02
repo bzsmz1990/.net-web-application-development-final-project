@@ -48,6 +48,7 @@ namespace PhotoProject.Controllers
                 //ViewBag.Following = userHelp.GetFollowing(id);
                 //return View();
                 GalleryViewModel userhome = new GalleryViewModel();
+                userhome.Owner = userHelp.GetUser(id);
                 userhome.OwnedPictures = picHelp.GetOwnedPictures(id);
                 userhome.LikedPictures = picHelp.GetLikedPictures(id);
                 userhome.Following = userHelp.GetFollowing(id);
