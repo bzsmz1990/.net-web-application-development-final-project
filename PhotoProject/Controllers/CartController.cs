@@ -62,7 +62,7 @@ namespace PhotoProject.Controllers
             if (cart.PicturesInCart == null && cart.AlbumsInCart == null)
             {
                 ViewBag.Message = "No items in cart";
-                return RedirectToAction("Index", "Cart");
+                return RedirectToAction("Error", "Cart");
             }
             ViewBag.CartTotal = CartHelper.getTotalFromCart(cart);
             ViewBag.Pictures = cart.PicturesInCart.ToList();
@@ -121,6 +121,46 @@ namespace PhotoProject.Controllers
 
         }
 
+        public ActionResult buyPicture(int picId)
+        {
+            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
+            Picture pic = db.Pictures.Include(c => picId).FirstOrDefault();
+            if (pic != null && user.OwnedPictures.Contains(pic))
+            {
+                ViewBag.Message = "You already own that picture";
+                return RedirectToAction("Error", "Cart");
+            }
+            Cart cart = user.Cart;
+
+            CartHelper helper = new CartHelper(db);
+            if (helper.buyPicture(picId, cart.UserId))
+            {
+                ViewBag.Message = "Just added " + picId;
+                return RedirectToAction("Index", "Cart");
+            } else {
+                return RedirectToAction("Error", "Cart");
+            }
+
+        }
+        
+        public ActionResult buyAlbum(int albumId)
+        {
+            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
+            Cart cart = user.Cart;
+
+            CartHelper helper = new CartHelper(db);
+            if (helper.buyAlbum(albumId, cart.UserId)) {
+                ViewBag.Message = "Just added " + albumId;
+                return RedirectToAction("Index", "Cart");
+            } else {
+                return RedirectToAction("Error", "Cart");
+            }
+        }
+
+        public ActionResult Error()
+        {
+            return View();
+        }
 
         // GET: Cart/Details/5
         public ActionResult Details(string id)

@@ -42,7 +42,7 @@ namespace Business_Logic
             return db.Albums.Where(p => p.Name.Contains(searchString)).ToList();
         }
 
-        public Album createAlbum(List<Picture> pics, decimal cost, DateTime date) {
+        public Album createAlbumWithPicturesAndCost(List<Picture> pics, decimal cost, DateTime date) {
             if (pics.Count == 0)
             {
                 return null;
@@ -55,6 +55,46 @@ namespace Business_Logic
             return album;
         }
 
+        public Album createAlbumWithOnePicture(Picture pic)
+        {
+            if (pic == null) {
+                return null;
+            }
+            Album album = new Album {Pictures = new List<Picture>(){pic}};
+            return album;
+        }
+
+        public Album addPictureToAlbum(Picture pic, Album al)
+        {
+            if (pic == null || al == null)
+            {
+                return null;
+            }
+            al.Pictures = (al.Pictures ?? new List<Picture>());
+            al.Pictures.Add(pic);
+            return al;
+        }
+
+        public Album addCostToAlbum(decimal cost, Album al)
+        {
+            if (cost < 0 || cost > Decimal.MaxValue || al == null)
+            {
+                return null;
+            }
+            al.Cost = cost;
+            return al;
+        }
+
+        public Album addNameToAlbum(string name, Album al)
+        {
+            if (name == null || al == null)
+            {
+                return null;
+            }
+            al.Name = name;
+            return al;
+        }
+    
         public ICollection<Album> FilterListByPictureType(string searchTerm, DataLayer.Picture.ValidFileType PictureType)
         {
             if (searchTerm == null)
