@@ -334,6 +334,8 @@
     <Content Include="Views\Shared\_LoginPopUp.cshtml" />
     <Content Include="Views\UserHome\UserPage.cshtml" />
     <Content Include="Views\Cart\Error.cshtml" />
+    <Content Include="Views\Shared\_SearchBar.cshtml" />
+    <Content Include="Views\Account\SuccesfulRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
