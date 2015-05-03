@@ -18,6 +18,9 @@
                 <p class="userpagebutton">
                     @Html.ActionLink("Upload Image", "Upload", "Upload", routeValues: null, htmlAttributes: new { @class = "button1" })
                 </p>
+                <p class="userpagebutton">
+                    @Html.ActionLink("Create Album", "CreateNewAlbum", "UserHome", routeValues: null, htmlAttributes: new { @class = "button1" })
+                </p>
             </div>
         </div>
         <div class="uploadedimages">
@@ -48,9 +51,35 @@
                 </div>
             </div>
         </div>
+        <br />
+        <br />
 
+        <div class="uploadedimages">
+            <h4>Album the user created</h4>
+            <div class="myWorkContent">
+                <div id="insideDiv">
+                    @{
+                        HashSet<DataLayer.Album> albums = (HashSet<DataLayer.Album>)Model.Owner.Albums;
+                        if (albums == null)
+                        {
+                            <h3>There are no albums</h3>
+                        }
+                        else
+                        {
+                            foreach (DataLayer.Album alb in albums)
+                            {
+                                <li>
+                                    @alb.Name
+                                </li>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
         <br />
         <br />
+
         <div class="uploadedimages">
             <h4>Pictures the user liked</h4>
             <div class="myWorkContent">
@@ -77,6 +106,8 @@
                 </div>
             </div>
         </div>
+        <br />
+        <br />
 
         <div class="uploadedimages">
             <h4>People this user follows</h4>
@@ -101,6 +132,9 @@
                 </div>
             </div>
         </div>
+        <br />
+        <br />
+
     </div>
 
         </div>

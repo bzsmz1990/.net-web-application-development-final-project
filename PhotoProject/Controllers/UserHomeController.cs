@@ -11,6 +11,7 @@ using System.Net;
 
 namespace PhotoProject.Controllers
 {
+    [Authorize]
     public class UserHomeController : Controller
     {
         private static ApplicationDbContext db = new ApplicationDbContext();
@@ -24,6 +25,7 @@ namespace PhotoProject.Controllers
         //    return View();
         //}
 
+        [AllowAnonymous]
         public ActionResult Error(string errorMessage)
         {
             ViewBag.Message = errorMessage;
@@ -43,10 +45,6 @@ namespace PhotoProject.Controllers
             }
             else
             {
-                //ViewBag.OwnedPictures = picHelp.GetOwnedPictures(id);
-                //ViewBag.LikedPictures = picHelp.GetLikedPictures(id);
-                //ViewBag.Following = userHelp.GetFollowing(id);
-                //return View();
                 GalleryViewModel userhome = new GalleryViewModel();
                 userhome.Owner = userHelp.GetUser(id);
                 userhome.OwnedPictures = picHelp.GetOwnedPictures(id);
@@ -68,6 +66,45 @@ namespace PhotoProject.Controllers
 
             return View(userInfo);
         }
-       
+
+        [HttpGet]
+        public ActionResult CreateNewAlbum()
+        {
+            CreateAlbumViewModel createalbum = new CreateAlbumViewModel();
+            var userID = User.Identity.GetUserId();
+            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
+            createalbum.owner = currentUser;
+            return View(createalbum);
+        }
+
+        [HttpPost]
+        public ActionResult CreateNewAlbum(FormCollection formcollection)
+        {
+            CreateAlbumViewModel createalbum = new CreateAlbumViewModel();
+            createalbum.album = new Album();
+            createalbum.album.Pictures = new List<Picture>();
+            createalbum.owner = new UserInfo();
+            var userID = User.Identity.GetUserId();
+            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
+            createalbum.owner = currentUser;
+            createalbum.album.Name = formcollection["album.Name"];
+            createalbum.album.Cost = Convert.ToDecimal(formcollection["album.Cost"]);
+            createalbum.album.UploadTime = DateTime.Now;
+            
+            foreach (var key in formcollection.Keys)
+            {
+                if (key.ToString().StartsWith("Picture"))
+                {
+                    int picId = int.Parse(key.ToString().Replace("Picture", ""));
+                    Picture pic = currentUser.OwnedPictures.Single(p=>p.Id==picId);
+                    if (formcollection[key.ToString()].Contains("true"))
+                        createalbum.album.Pictures.Add(pic);
+                }
+            }
+            createalbum.album.User = currentUser;
+            currentUser.Albums.Add(createalbum.album);
+            db.SaveChanges();
+            return RedirectToAction("Gallery", "UserHome", new { id = userID });
+        }
     }
 }

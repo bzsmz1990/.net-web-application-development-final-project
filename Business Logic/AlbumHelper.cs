@@ -109,5 +109,15 @@ namespace Business_Logic
             return pictures;
         }
 
+        public Album CreateAlbum(string name, string ownerId, List<Picture> pics, decimal cost)
+        {
+            Album album = new Album();
+            album.Name = name;
+            album.UserId = ownerId;
+            album.Cost = cost;
+            album.UploadTime = DateTime.Now;
+            album.Pictures = pics;
+            return album;
+        }
     }
 }

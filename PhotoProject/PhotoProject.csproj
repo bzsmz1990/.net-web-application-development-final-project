@@ -219,6 +219,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AlbumDetailController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -231,6 +232,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\CreateAlbumViewModel.cs" />
     <Compile Include="ViewModels\SearchResultsViewModel.cs" />
     <Compile Include="ViewModels\UserHomeViewModel.cs" />
   </ItemGroup>
@@ -337,11 +339,13 @@
     <Content Include="Views\Cart\Error.cshtml" />
     <Content Include="Views\Shared\_SearchBar.cshtml" />
     <Content Include="Views\Account\SuccesfulRegistration.cshtml" />
+    <Content Include="Views\UserHome\CreateNewAlbum.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Migrations\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\AlbumDetail\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

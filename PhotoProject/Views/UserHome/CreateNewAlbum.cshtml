@@ -1,0 +1,60 @@
+﻿@model PhotoProject.ViewModels.CreateAlbumViewModel
+
+@{
+    ViewBag.Title = "CreateNewAlbum";
+}
+
+<h2>CreateNewAlbum</h2>
+<div class="uploadpage">
+    <div class="col-2">
+
+        @using (Html.BeginForm("CreateNewAlbum", "UserHome", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>CreateAlbumViewModel</h4>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.album.Name, htmlAttributes: new { @class = "control-label col-md-2" })<span class="required">*</span>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.album.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.album.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.album.Cost, htmlAttributes: new { @class = "control-label col-md-2" })<span class="required">*</span>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.album.Cost, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.album.Cost, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <label>Select picture want to add in this album:</label>
+                <ul>
+                    @foreach (var pic in Model.owner.OwnedPictures)
+                    {
+                        <li>
+                            @Html.CheckBox("Picture" + pic.Id)<label for="Picture@pic.Id" class="inline">@pic.Title</label>
+                        </li>
+                    }
+                </ul>
+
+                <p>
+                    <input type="submit" value="Create" />
+                </p>
+
+            </div>
+        }
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
