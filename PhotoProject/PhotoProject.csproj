@@ -338,6 +338,8 @@
     <Content Include="Views\Shared\_SearchBar.cshtml" />
     <Content Include="Views\Account\SuccesfulRegistration.cshtml" />
     <Content Include="Views\Cart\Submit.cshtml" />
+    <Content Include="Views\Search\SearchIndex.cshtml" />
+    <Content Include="Views\Search\SearchResults2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

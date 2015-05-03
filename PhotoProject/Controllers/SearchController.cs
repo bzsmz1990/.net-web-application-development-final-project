@@ -68,7 +68,7 @@ namespace PhotoProject.Controllers
          * Receive: search term, current page on the picture search results, current page in the album search result
          * Returns: SearchResultsViewModel with the pictures and albums that matched the search
          * */
-        public ActionResult SearchResults(string searchTerm, string currentFilter, int? picturePage, int? albumPage)
+        public ActionResult SearchResults2(string searchTerm, string currentFilter, int? picturePage, int? albumPage)
         {
             if (searchTerm != null)
             {
