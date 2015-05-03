@@ -35,12 +35,16 @@
                 <!-- logo of our website -->
                 <a href="@Url.Action("Index", "Home")">
                     <img src="http://gapsa.upenn.edu/wp-content/uploads/2013/08/Camera-Icon2.jpg" alt="HTML tutorial" style="width:42px;height:42px;border:0"> <!-- google image, dimtastic.com -->
+                    <p class="tiny info white il">PhotoBucket</p>
                 </a>
             </div><!-- logo of our website -->
             <div class="header-part middle-part info-box onlynomobile">
-                <p class="tiny info white il">PhotoBucket</p>
+                <form method="get" action="/search" id="search">
+                    @*<input name="q" type="text" size="80" placeholder="Search..." />*@
+                    <input type="button" value="search" onclick="location.href='<%: Url.Action("")" size="80" placeholder="Search..." />
+                </form>
             </div><!-- name -->
-            <!-- here should be the search pannel -->
+            
 
             <div class="header-part dropdown acc-select">
                 <div class="dd-content">

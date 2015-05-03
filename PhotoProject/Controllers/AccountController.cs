@@ -178,14 +178,20 @@ namespace PhotoProject.Controllers
                     ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
                                     + "before you can log in.";
 
-                    return View("Info");
-                    //return RedirectToAction("Index", "Home");
+                    //return View("Info");
+                    return RedirectToAction("SuccesfulRegistration", "Account");
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult SuccesfulRegistration()
+        {
+            return View();
         }
 
         //
