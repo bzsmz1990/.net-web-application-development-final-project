@@ -28,6 +28,7 @@ namespace DataLayer
         public string LastName { get; set; }
 
         [NotMapped]
+        [Display(Name = "Photographer")]
         public string FullName { get 
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
