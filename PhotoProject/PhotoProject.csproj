@@ -318,7 +318,6 @@
     <Content Include="Views\Search\Delete.cshtml" />
     <Content Include="Views\Search\Details.cshtml" />
     <Content Include="Views\Search\Edit.cshtml" />
-    <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\PictureDetails\Create.cshtml" />
     <Content Include="Views\PictureDetails\Delete.cshtml" />
     <Content Include="Views\PictureDetails\Details.cshtml" />
@@ -339,7 +338,7 @@
     <Content Include="Views\Shared\_SearchBar.cshtml" />
     <Content Include="Views\Account\SuccesfulRegistration.cshtml" />
     <Content Include="Views\Cart\Submit.cshtml" />
-    <Content Include="Views\Search\SearchIndex.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Search\SearchResults2.cshtml" />
     <Content Include="Views\UserHome\CreateNewAlbum.cshtml">
       <SubType>Code</SubType>

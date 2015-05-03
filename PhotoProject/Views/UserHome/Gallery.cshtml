@@ -68,9 +68,9 @@
                         {
                             foreach (DataLayer.Album alb in albums)
                             {
-                                <li>
-                                    @alb.Name
-                                </li>
+                                <a href='@Url.Action("Details", "PictureDetails", new { id = @alb.Pictures.LastOrDefault().Id })'>
+                                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(@alb.Pictures.LastOrDefault().CompressImg, 0, @alb.Pictures.LastOrDefault().CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
+                                </a>
                             }
                         }
                     }
@@ -124,7 +124,7 @@
                             foreach (DataLayer.UserInfo user in followinglist)
                             {
                                 <li>
-                                    @Html.ActionLink(user.FirstName + " " + user.LastName, "Gallery", "UserHome", new { id = user.UserId })
+                                    @Html.ActionLink(user.FullName, "Gallery", "UserHome", new { id = user.UserId })
                                 </li>
                             }
                         }
