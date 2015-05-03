@@ -18,27 +18,34 @@ namespace PhotoProject.Controllers
     public class PictureDetailsController : Controller
     {
         private static ApplicationDbContext db = new ApplicationDbContext();
-        private static PictureHelper picHelp = new PictureHelper(db);
+        private static PictureHelper picHelp = new PictureHelper(db); 
+        //public PictureDetailsController()
+        //{
+        //     db = new ApplicationDbContext();
+        //     picHelp = new PictureHelper(db);
+        //}
 
         private string PHOTO_PROJECT_EMAIL = "alo270@nyu.edu";
 
         // GET: PictureDetails/Details/5
         public ActionResult Details(int? id)
         {
-            Picture picture = new Picture();
-            using (ApplicationDbContext newDb = new ApplicationDbContext())
-            {
+            //Picture picture = new Picture();
+            //using (ApplicationDbContext newDb = new ApplicationDbContext())
+            //{
 
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                picture = newDb.Pictures.Find(id);
-                if (picture == null)
-                {
-                    return HttpNotFound();
-                }
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            Picture picture = db.Pictures.Find(id);
+
+            if (picture == null)
+            {
+                return HttpNotFound();
+            }
+            string x = picture.Description;
+            //}
             return View(picture);
         }
 
@@ -69,26 +76,26 @@ namespace PhotoProject.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var userID = User.Identity.GetUserId();
-            UserInfo userInfo = db.UserInfos.Single(i => i.UserId == userID);
+            //var userID = User.Identity.GetUserId();
+            //UserInfo userInfo = db.UserInfos.Single(i => i.UserId == userID);
 
-            SendGridMessage myMessage = new SendGridMessage();
-            myMessage.AddTo(PHOTO_PROJECT_EMAIL);
-            myMessage.From = new MailAddress(userInfo.User.Email, userInfo.FullName);
-            myMessage.Subject = "Reported Picture: " + picture.Id + " Created By " + picture.Owner.FullName;
-            myMessage.Text = reason;
+            //SendGridMessage myMessage = new SendGridMessage();
+            //myMessage.AddTo(PHOTO_PROJECT_EMAIL);
+            //myMessage.From = new MailAddress(userInfo.User.Email, userInfo.FullName);
+            //myMessage.Subject = "Reported Picture: " + picture.Id + " Created By " + picture.Owner.FullName;
+            //myMessage.Text = reason;
 
-            var credentials = new NetworkCredential("username", "password");
+            //var credentials = new NetworkCredential("username", "password");
 
-            // Create an Web transport for sending email.
-            var transportWeb = new Web(credentials);
+            //// Create an Web transport for sending email.
+            //var transportWeb = new Web(credentials);
 
-            // Send the email.
-            await transportWeb.DeliverAsync(myMessage);
+            //// Send the email.
+            //await transportWeb.DeliverAsync(myMessage);
 
             return View(picture);
         }
-        
+
 
         // GET: PictureDetails/Edit/5
         public ActionResult Edit(int? id)
@@ -102,7 +109,7 @@ namespace PhotoProject.Controllers
             {
                 return HttpNotFound();
             }
-            
+
             return View(picture);
         }
 
@@ -123,13 +130,15 @@ namespace PhotoProject.Controllers
             return View(picture);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    //if (disposing)
+        //    //{
+        //    //    db.Dispose();
+        //    //}
+        //    base.Dispose(disposing);
+        //}
+
+
     }
 }
