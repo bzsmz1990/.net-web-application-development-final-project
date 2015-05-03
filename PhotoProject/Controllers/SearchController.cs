@@ -19,7 +19,7 @@ namespace PhotoProject.Controllers
         private static PictureHelper pictureHelper = new PictureHelper(db);
         private static AlbumHelper albumHelper = new AlbumHelper(db);
 
-        private static int LIST_SIZE = 2;
+        private static int LIST_SIZE = 10;
 
         // GET: Search
         /* This method will be used to get all pictures/abums, or get them by a certain order.

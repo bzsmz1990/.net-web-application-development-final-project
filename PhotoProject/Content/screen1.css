@@ -985,15 +985,12 @@ background:none;
   width:270%;
   margin: 0 auto;
   white-space:nowrap; 
-  overflow: scroll;
   overflow-y: hidden;
-  
-  
+   
 }
 #insideDive {
  /* As large as it needs to be */
   width: 250%;
-
 }
 
 ::-webkit-scrollbar {
@@ -1125,7 +1122,19 @@ background:none;
     }
   
 
+.searchpage {
+    position:center;
+    text-align:center;
+    margin-top: 120px;
+    margin-bottom: 100px;
+    width: 70%;
+    margin-left: 15%;
+    text-align:left;
+}
 
+.searchpage .col-2 h2 {
+    margin-bottom: 40px;
+}
 
 
 

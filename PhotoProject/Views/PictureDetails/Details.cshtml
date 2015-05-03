@@ -9,7 +9,8 @@
             <div class="imagecontainer">
                 <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.CompressImg, 0, Model.CompressImg.Length)" style="width:400px;height:auto;border-radius: 15px 15px 15px 15px; vertical-align:middle;" />
                 <div>
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id })*@
+                    <a href="#login_form" id="login_pop">Edit&nbsp;</a>
                     <a href="javascript:history.back()">Back to List</a>
                     @*@Html.ActionLink("Back to List", "Gallery", "UserHome", new { @id = Model.Owner.UserId }, null)*@
                 </div>
@@ -71,4 +72,10 @@
         </div>
         
     </div>
+</div>
+
+
+<a href="#x" class="overlay" id="login_form"></a>
+<div class="popup">
+    @{Html.RenderAction("Edit", "PictureDetails");}
 </div>
