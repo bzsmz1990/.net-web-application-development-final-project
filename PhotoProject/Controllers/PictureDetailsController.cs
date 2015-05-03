@@ -35,7 +35,6 @@ namespace PhotoProject.Controllers
             {
                 return HttpNotFound();
             }
-            string x = picture.Description;
 
             return View(picture);
         }
