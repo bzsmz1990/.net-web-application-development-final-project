@@ -19,7 +19,7 @@ namespace PhotoProject.Controllers
         private static PictureHelper pictureHelper = new PictureHelper(db);
         private static AlbumHelper albumHelper = new AlbumHelper(db);
 
-        private static int LIST_SIZE = 20;
+        private static int LIST_SIZE = 2;
 
         // GET: Search
         /* This method will be used to get all pictures/abums, or get them by a certain order.
@@ -68,16 +68,22 @@ namespace PhotoProject.Controllers
          * Receive: search term, current page on the picture search results, current page in the album search result
          * Returns: SearchResultsViewModel with the pictures and albums that matched the search
          * */
-        public ActionResult SearchResults(string searchTerm, int? picturePage, int? albumPage)
+        public ActionResult SearchResults2(string searchTerm, string currentFilter, int? picturePage, int? albumPage)
         {
-            if (searchTerm == null)
+            if (searchTerm != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                picturePage = 1;
             }
-
-            List<Picture> pictures = pictureHelper.GetPicturesWhereTitleHasWord(searchTerm);
-            pictures.AddRange(pictureHelper.GetPicturesWhereDescriptionHasWord(searchTerm));
-            pictures.AddRange(pictureHelper.GetPicturesWhereTagHasWord(searchTerm));
+            else
+            {
+                searchTerm = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchTerm;
+            
+            HashSet<Picture> pictures = new HashSet<Picture>();
+            pictures.UnionWith(pictureHelper.GetPicturesWhereTitleHasWord(searchTerm));
+            pictures.UnionWith(pictureHelper.GetPicturesWhereDescriptionHasWord(searchTerm));
+            pictures.UnionWith(pictureHelper.GetPicturesWhereTagHasWord(searchTerm));
 
             ICollection<Album> albums = albumHelper.GetAlbumsWhereTitleHasWord(searchTerm);
 

@@ -11,6 +11,7 @@ using Business_Logic;
 using System.Text;
 using SendGrid;
 using System.Net.Mail;
+using Microsoft.AspNet.Identity;
 
 namespace PhotoProject.Controllers
 {
@@ -23,13 +24,13 @@ namespace PhotoProject.Controllers
         // GET: Cart
         public ActionResult Index()
         {
-            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
-            user.Cart = (user.Cart ?? new Cart());
-            Cart cart = user.Cart;
+            var userID = User.Identity.GetUserId();
+            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
+            Cart cart = currentUser.Cart;
             
             if (cart == null)
             {
-                
+                RedirectToAction("Error", "Cart");
             }
             bool isMoreExpensive = false;
             if (cart.AlbumsInCart != null)
@@ -57,23 +58,23 @@ namespace PhotoProject.Controllers
         public ActionResult CheckOut()
         {
 
-            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
-            Cart cart = user.Cart;
+            var userID = User.Identity.GetUserId();
+            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
+            Cart cart = currentUser.Cart;
             if (cart.PicturesInCart == null && cart.AlbumsInCart == null)
             {
                 ViewBag.Message = "No items in cart";
                 return RedirectToAction("Error", "Cart");
             }
             ViewBag.CartTotal = CartHelper.getTotalFromCart(cart);
-            ViewBag.Pictures = cart.PicturesInCart.ToList();
-            ViewBag.Albums = cart.AlbumsInCart.ToList();
 
-            return View(user);
+            return View(cart);
         }
 
         public ActionResult Submit()
         {
-            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
+            var userID = User.Identity.GetUserId();
+            UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
             List<Transaction> picTrans = CartHelper.generatePictureTransactions(user);
             List<Transaction> albumTrans = CartHelper.generateAlbumTransactions(user);
 
@@ -96,7 +97,7 @@ namespace PhotoProject.Controllers
                 userHelp.SetLevel(trans.Seller);
             }
 
-            email_msg += "Your current balance: " + user.AccountBalance;
+            email_msg += "Your current balance: " + user.AccountBalance + "\n";
 
             //Send email
             var message = new SendGridMessage();
@@ -115,6 +116,9 @@ namespace PhotoProject.Controllers
 
             // Send the email.
             transportWeb.DeliverAsync(message);
+
+            user.Cart.PicturesInCart.Clear();
+            user.Cart.AlbumsInCart.Clear();
 
             return View();
 

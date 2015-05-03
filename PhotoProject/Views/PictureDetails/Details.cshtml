@@ -10,7 +10,8 @@
                 <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.CompressImg, 0, Model.CompressImg.Length)" style="width:400px;height:auto;border-radius: 15px 15px 15px 15px; vertical-align:middle;" />
                 <div>
                     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-                    @Html.ActionLink("Back to List", "Gallery", "UserHome", new { @id = Model.Owner.UserId }, null)
+                    <a href="javascript:history.back()">Back to List</a>
+                    @*@Html.ActionLink("Back to List", "Gallery", "UserHome", new { @id = Model.Owner.UserId }, null)*@
                 </div>
             </div>
             <div class="informationcontainer">
@@ -20,8 +21,8 @@
   
 
                     <tr>
-                        <td>First Name:</td>
-                        <td>@Html.DisplayFor(model => model.Owner.FirstName)</td>
+                        <td>@Html.DisplayNameFor(model => model.Owner.FullName):</td>
+                        <td>@Html.DisplayFor(model => model.Owner.FullName)</td>
                     </tr>
 
                     
