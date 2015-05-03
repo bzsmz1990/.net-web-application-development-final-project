@@ -337,6 +337,7 @@
     <Content Include="Views\Cart\Error.cshtml" />
     <Content Include="Views\Shared\_SearchBar.cshtml" />
     <Content Include="Views\Account\SuccesfulRegistration.cshtml" />
+    <Content Include="Views\Cart\Submit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

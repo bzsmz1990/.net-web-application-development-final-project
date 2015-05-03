@@ -1,4 +1,4 @@
-﻿@model DataLayer.UserInfo
+﻿@model DataLayer.Cart
 
 
 @{
@@ -9,28 +9,49 @@
     ViewBag.Title = "CheckOut page";
 }
 
+<div class="managepage">
+    <div class="col-2">
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <p>
+            @Html.ActionLink("Checkout", "CheckOut")
+        </p>
+        <table class="table">
+            <p>This is checkout.</p>
+
+            <p>Your current Balance is: $@(Model.User.AccountBalance)</p>
+
+            <p>
+                Cart Total: @ViewBag.CartTotal
+            </p>
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.User.FirstName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
+                    @Html.ActionLink("Details", "Details", new { id = Model.UserId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.UserId })
+                </td>
+            </tr>
+            <p>
+                @Html.ActionLink("Submit Order", "Submit")
+            </p>
+        </table>
+        @foreach (DataLayer.Picture pic in Model.PicturesInCart)
+        {
+            <p> @pic.Title</p>
+        }
+    </div>
+</div>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<p>
-    @Html.ActionLink("Submit Order", "Submit")
-</p>
 
 
-<h2>Checkout</h2>
 
-<p>This is checkout.</p>
 
-<p>Your current Balance is: $@(Model.AccountBalance)</p>
-
-<p>
-    Cart Total: @ViewBag.CartTotal
-</p>
-
-@foreach (var item in ViewBag.Pictures)
-{
-    <p>
-        @item
-    </p>
-}
 
