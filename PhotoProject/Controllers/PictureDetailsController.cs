@@ -122,7 +122,8 @@ namespace PhotoProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(picture).State = EntityState.Modified;
+                //db.Entry(picture).State = EntityState.Modified;
+                picture.Cost = picture.Cost;
                 db.SaveChanges();
                 return RedirectToAction("Details", picture.Id);
             }

@@ -56,75 +56,17 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.UploadTime, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UploadTime, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UploadTime, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.NumberOfLikes, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.NumberOfLikes, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.NumberOfLikes, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.HasBeenReported, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.HasBeenReported)
-                        @Html.ValidationMessageFor(model => model.HasBeenReported, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.OriginalImg, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.OriginalImg, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.OriginalImg, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.CompressImg, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CompressImg, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.CompressImg, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.PictureType, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.PictureType, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.PictureType, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Hidden, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.Hidden)
-                        @Html.ValidationMessageFor(model => model.Hidden, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.AlbumId, "AlbumId", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("AlbumId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.AlbumId, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
+                    @Html.Hidden("Id", Model.Id)
+                    @Html.Hidden("OwnerId", Model.OwnerId)
+                    @Html.Hidden("UploadTime", Model.UploadTime)
+                    @Html.Hidden("NumberOfLikes", Model.NumberOfLikes)
+                    @Html.Hidden("HasBeenReported", Model.HasBeenReported)
+                    @Html.Hidden("OriginalImg", Model.OriginalImg)
+                    @Html.Hidden("CompressImg", Model.CompressImg)
+                    @Html.Hidden("PictureType", Model.PictureType)
+                    @Html.Hidden("Hidden", Model.Hidden)
+                    @Html.Hidden("AlbumId", Model.AlbumId)
                     <input type="submit" value="Save" class="btn btn-default" />
                 </div>
             </div>
@@ -132,5 +74,5 @@
     }
     
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Back to Image Details", "Details", "PictureDetails", new { @id = Model.Id}, null)
     </div>
