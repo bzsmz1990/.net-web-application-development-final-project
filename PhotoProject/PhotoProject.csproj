@@ -231,6 +231,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\CreateAlbumViewModel.cs" />
     <Compile Include="ViewModels\SearchResultsViewModel.cs" />
     <Compile Include="ViewModels\UserHomeViewModel.cs" />
   </ItemGroup>
@@ -340,6 +341,9 @@
     <Content Include="Views\Cart\Submit.cshtml" />
     <Content Include="Views\Search\SearchIndex.cshtml" />
     <Content Include="Views\Search\SearchResults2.cshtml" />
+    <Content Include="Views\UserHome\CreateNewAlbum.cshtml">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
