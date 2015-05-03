@@ -25,14 +25,19 @@ namespace PhotoProject.Controllers
         // GET: PictureDetails/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            Picture picture = new Picture();
+            using (ApplicationDbContext newDb = new ApplicationDbContext())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Picture picture = db.Pictures.Find(id);
-            if (picture == null)
-            {
-                return HttpNotFound();
+
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                picture = newDb.Pictures.Find(id);
+                if (picture == null)
+                {
+                    return HttpNotFound();
+                }
             }
             return View(picture);
         }
