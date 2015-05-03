@@ -478,6 +478,20 @@ figure:nth-child(8) {
       vertical-align: middle;
       padding: 10px 20px;
       white-space: nowrap; }
+    .site-header .header-top .header-part img {
+        float:left;
+
+    }
+
+
+    .site-header .header-top .header-part p{
+        font-size: 20px;
+        position: relative;
+        margin-left: 35px;
+        margin-top:10px;
+        margin-right: 90px;
+    }
+
       .site-header .header-top .header-part.logo {
         display: none; }
       .site-header .header-top .header-part p, .site-header .header-top .header-part .woocommerce-account .customer_details dt, .woocommerce-account .customer_details .site-header .header-top .header-part dt, .site-header .header-top .header-part .woocommerce-account .customer_details dd, .woocommerce-account .customer_details .site-header .header-top .header-part dd {
@@ -1077,8 +1091,35 @@ background:none;
   .informationcontainer table {
       font-size: 20px;
   }
-   .informationcontainer table td{
-  }
+   .informationcontainer table.classname td {
+    font-size: 20px;
+}
+
+
+#search input[type="text"] {
+    background: url(search-white.png) no-repeat 10px 6px #fcfcfc;
+    border: 1px solid #d1d1d1;
+    font: bold 12px Arial,Helvetica,Sans-serif;
+    color: #bebebe;
+    width: 400px;
+    padding: 6px 15px 6px 35px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+    -webkit-transition: all 0.7s ease 0s;
+    -moz-transition: all 0.7s ease 0s;
+    -o-transition: all 0.7s ease 0s;
+    transition: all 0.7s ease 0s;
+    }
+
+#search input[type="text"]:focus {
+    width: 500px;
+    }
+  
 
 
 
