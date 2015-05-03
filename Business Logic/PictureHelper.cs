@@ -87,9 +87,30 @@ namespace Business_Logic
 
             searchString = searchString.ToLower();
 
-            return db.Pictures
-                .Where(p => p.Tags != null && p.Hidden == false && p.Tags.Any(t => t.Description.ToLower().Contains(searchString)))
-                .ToList();
+            ICollection<Tag> tags = db.Tags.Where(t => t.Description.ToLower().Contains(searchString)).ToList();
+
+            List<Picture> pictures = new List<Picture>();
+
+            foreach (Tag t in tags)
+            {
+                if (t.Pictures != null)
+                {
+                    foreach (Picture p in t.Pictures)
+                    {
+                        if (!p.Hidden)
+                        {
+                            pictures.Add(p);
+                        }
+                    }
+                }
+
+            }
+
+            return pictures;
+
+         //   return db.Pictures
+         //       .Where(p => p.Tags != null && p.Hidden == false && p.Tags.Any(t => t.Description.ToLower().Contains(searchString)))
+           //     .ToList();
         }
 
         public Picture LikePicture(int pictureId, string userId)

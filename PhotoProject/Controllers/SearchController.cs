@@ -75,9 +75,10 @@ namespace PhotoProject.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            List<Picture> pictures = pictureHelper.GetPicturesWhereTitleHasWord(searchTerm);
-            pictures.AddRange(pictureHelper.GetPicturesWhereDescriptionHasWord(searchTerm));
-            pictures.AddRange(pictureHelper.GetPicturesWhereTagHasWord(searchTerm));
+            HashSet<Picture> pictures = new HashSet<Picture>();
+            pictures.UnionWith(pictureHelper.GetPicturesWhereTitleHasWord(searchTerm));
+            pictures.UnionWith(pictureHelper.GetPicturesWhereDescriptionHasWord(searchTerm));
+            pictures.UnionWith(pictureHelper.GetPicturesWhereTagHasWord(searchTerm));
 
             ICollection<Album> albums = albumHelper.GetAlbumsWhereTitleHasWord(searchTerm);
 
