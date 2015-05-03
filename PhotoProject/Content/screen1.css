@@ -521,6 +521,10 @@ figure:nth-child(8) {
       .site-header .header-top .header-part.acc-select, .site-header .header-top .header-part.mini-cart {
         min-width: 175px;
         box-sizing: border-box; }
+
+      .site-header .header-top .header-part.acc-select a {
+          margin-right:30px;
+      }
       .site-header .header-top .header-part.acc-select {
         border-left: 1px solid #2d2623; }
 		.site-header .header-top .header-part.acc-select .dd-bg .dd-content span {
