@@ -112,6 +112,7 @@ namespace Business_Logic
         public Album CreateAlbum(string name, string ownerId, List<Picture> pics, decimal cost)
         {
             Album album = new Album();
+            album.Pictures = new List<Picture>();
             album.Name = name;
             album.UserId = ownerId;
             album.Cost = cost;
