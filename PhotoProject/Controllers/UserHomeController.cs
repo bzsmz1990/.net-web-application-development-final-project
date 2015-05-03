@@ -67,7 +67,7 @@ namespace PhotoProject.Controllers
             return View(userInfo);
         }
 
-        /*[HttpGet]
+        [HttpGet]
         public ActionResult CreateNewAlbum()
         {
             CreateAlbumViewModel createalbum = new CreateAlbumViewModel();
@@ -105,6 +105,6 @@ namespace PhotoProject.Controllers
             currentUser.Albums.Add(createalbum.album);
             db.SaveChanges();
             return RedirectToAction("Gallery", "UserHome", new { id = userID });
-        }*/
+        }
     }
 }
