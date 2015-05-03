@@ -36,8 +36,8 @@ namespace DataLayer
         public string Title { get; set; }
 
         [Required]
-        [DataType(DataType.Currency)]
-        [Range(0, 100, ErrorMessage = "The {0} cannot be less than 0")]
+        [DataType(DataType.Currency, ErrorMessage="The {0} must be an integer")]
+        [Range(0, 100, ErrorMessage = "The {0} cannot be less than {1} or greater than {2}")]
         public decimal Cost { get; set; }
 
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.")]

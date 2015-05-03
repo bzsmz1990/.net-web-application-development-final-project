@@ -12,27 +12,18 @@ using Business_Logic;
 using SendGrid;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using System.Web.Routing;
 
 namespace PhotoProject.Controllers
 {
     public class PictureDetailsController : Controller
     {
         private static ApplicationDbContext db = new ApplicationDbContext();
-        private static PictureHelper picHelp = new PictureHelper(db); 
-        //public PictureDetailsController()
-        //{
-        //     db = new ApplicationDbContext();
-        //     picHelp = new PictureHelper(db);
-        //}
-
-        private string PHOTO_PROJECT_EMAIL = "alo270@nyu.edu";
+        private static PictureHelper picHelp = new PictureHelper(db);
 
         // GET: PictureDetails/Details/5
         public ActionResult Details(int? id)
         {
-            //Picture picture = new Picture();
-            //using (ApplicationDbContext newDb = new ApplicationDbContext())
-            //{
 
             if (id == null)
             {
@@ -45,7 +36,7 @@ namespace PhotoProject.Controllers
                 return HttpNotFound();
             }
             string x = picture.Description;
-            //}
+
             return View(picture);
         }
 
@@ -69,29 +60,11 @@ namespace PhotoProject.Controllers
         // POST: PictureDetails/ReportPicture/5
         public async Task<ActionResult> ReportPicture(int id, string reason)
         {
-            //TODO: ADD USERNAME AND PASSWORD FOR EMAIL
             Picture picture = picHelp.ReportPicture(id);
             if (picture == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            //var userID = User.Identity.GetUserId();
-            //UserInfo userInfo = db.UserInfos.Single(i => i.UserId == userID);
-
-            //SendGridMessage myMessage = new SendGridMessage();
-            //myMessage.AddTo(PHOTO_PROJECT_EMAIL);
-            //myMessage.From = new MailAddress(userInfo.User.Email, userInfo.FullName);
-            //myMessage.Subject = "Reported Picture: " + picture.Id + " Created By " + picture.Owner.FullName;
-            //myMessage.Text = reason;
-
-            //var credentials = new NetworkCredential("username", "password");
-
-            //// Create an Web transport for sending email.
-            //var transportWeb = new Web(credentials);
-
-            //// Send the email.
-            //await transportWeb.DeliverAsync(myMessage);
 
             return View(picture);
         }
@@ -118,27 +91,31 @@ namespace PhotoProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,OwnerId,Title,Cost,Location,Description,UploadTime,NumberOfLikes,HasBeenReported,OriginalImg,CompressImg,PictureType,Hidden,AlbumId")] Picture picture)
+        public ActionResult Edit(int id, FormCollection form)
         {
-            if (ModelState.IsValid)
+            Picture dbPicture = db.Pictures.Find(id);
+
+            if (dbPicture == null)
             {
-                //db.Entry(picture).State = EntityState.Modified;
-                picture.Cost = picture.Cost;
-                db.SaveChanges();
-                return RedirectToAction("Details", picture.Id);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return View(picture);
+
+            bool updateSuccessful = TryUpdateModel(dbPicture, new[] { "Title", "Cost", "Location", "Description" });
+            if (updateSuccessful)
+            {
+                db.SaveChanges();
+                return RedirectToAction("Details", new RouteValueDictionary(new { controller = "PictureDetails", action = "Details", id = dbPicture.Id }));
+            }
+            else
+            {
+                return View(dbPicture);
+
+            }
+
+
         }
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    //if (disposing)
-        //    //{
-        //    //    db.Dispose();
-        //    //}
-        //    base.Dispose(disposing);
-        //}
 
 
     }
