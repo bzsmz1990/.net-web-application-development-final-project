@@ -11,7 +11,7 @@
                 <div>
                     @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id })*@
                     <a href="#login_form" id="login_pop">Edit&nbsp;|</a>
-                    <a href="#login_form" id="login_pop">Back to List&nbsp;|</a>
+                    @Html.ActionLink("Back to List |", "LikePicture", new { @id = Model.Id })@*ADD CONTROLLER TO MAKE IT WORK*@
 
                     @{
                         if (ViewBag.LikeAction)
@@ -25,8 +25,9 @@
 }
 
                     @*@Html.ActionLink("Back to List", "Gallery", "UserHome", new { @id = Model.Owner.UserId }, null)*@
+                    @Html.ActionLink("Add to Cart |", "LikePicture", new { @id = Model.Id }) @*ADD CONTROLLER TO MAKE IT WORK*@
+                    @Html.ActionLink("Report Photo |", "LikePicture", new { @id = Model.Id }) @*ADD CONTROLLER TO MAKE IT WORK*@
                     
-                    <a href="#login_form" id="login_pop">Add to Cart&nbsp;</a>
                     <p> Number Of Likes: @Html.DisplayFor(model => model.NumberOfLikes)</p>
                 </div>
             </div>
