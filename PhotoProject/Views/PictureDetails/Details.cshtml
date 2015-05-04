@@ -5,7 +5,7 @@
 <div class="imagepage">
     <div class="col-2">
         <div>
-           
+
             <div class="imagecontainer">
                 <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.CompressImg, 0, Model.CompressImg.Length)" style="width:400px;height:auto;border-radius: 15px 15px 15px 15px; vertical-align:middle;" />
                 <div>
@@ -18,22 +18,22 @@
             <div class="informationcontainer">
                 <h4>Image: @Html.DisplayFor(model => model.Title)</h4>
 
-                   <table>
-  
+                <table>
+
 
                     <tr>
                         <td>@Html.DisplayNameFor(model => model.Owner.FullName):</td>
                         <td>@Html.DisplayFor(model => model.Owner.FullName)</td>
                     </tr>
 
-                    
+
 
                     <tr>
                         <td>@Html.DisplayNameFor(model => model.Title):</td>
                         <td>@Html.DisplayFor(model => model.Title)</td>
                     </tr>
 
-               
+
                     <tr>
                         <td>@Html.DisplayNameFor(model => model.Cost):</td>
                         <td>@Html.DisplayFor(model => model.Cost)</td>
@@ -52,12 +52,14 @@
 
                     <tr>
                         <td>Upload Time:</td>
-                        <td>@Html.DisplayFor(model => model.UploadTime)<td>
-                    
+                        <td>@Html.DisplayFor(model => model.UploadTime)
+                        <td>
+
                     </tr>
                     <tr>
                         <td>
-                            Number Of Likes:</td>
+                            Number Of Likes:
+                        </td>
                         <td> @Html.DisplayFor(model => model.NumberOfLikes)</td>
                     </tr>
 
@@ -70,7 +72,7 @@
             </div>
 
         </div>
-        
+
     </div>
 </div>
 

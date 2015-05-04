@@ -18,6 +18,7 @@ namespace PhotoProject.Controllers
         private static PictureProcess picPro = new PictureProcess();
         private static PictureHelper picHelp = new PictureHelper(db);
         private static UserInfoHelper userHelp = new UserInfoHelper(db);
+        private static AlbumHelper albumHelp = new AlbumHelper(db);
 
         // GET: UserHome
         //public ActionResult Index()
@@ -87,10 +88,8 @@ namespace PhotoProject.Controllers
             var userID = User.Identity.GetUserId();
             UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
             createalbum.owner = currentUser;
-            createalbum.album.Name = formcollection["album.Name"];
-            createalbum.album.Cost = Convert.ToDecimal(formcollection["album.Cost"]);
-            createalbum.album.UploadTime = DateTime.Now;
-            
+
+            List<Picture> picInAlbum = new List<Picture>();
             foreach (var key in formcollection.Keys)
             {
                 if (key.ToString().StartsWith("Picture"))
@@ -98,10 +97,10 @@ namespace PhotoProject.Controllers
                     int picId = int.Parse(key.ToString().Replace("Picture", ""));
                     Picture pic = currentUser.OwnedPictures.Single(p=>p.Id==picId);
                     if (formcollection[key.ToString()].Contains("true"))
-                        createalbum.album.Pictures.Add(pic);
+                        picInAlbum.Add(pic);
                 }
             }
-            createalbum.album.User = currentUser;
+            createalbum.album = albumHelp.CreateAlbum(formcollection["album.Name"], userID, currentUser, picInAlbum, Convert.ToDecimal(formcollection["album.Cost"]));
             currentUser.Albums.Add(createalbum.album);
             db.SaveChanges();
             return RedirectToAction("Gallery", "UserHome", new { id = userID });

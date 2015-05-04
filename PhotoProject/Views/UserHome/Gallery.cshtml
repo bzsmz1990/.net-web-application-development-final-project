@@ -69,7 +69,7 @@
                             foreach (DataLayer.Album alb in albums)
                             {
                                 <li>
-                                    @alb.Name
+                                    @Html.ActionLink(alb.Name, "AlbumDetails", "AlbumDetails", new { id = alb.Id }, null)
                                 </li>
                             }
                         }

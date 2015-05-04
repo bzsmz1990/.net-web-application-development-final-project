@@ -1,0 +1,61 @@
+﻿@model DataLayer.Album
+
+@{
+    ViewBag.Title = "AlbumDetails";
+}
+
+<h2>AlbumDetails</h2>
+
+
+<div class="uploadpage">
+    <div class="col-2">
+
+        <table class="table">
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Name):</td>
+                <td>@Html.DisplayFor(model => model.Name)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Cost):</td>
+                <td>@Html.DisplayFor(model => model.Cost)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.UploadTime):</td>
+                <td>@Html.DisplayFor(model => model.UploadTime)</td>
+            </tr>
+
+            <tr></tr>
+
+        </table>
+
+        <div class="uploadedimages">
+            <h4>Pictures in the album</h4>
+
+            <div class="myWorkContent">
+                <div id="insideDiv">
+                    @{
+                        List<DataLayer.Picture> picInAlbums = Model.Pictures.ToList();
+                        if (picInAlbums == null)
+                        {
+                            <h3>The user doesn't upload any picture.</h3>
+                        }
+                        else
+                        {
+                            for (int i = 0; i < picInAlbums.Count(); i++)
+                            {
+
+                                <a href='@Url.Action("Details", "PictureDetails", new { id = @picInAlbums[i].Id })'>
+                                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(picInAlbums[i].CompressImg, 0, picInAlbums[i].CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
+                                </a>
+
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+</div>
+
