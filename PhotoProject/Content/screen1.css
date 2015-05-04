@@ -301,6 +301,11 @@ figure:nth-child(8) {
 .popup h2{
    margin-bottom:5px;
 }
+.popup h1{
+   margin-bottom:5px;
+   font-size:10px;
+}
+
 
 .panel a#login_pop {
         border: 2px solid #aaa;
@@ -348,6 +353,7 @@ figure:nth-child(8) {
 	    border: 3px solid #fff;
 	    display: inline-block;
 	    left: 50%;
+        width:275px;
 	    opacity: 0;
 	    padding: 15px;
 	    position: fixed;
@@ -414,6 +420,8 @@ figure:nth-child(8) {
 	.popup p, .popup div {
 	    margin-bottom: 10px;
 	}
+
+
 	.popup label {
 	    display: inline-block;
 	    text-align: left;

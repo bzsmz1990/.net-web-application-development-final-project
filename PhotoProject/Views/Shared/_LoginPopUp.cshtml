@@ -15,7 +15,7 @@
     <a href="#x" class="overlay" id="login_form"></a>
     <div class="popup">
         <h2>Welcome Guest!</h2>
-        <p>Please enter your login and password here</p>
+        <h1>Please enter your login and password here</h1>
 
         @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
@@ -36,14 +36,14 @@
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <p class="pw-lost righted">
-                @Html.ActionLink("Forgot your password?", "ForgotPassword", "Account")
-            </p>
+            <div class="form-group">
+                <p class="pw-lost righted">
+                    @Html.ActionLink("Forgot your password?", "ForgotPassword", "Account")
+                </p>
+            </div>
+           
             <input type="submit" value="Log in" class="btn btn-default" style="background-color: #F12C2C;" />
             <a class="close" href="#close"></a>
-            <p class="register all-caps bolded centered top-spaced mini-spaced">
-                @Html.ActionLink("Don't have an account? Register!", "Register", "Account")
-            </p>
 
         }
     </div>
