@@ -17,6 +17,8 @@ namespace Business_Logic
         private static PictureProcess picPro = new PictureProcess();
         public static PictureHelper picHelp = new PictureHelper(db);
 
+        public static int NUM_POINTS_PER_LIKE = 10;
+
         public PictureHelper(ApplicationDbContext context)
         {
             db = context;
@@ -52,7 +54,7 @@ namespace Business_Logic
 
         public List<Picture> GetPicturesWhereTitleHasWord(string searchString)
         {
-            
+
             if (String.IsNullOrEmpty(searchString) || String.IsNullOrWhiteSpace(searchString))
             {
                 return db.Pictures.Where(p => p.Hidden == false).OrderBy(p => p.UploadTime).ToList();
@@ -65,7 +67,7 @@ namespace Business_Logic
 
         public List<Picture> GetPicturesWhereDescriptionHasWord(string searchString)
         {
-            
+
             if (String.IsNullOrEmpty(searchString) || String.IsNullOrWhiteSpace(searchString))
             {
                 return db.Pictures.Where(p => p.Hidden == false).OrderBy(p => p.UploadTime).ToList();
@@ -78,7 +80,7 @@ namespace Business_Logic
 
         public List<Picture> GetPicturesWhereTagHasWord(string searchString)
         {
-            
+
             if (String.IsNullOrEmpty(searchString) || String.IsNullOrWhiteSpace(searchString))
             {
                 return db.Pictures.Where(p => p.Hidden == false).OrderBy(p => p.UploadTime).ToList();
@@ -107,12 +109,9 @@ namespace Business_Logic
 
             return pictures;
 
-         //   return db.Pictures
-         //       .Where(p => p.Tags != null && p.Hidden == false && p.Tags.Any(t => t.Description.ToLower().Contains(searchString)))
-           //     .ToList();
         }
 
-        public Picture LikePicture(int pictureId, string userId)
+        public Tuple<Picture, bool> LikePicture(int pictureId, string userId)
         {
             Picture picture = db.Pictures.Single(p => p.Id == pictureId);
             UserInfo userInfo = db.UserInfos.Single(u => u.UserId == userId);
@@ -127,21 +126,25 @@ namespace Business_Logic
                 userInfo.LikedPictures.Remove(picture);
                 picture.NumberOfLikes--;
                 db.SaveChanges();
-                return picture;
+                return Tuple.Create(picture, false);
             }
 
-            if (picture.LikedBy == null || !picture.LikedBy.Contains(userInfo))
+
+            picture.NumberOfLikes++;
+            picture.LikedBy = (picture.LikedBy ?? new List<UserInfo>());
+
+            if (!picture.LikedBy.Contains(userInfo))
             {
-                picture.NumberOfLikes++;
-                picture.LikedBy = (picture.LikedBy ?? new List<UserInfo>());
                 picture.LikedBy.Add(userInfo);
-                userInfo.LikedPictures = (userInfo.LikedPictures ?? new List<Picture>());
-                userInfo.LikedPictures.Add(picture);
-                db.SaveChanges();
-                //TODO: ALSO ADD CREDIT TO OWNER
+                picture.Owner.AccountBalance = picture.Owner.AccountBalance + NUM_POINTS_PER_LIKE;
             }
 
-            return picture;
+            userInfo.LikedPictures = (userInfo.LikedPictures ?? new List<Picture>());
+            userInfo.LikedPictures.Add(picture);
+            db.SaveChanges();
+
+
+            return Tuple.Create(picture, true);
         }
 
         public Picture ReportPicture(int pictureId)
@@ -172,8 +175,8 @@ namespace Business_Logic
             return System.Text.RegularExpressions.Regex.Split(temp, @"[ ]+");
         }
 
-        public Picture CreatPicture(string userID, string title, 
-            decimal cost, string location, string description, 
+        public Picture CreatPicture(string userID, string title,
+            decimal cost, string location, string description,
             string tags, DateTime time, Picture.ValidFileType type,
             byte[] data)
         {
@@ -246,8 +249,8 @@ namespace Business_Logic
 
         public int NumPicNotHidden(List<Picture> pictures)
         {
-            int num=0;
-            foreach(Picture pic in pictures)
+            int num = 0;
+            foreach (Picture pic in pictures)
             {
                 if (!pic.Hidden)
                     num++;
