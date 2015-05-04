@@ -345,6 +345,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\AlbumDetails\AlbumDetails.cshtml" />
+    <Content Include="Views\AlbumDetails\AddPicInAlbum.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

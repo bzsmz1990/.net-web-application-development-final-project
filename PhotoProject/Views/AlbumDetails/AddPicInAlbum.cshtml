@@ -1,0 +1,48 @@
+﻿@model DataLayer.Album
+
+@{
+    ViewBag.Title = "AddPicInAlbum";
+}
+
+<h2>AddPicInAlbum</h2>
+
+<div class="uploadpage">
+    <div class="col-2">
+
+        @using (Html.BeginForm("CreateNewAlbum", "UserHome", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Id)
+                <label>Select picture want to add in this album:</label>
+                <ul>
+                    @foreach (var pic in Model.User.OwnedPictures)
+                    {
+                        <li>
+                            <a href='@Url.Action("Details", "PictureDetails", new { id = @pic.Id })'>
+                                <img src="data:image/jpeg;base64, @Convert.ToBase64String(pic.CompressImg, 0, pic.CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
+                            </a>
+                            @Html.CheckBox("Picture" + pic.Id)<label for="Picture@pic.Id" class="inline">@pic.Title</label>
+                        </li>
+                    }
+                </ul>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Cost, htmlAttributes: new { @class = "control-label col-md-2" })<span class="required">*</span>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <p>
+                    <input type="submit" value="Add" />
+                </p>
+
+            </div>
+        }
+
+    </div>
+</div>
