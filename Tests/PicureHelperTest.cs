@@ -48,7 +48,7 @@ namespace Tests
                 new Transaction()
             };
 
-            Picture picture1 = new Picture { Id = 1, Title = "Picture1", UploadTime = new DateTime(2015, 1, 18), Tags = new List<Tag>{ tag1 } };
+            Picture picture1 = new Picture { Id = 1, Title = "Picture1", UploadTime = new DateTime(2015, 1, 18), Tags = new List<Tag> { tag1 }, Owner = user1 };
             Picture picture2 = new Picture { Id = 2, Title = "Picture2", UploadTime = new DateTime(2015, 2, 18), SaleTransactions = secondTransactions, Tags = new List<Tag> { tag1, tag2 } };
             Picture picture3 = new Picture { Id = 3, Title = "Picture3", UploadTime = new DateTime(2015, 3, 18), SaleTransactions = thirdTransactions };
             Picture picture4 = new Picture { Id = 4, Title = "Picture4", UploadTime = new DateTime(2015, 4, 18), Hidden=false};
@@ -192,24 +192,27 @@ namespace Tests
             Assert.AreEqual(0, pictureData.ElementAt(0).NumberOfLikes);
             Assert.IsNull(userData.ElementAt(0).LikedPictures);
 
-            Picture likedPicture = helper.LikePicture(pictureId, userId);
+            Tuple<Picture, bool> likedPictureAndAction = helper.LikePicture(pictureId, userId);
 
-            Assert.IsNotNull(likedPicture);
+            Assert.IsNotNull(likedPictureAndAction.Item1);
             Assert.AreEqual(1, pictureData.ElementAt(0).NumberOfLikes);
             Assert.AreEqual(1, userData.ElementAt(0).LikedPictures.Count);
             Assert.AreEqual(1, pictureData.ElementAt(0).LikedBy.Count);
+            Assert.IsTrue(likedPictureAndAction.Item2);
 
-            likedPicture = helper.LikePicture(pictureId, userData.ElementAt(1).UserId);
-            Assert.IsNotNull(likedPicture);
+            likedPictureAndAction = helper.LikePicture(pictureId, userData.ElementAt(1).UserId);
+            Assert.IsNotNull(likedPictureAndAction.Item1);
             Assert.AreEqual(2, pictureData.ElementAt(0).NumberOfLikes);
             Assert.AreEqual(1, userData.ElementAt(1).LikedPictures.Count);
             Assert.AreEqual(2, pictureData.ElementAt(0).LikedBy.Count);
+            Assert.IsTrue(likedPictureAndAction.Item2);
 
-            likedPicture = helper.LikePicture(pictureId, userId);
-            Assert.IsNotNull(likedPicture);
+            likedPictureAndAction = helper.LikePicture(pictureId, userId);
+            Assert.IsNotNull(likedPictureAndAction.Item1);
             Assert.AreEqual(1, pictureData.ElementAt(0).NumberOfLikes);
             Assert.AreEqual(0, userData.ElementAt(0).LikedPictures.Count);
             Assert.AreEqual(2, pictureData.ElementAt(0).LikedBy.Count);
+            Assert.IsFalse(likedPictureAndAction.Item2);
 
         }
 

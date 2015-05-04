@@ -30,6 +30,16 @@ namespace PhotoProject.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Picture picture = db.Pictures.Find(id);
+            var userId = User.Identity.GetUserId();
+
+            UserInfo userInfo = null;
+            if (userId != null)
+            {
+                userInfo = db.UserInfos.Single(u => u.UserId == userId);
+            }
+
+            ViewBag.LikeAction = userInfo == null ? false : userInfo.LikedPictures.Contains(picture); //This will be true if the user has liked the picture and false if the user has unliked the picture
+
 
             if (picture == null)
             {
@@ -40,18 +50,19 @@ namespace PhotoProject.Controllers
         }
 
         [Authorize]
-        [HttpPost]
-        // POST: PictureDetails/LikePicture
+        // GET: PictureDetails/LikePicture
         public ActionResult LikePicture(int id)
         {
-            Picture picture = picHelp.LikePicture(id, User.Identity.GetUserId());
+            Tuple<Picture, bool> pictureAndLikeAction = picHelp.LikePicture(id, User.Identity.GetUserId());
 
-            if (picture == null)
+            if (pictureAndLikeAction == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return Details(id);
+            ViewBag.LikeAction = pictureAndLikeAction.Item2; //This will be true if the user has liked the picture and false if the user has unliked the picture
+
+            return RedirectToAction("Details", new RouteValueDictionary(new { controller = "PictureDetails", action = "Details", id = pictureAndLikeAction.Item1.Id }));
         }
 
         [Authorize]

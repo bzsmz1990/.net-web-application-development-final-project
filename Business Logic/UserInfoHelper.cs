@@ -11,8 +11,7 @@ namespace Business_Logic
     public class UserInfoHelper
     {
 
-        private static ApplicationDbContext db = new ApplicationDbContext();
-        private static UserInfoHelper userHelp = new UserInfoHelper(db);
+        private ApplicationDbContext db;
 
         public static int NUM_POINTS_PER_FOLLOW = 20;
 

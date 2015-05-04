@@ -59,19 +59,25 @@
             <div class="myWorkContent">
                 <div id="insideDiv">
                     @{
-                        HashSet<DataLayer.Album> albums = (HashSet<DataLayer.Album>)Model.Owner.Albums;
+                        List<DataLayer.Album> albums = Model.Owner.Albums.ToList();
                         if (albums == null)
                         {
                             <h3>There are no albums</h3>
                         }
                         else
                         {
-                            foreach (DataLayer.Album alb in albums)
-                            {
-                                <a href='@Url.Action("Details", "PictureDetails", new { id = @alb.Pictures.LastOrDefault().Id })'>
-                                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(@alb.Pictures.LastOrDefault().CompressImg, 0, @alb.Pictures.LastOrDefault().CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
-                                </a>
-                            }
+                            <ul>
+                                @foreach (DataLayer.Album alb in albums)
+                                {
+                                    @*<a href='@Url.Action("Details", "PictureDetails", new { id = @alb.Pictures.LastOrDefault().Id })'>
+                                            <img src="data:image/jpeg;base64, @Convert.ToBase64String(@alb.Pictures.LastOrDefault().CompressImg, 0, @alb.Pictures.LastOrDefault().CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
+                                        </a>*@
+                                    <li>
+                                        @Html.ActionLink(alb.Name, "AlbumDetails", "AlbumDetails", new { id = alb.Id }, null)
+                                    </li>
+                                }
+                            </ul>
+
                         }
                     }
                 </div>
@@ -137,6 +143,6 @@
 
     </div>
 
-        </div>
+</div>
 
 

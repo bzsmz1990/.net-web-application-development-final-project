@@ -9,6 +9,10 @@
 
 <div class="uploadpage">
     <div class="col-2">
+        
+        <p class="userpagebutton">
+            @Html.ActionLink("Add Picture", "AddPicInAlbum", "AlbumDetails", routeValues: new { id=Model.Id}, htmlAttributes: new { @class = "button1" })
+        </p>
 
         <table class="table">
             <tr>

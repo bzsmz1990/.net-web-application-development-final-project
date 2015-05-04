@@ -12,6 +12,18 @@
                     @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id })*@
                     <a href="#login_form" id="login_pop">Edit&nbsp;</a>
                     <a href="javascript:history.back()">Back to List</a>
+
+                    @{
+                        if (ViewBag.LikeAction)
+                        {
+                            @Html.ActionLink("Unlike", "LikePicture", new { @id = Model.Id })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Like", "LikePicture", new { @id = Model.Id })
+                        }
+}
+
                     @*@Html.ActionLink("Back to List", "Gallery", "UserHome", new { @id = Model.Owner.UserId }, null)*@
                 </div>
             </div>

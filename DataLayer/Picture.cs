@@ -86,5 +86,19 @@ namespace DataLayer
 
         public virtual ICollection<Transaction> SaleTransactions { get; set; }
 
+        [NotMapped]
+        public int SalesCount
+        {
+            get
+            {
+                if (SaleTransactions == null)
+                {
+                    return 0;
+                }
+
+                return SaleTransactions.Count;
+            }
+        }
+
     }
 }
