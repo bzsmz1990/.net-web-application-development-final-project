@@ -109,7 +109,7 @@ namespace PhotoProject.Controllers
                 {
                     int picId = int.Parse(key.ToString().Replace("Picture", ""));
                     Picture pic = currentUser.OwnedPictures.Single(p=>p.Id==picId);
-                    if (formcollection[key.ToString()].Contains("true"))
+                    if (pic.Album == null)
                         picInAlbum.Add(pic);
                 }
             }

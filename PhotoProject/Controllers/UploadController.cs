@@ -73,29 +73,33 @@ namespace PhotoProject.Controllers
                     //create picture
                     Picture pic = picHelp.CreatPicture(userID, formcollection["Title"], Convert.ToDecimal(formcollection["Cost"]), formcollection["Location"], formcollection["Description"], formcollection["Tags"], DateTime.Now, type, data);
 
-                    db.Pictures.Add(pic);
-                    currentUser.OwnedPictures.Add(pic);
-
-                    try
+                    using (ApplicationDbContext tempdb = new ApplicationDbContext())
                     {
+                        db.Pictures.Add(pic);
+                        currentUser.OwnedPictures.Add(pic);
                         db.SaveChanges();
                     }
-                    catch (DbEntityValidationException e)
-                    {
-                        foreach (var eve in e.EntityValidationErrors)
-                        {
-                            Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                                eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                            foreach (var ve in eve.ValidationErrors)
-                            {
-                                Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                                    ve.PropertyName, ve.ErrorMessage);
-                            }
-                        }
-                        throw;
-                    }
+                    
 
-                    //db.SaveChanges();
+                    //try
+                    //{
+                    //    db.SaveChanges();
+                    //}
+                    //catch (DbEntityValidationException e)
+                    //{
+                    //    foreach (var eve in e.EntityValidationErrors)
+                    //    {
+                    //        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                    //            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    //        foreach (var ve in eve.ValidationErrors)
+                    //        {
+                    //            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                    //                ve.PropertyName, ve.ErrorMessage);
+                    //        }
+                    //    }
+                    //    throw;
+                    //}
+
                     return RedirectToAction("Gallery", "UserHome", new { id = userID });
                 }
                 else
