@@ -109,8 +109,11 @@ namespace PhotoProject.Controllers
                 {
                     int picId = int.Parse(key.ToString().Replace("Picture", ""));
                     Picture pic = currentUser.OwnedPictures.Single(p=>p.Id==picId);
-                    if (pic.Album == null)
-                        picInAlbum.Add(pic);
+                    if (formcollection[key.ToString()].Contains("true"))
+                    {
+                        if(pic.AlbumId == null)
+                            picInAlbum.Add(pic);
+                    }        
                 }
             }
             createalbum.album = albumHelp.CreateAlbum(formcollection["album.Name"], userID, currentUser, picInAlbum, Convert.ToDecimal(formcollection["album.Cost"]));
