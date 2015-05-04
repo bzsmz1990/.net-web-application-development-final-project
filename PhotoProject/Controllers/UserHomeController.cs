@@ -47,10 +47,21 @@ namespace PhotoProject.Controllers
             else
             {
                 GalleryViewModel userhome = new GalleryViewModel();
+                userhome.isOwner = isOwner;
                 userhome.Owner = userHelp.GetUser(id);
                 userhome.OwnedPictures = picHelp.GetOwnedPictures(id);
                 userhome.LikedPictures = picHelp.GetLikedPictures(id);
                 userhome.Following = userHelp.GetFollowing(id);
+                if (userID != null)
+                {
+                    UserInfo userInfo = db.UserInfos.Single(emp => emp.UserId == userID);
+                    //THis will be true if the current user has followed *this* user, false otherwise
+                    ViewBag.FollowAction = userInfo == null ? false : userInfo.Following.Contains(db.UserInfos.Single(emp => emp.UserId == id));
+                }
+                else
+                {
+                    ViewBag.FollowAction = false;
+                }
                 return View(userhome);
             }
             
@@ -62,10 +73,12 @@ namespace PhotoProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            Tuple<UserInfo, bool> userAndFollowAction = userHelp.FollowUser(User.Identity.GetUserId(), id);
 
-            UserInfo userInfo = userHelp.FollowUser(User.Identity.GetUserId(), id);
+            ViewBag.FollowAction = userAndFollowAction.Item2; //This will be true if the user has followed another and false if he has unfollowed.
 
-            return View(userInfo);
+            //Return to whichever page that called it
+            return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
         }
 
         [HttpGet]
