@@ -13,9 +13,8 @@ namespace Business_Logic
 {
     public class PictureHelper
     {
-        private static ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
         private static PictureProcess picPro = new PictureProcess();
-        public static PictureHelper picHelp = new PictureHelper(db);
 
         public static int NUM_POINTS_PER_LIKE = 10;
 

@@ -9,8 +9,7 @@ namespace Business_Logic
 {
     public class AlbumHelper
     {
-        private static ApplicationDbContext db = new ApplicationDbContext();
-        public static AlbumHelper albumHelp = new AlbumHelper(db);
+        private ApplicationDbContext db;
 
         public AlbumHelper(ApplicationDbContext context)
         {

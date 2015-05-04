@@ -49,13 +49,13 @@ namespace PhotoProject.Controllers
             {
                 case "most_purchased":
                     pictures = pictureHelper.GetPicturesOrderedByMostPurchased();
-                    albums = AlbumHelper.albumHelp.GetAlbumsOrderedByMostPurchased();
+                    albums = albumHelper.GetAlbumsOrderedByMostPurchased();
                     break;
                 case "most_recent":
                 case null:
                 default:
-                    pictures = PictureHelper.picHelp.GetPicturesOrderedByMostRecent();
-                    albums = AlbumHelper.albumHelp.GetAlbumsOrderedByMostRecent();
+                    pictures = pictureHelper.GetPicturesOrderedByMostRecent();
+                    albums = albumHelper.GetAlbumsOrderedByMostRecent();
                     break;
             }
 
