@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="uploadedimages">
-            <h4>Pictures the user uploaded</h4>
+            <h4>@Model.Owner.FirstName's uploaded pictures</h4>
 
 
 
@@ -55,7 +55,7 @@
         <br />
 
         <div class="uploadedimages">
-            <h4>Album the user created</h4>
+            <h4>@Model.Owner.FirstName's albums</h4>
             <div class="myWorkContent">
                 <div id="insideDiv">
                     @{
@@ -66,17 +66,15 @@
                         }
                         else
                         {
-                            <ul>
-                                @foreach (DataLayer.Album alb in albums)
-                                {
-                                    @*<a href='@Url.Action("Details", "PictureDetails", new { id = @alb.Pictures.LastOrDefault().Id })'>
-                                            <img src="data:image/jpeg;base64, @Convert.ToBase64String(@alb.Pictures.LastOrDefault().CompressImg, 0, @alb.Pictures.LastOrDefault().CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
-                                        </a>*@
-                                    <li>
-                                        @Html.ActionLink(alb.Name, "AlbumDetails", "AlbumDetails", new { id = alb.Id }, null)
-                                    </li>
-                                }
-                            </ul>
+
+                            foreach (DataLayer.Album alb in albums)
+                            {
+                                <a href='@Url.Action("AlbumDetails", "AlbumDetails", new { id = alb.Id }, null)'>
+                                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(@alb.Pictures.LastOrDefault().CompressImg, 0, @alb.Pictures.LastOrDefault().CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
+                                    @Html.ActionLink(alb.Name, "AlbumDetails", "AlbumDetails", new { id = alb.Id }, null)
+                                 </a>
+                            }
+                           
 
                         }
                     }
@@ -87,7 +85,7 @@
         <br />
 
         <div class="uploadedimages">
-            <h4>Pictures the user liked</h4>
+            <h4>Pictures @Model.Owner.FirstName liked</h4>
             <div class="myWorkContent">
                 <div id="insideDiv">
                     @{
@@ -101,10 +99,8 @@
                             for (int i = 0; i < likedpicList.Count(); i++)
                             {
                                 <a href='@Url.Action("Details", "PictureDetails", new { id = @likedpicList[i].Id })'>
-                                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(likedpicList[i].CompressImg, 0, likedpicList[i].CompressImg.Length)" />
+                                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(likedpicList[i].CompressImg, 0, likedpicList[i].CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
                                 </a>
-                                <br />
-                                <br />
                             }
                         }
                     }
@@ -112,11 +108,10 @@
                 </div>
             </div>
         </div>
-        <br />
-        <br />
+
 
         <div class="uploadedimages">
-            <h4>People this user follows</h4>
+            <h4>@Model.Owner.FirstName is following</h4>
             <div class="myWorkContent">
                 <div id="insideDiv">
                     @{
