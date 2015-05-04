@@ -50,6 +50,26 @@ namespace PhotoProject.Controllers
         }
 
         [Authorize]
+        public ActionResult buyPicture(int picId)
+        {
+            var userID = User.Identity.GetUserId();
+            UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
+            Picture pic = db.Pictures.Single(c => c.Id == picId);
+            if (pic != null && user.OwnedPictures.Contains(pic))
+            {
+                ViewBag.Message = "You already own that picture";
+                return RedirectToAction("Error", "Cart");
+            }
+            Cart cart = user.Cart;
+            cart.PicturesInCart = (cart.PicturesInCart ?? new List<Picture>());
+            cart.PicturesInCart.Add(pic);
+            db.SaveChanges();
+            ViewBag.Message = "Just added " + picId;
+            return RedirectToAction("Index", "Cart");
+
+        }
+
+        [Authorize]
         // GET: PictureDetails/LikePicture
         public ActionResult LikePicture(int id)
         {

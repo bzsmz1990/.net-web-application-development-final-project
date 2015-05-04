@@ -267,6 +267,8 @@ namespace PhotoProject.Controllers
                 if (pic.Id == picId)
                 {
                     cart.PicturesInCart.Remove(pic);
+                    db.SaveChanges();
+                    break;
                 }
             }
                             

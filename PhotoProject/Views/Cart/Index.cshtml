@@ -10,28 +10,20 @@
 
 <div class="managepage">
     <div class="col-2">
-        <p>
-            @Html.ActionLink("Create New", "Create")
-        </p>
-        <p>
-            @Html.ActionLink("Checkout", "CheckOut")
-        </p>
-        <table class="table">
-
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.User.FirstName)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
-                    @Html.ActionLink("Details", "Details", new { id = Model.UserId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = Model.UserId })
-                </td>
-            </tr>
-        </table>
-        @foreach (DataLayer.Picture pic in Model.PicturesInCart)
+        @if (Model.PicturesInCart.Count != 0)
         {
-            <p> @pic.Title</p>
+            foreach (DataLayer.Picture pic in Model.PicturesInCart)
+            {
+                <p> @pic.Title | @Html.ActionLink("Delete", "Delete", new { picId = pic.Id })</p>
+            }
+
+            <p>
+                @Html.ActionLink("Checkout", "CheckOut")
+            </p>
+        }
+        else
+        {
+            <p> Your Cart is Empty</p>
         }
     </div>
 </div>

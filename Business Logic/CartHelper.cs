@@ -72,8 +72,8 @@ namespace Business_Logic
             {
                 return false;
             }
-            Cart cart = db.Carts.SingleOrDefault(c => c.UserId == cartId);
-            Picture picture = db.Pictures.SingleOrDefault(p => p.Id == picId);
+            Cart cart = db.Carts.Single(c => c.UserId == cartId);
+            Picture picture = db.Pictures.Single(p => p.Id == picId);
             if (picture == null || cart == null)
             {
                 return false;

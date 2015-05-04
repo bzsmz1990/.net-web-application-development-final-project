@@ -11,34 +11,18 @@
 
 <div class="managepage">
     <div class="col-2">
-        <p>
-            @Html.ActionLink("Create New", "Create")
-        </p>
-        <p>
-            @Html.ActionLink("Checkout", "CheckOut")
-        </p>
-        <table class="table">
-            <p>This is checkout.</p>
+            <p>Please review your order.<br /> Your current Balance is: @(Model.User.AccountBalance)</p><br />
 
-            <p>Your current Balance is: $@(Model.User.AccountBalance)</p>
+            @foreach (DataLayer.Picture pic in Model.PicturesInCart)
+            {
+                <p> @pic.Title - Cost: @pic.Cost   |   @Html.ActionLink("Delete", "Delete", new { picId = pic.Id })</p>
+            }
+            <br />
 
             <p>
-                Cart Total: @ViewBag.CartTotal
+                Total: @ViewBag.CartTotal
             </p>
 
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.User.FirstName)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
-                    @Html.ActionLink("Details", "Details", new { id = Model.UserId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = Model.UserId })
-                </td>
-            </tr>
-
-            
-        </table>
         @if (ViewBag.hasEnough == false)
         {
             <p>You do not have enough credit to purchase these pictures</p>
@@ -46,10 +30,6 @@
         <p>
             @Html.ActionLink("Submit Order", "Submit")
         </p>
-        }
-        @foreach (DataLayer.Picture pic in Model.PicturesInCart)
-        {
-            <p> @pic.Title</p>
         }
     </div>
 </div>
