@@ -42,8 +42,7 @@ namespace Business_Logic
 
         public ICollection<Picture> GetPicturesOrderedByMostPurchased()
         {
-            return (db.Pictures.Where(p => p.SaleTransactions != null && p.Hidden == false).OrderByDescending(p => p.SaleTransactions.Count)
-                .Union(db.Pictures.Where(p => p.SaleTransactions == null && p.Hidden == false).OrderByDescending(p => p.UploadTime))).ToList();
+            return db.Pictures.Where(p => p.Hidden == false).ToList().OrderByDescending(p => p.SalesCount).ThenByDescending(p => p.UploadTime).ToList();
         }
 
         public ICollection<Picture> GetPicturesOrderedByMostRecent()
