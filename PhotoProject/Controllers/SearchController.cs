@@ -30,8 +30,17 @@ namespace PhotoProject.Controllers
          * Receives: Word for ordering, current page on pictures result, current page on albums result
          * Returns: SearchResultsViewModel with the pictures and albums that matched the search
          * */
-        public ActionResult Index(string sortOrder, int? picturePage, int? albumPage)
+        public ActionResult Index(string sortOrder, string currentFilter, int? picturePage, int? albumPage)
         {
+            if (sortOrder != null)
+            {
+                picturePage = 1;
+            }
+            else
+            {
+                sortOrder = currentFilter;
+            }
+            ViewBag.CurrentFilter = sortOrder;
 
             ICollection<Picture> pictures = null;
             ICollection<Album> albums = null;
