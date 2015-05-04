@@ -66,9 +66,20 @@ namespace PhotoProject.Controllers
                 ViewBag.Message = "No items in cart";
                 return RedirectToAction("Error", "Cart");
             }
-            ViewBag.CartTotal = CartHelper.getTotalFromCart(cart);
+            decimal total = CartHelper.getTotalFromCart(cart);
+            ViewBag.hasEnough = true;
+            if (currentUser.AccountBalance < total)
+            {
+                ViewBag.hasEnough = false;
+            }
+            ViewBag.CartTotal = total;
 
             return View(cart);
+        }
+
+        public ActionResult InsufficientFunds()
+        {
+            return View();
         }
 
         public ActionResult Submit()
@@ -240,38 +251,27 @@ namespace PhotoProject.Controllers
         }
 
         // GET: Cart/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int picId)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cart cart = db.Carts.Find(id);
+
+            var userID = User.Identity.GetUserId();
+            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
+            Cart cart = currentUser.Cart;
             if (cart == null)
             {
                 return HttpNotFound();
             }
-            return View(cart);
+
+            foreach (Picture pic in cart.PicturesInCart)
+            {
+                if (pic.Id == picId)
+                {
+                    cart.PicturesInCart.Remove(pic);
+                }
+            }
+                            
+            return RedirectToAction("Index", "Cart");
         }
 
-        // POST: Cart/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            Cart cart = db.Carts.Find(id);
-            db.Carts.Remove(cart);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
     }
 }
