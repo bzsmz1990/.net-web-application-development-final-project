@@ -36,10 +36,17 @@
                     @Html.ActionLink("Delete", "Delete", new { id = Model.UserId })
                 </td>
             </tr>
-            <p>
-                @Html.ActionLink("Submit Order", "Submit")
-            </p>
+
+            
         </table>
+        @if (ViewBag.hasEnough == false)
+        {
+            <p>You do not have enough credit to purchase these pictures</p>
+        } else {
+        <p>
+            @Html.ActionLink("Submit Order", "Submit")
+        </p>
+        }
         @foreach (DataLayer.Picture pic in Model.PicturesInCart)
         {
             <p> @pic.Title</p>

@@ -51,7 +51,7 @@ namespace PhotoProject.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return View(picture);
+            return Details(id);
         }
 
         [Authorize]
