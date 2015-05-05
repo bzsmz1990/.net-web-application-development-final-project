@@ -21,6 +21,11 @@ namespace Business_Logic
             return db.Albums.ToList();
         }
 
+        public Album GetSpecificAlbums(int id)
+        {
+            return db.Albums.Single(emp => emp.Id == id);
+        }
+
         public ICollection<Album> GetAlbumsOrderedByMostPurchased()
         {
             return db.Albums.OrderByDescending(p => p.SaleTransactions.Count).ToList();

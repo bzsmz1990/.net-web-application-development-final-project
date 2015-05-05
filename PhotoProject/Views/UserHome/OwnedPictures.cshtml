@@ -28,9 +28,13 @@
             {
                 foreach (DataLayer.Album al in Model.Item2)
                 {
-                    <p> @al.Name</p>
+                    @*<p>
+                            @Html.ActionLink(al.Name, "PurchasedAlbum", "PurchasedThings", new { id = al.Id })
+                        </p>*@
+                    <p>@al.Name</p>
                 }
             }
+
             @if (Model.Item1.Count + Model.Item2.Count <= 0)
             {
                 <p> You have not yet purchased any pictures</p>

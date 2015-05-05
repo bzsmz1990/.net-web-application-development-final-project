@@ -11,6 +11,8 @@ namespace PhotoProject.Controllers
     public class PurchasedThingsController : Controller
     {
         private static PictureHelper picHelp = new PictureHelper(AlbumDetailsController.db);
+        private static AlbumHelper albHelp = new AlbumHelper(AlbumDetailsController.db);
+
         // GET: PurchasedThings
         public ActionResult Index()
         {
@@ -22,6 +24,13 @@ namespace PhotoProject.Controllers
             Picture pic = new Picture();
             pic = picHelp.GetSpecificPicture(id);
             return View(pic);
+        }
+
+        public ActionResult PurchasedAlbum(int id)
+        {
+            Album alb = new Album();
+            alb = albHelp.GetSpecificAlbums(id);
+            return View(alb);
         }
     }
 }

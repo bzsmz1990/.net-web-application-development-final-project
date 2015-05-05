@@ -350,6 +350,7 @@
     <Content Include="Views\AlbumDetails\Error.cshtml" />
     <Content Include="Views\UserHome\OwnedPictures.cshtml" />
     <Content Include="Views\PurchasedThings\OriginalImg.cshtml" />
+    <Content Include="Views\PurchasedThings\PurchasedAlbum.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
