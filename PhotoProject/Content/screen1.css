@@ -997,7 +997,40 @@ background:none;
   overflow-x: hidden; /*scroll or hidden for the images overflow*/
    
 }
-#insideDive {
+
+#myWorkContent1 a {
+display: inline;
+}
+
+div#insideDiv1{
+margin-top: 30px;
+width:800px;
+background:none;
+}
+
+#insideDiv1 img:hover {
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+
+.myWorkContent1 {
+  /* The width of your document, I suppose */
+  width:100%;
+  margin: 0 auto;
+  white-space:nowrap;
+  overflow-x: scroll; /*scroll or hidden for the images overflow*/
+   
+}
+.imagebox {
+    display:block;
+    float:left;
+    margin-left:20px;
+}
+.imagebox p {
+    text-align:center;
+}
+
+#insideDive1 {
  /* As large as it needs to be */
   width: 100%;
 }
