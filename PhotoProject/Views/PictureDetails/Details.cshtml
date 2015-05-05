@@ -11,7 +11,8 @@
                 <div>
                     @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id })*@
                     <a href="#login_form" id="login_pop">Edit&nbsp;|</a>
-                    @Html.ActionLink("Back to List |", "LikePicture", new { @id = Model.Id })@*ADD CONTROLLER TO MAKE IT WORK*@
+                    
+                    <a href="javascript:void(0);" onclick="history.go(-1);">Back to Gallery | </a>
 
                     @{
                         if (ViewBag.LikeAction)
@@ -25,7 +26,9 @@
 }
 
                     @*@Html.ActionLink("Back to List", "Gallery", "UserHome", new { @id = Model.Owner.UserId }, null)*@
-                    @Html.ActionLink("Add to Cart |", "buyPicture", "Cart", new { picId = Model.Id }, null) @*ADD CONTROLLER TO MAKE IT WORK*@
+                    @if (!ViewBag.isOwner) {
+                        @Html.ActionLink("Add to Cart |", "buyPicture", "Cart", new { picId = Model.Id }, null) @*ADD CONTROLLER TO MAKE IT WORK*@
+                    }
                     @Html.ActionLink("Report Photo |", "LikePicture", new { @id = Model.Id }) @*ADD CONTROLLER TO MAKE IT WORK*@
                     
                     <p> Number Of Likes: @Html.DisplayFor(model => model.NumberOfLikes)</p>

@@ -27,6 +27,11 @@
                 <td>@Html.DisplayNameFor(model => model.UploadTime):</td>
                 <td>@Html.DisplayFor(model => model.UploadTime)</td>
             </tr>
+            @if (!ViewBag.isowner) {
+            <tr>
+                <td>@Html.ActionLink("Add to Cart", "buyAlbum", "Cart", new { albumId = Model.Id }, null)</td>
+            </tr>
+            }
 
             <tr></tr>
 
@@ -58,8 +63,9 @@
                 </div>
             </div>
         </div>
-        
-
+        <br />
+        <br />
+        <a href="javascript:void(0);" onclick="history.go(-1);">Back to Gallery</a>
     </div>
 </div>
 

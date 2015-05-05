@@ -36,6 +36,9 @@ namespace PhotoProject.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Album album = db.Albums.Find(id);
+            var userId = User.Identity.GetUserId();
+            ViewBag.isOwner = User.Identity.GetUserId() == album.UserId;
+
             if (album == null)
             {
                 return HttpNotFound();
