@@ -33,7 +33,7 @@
             @if (@Model.isOwner)
             {
                 <div class="userbuttons">
-                    <p class="userpagebutton">
+                    <p class="userpagebutton1">
                         @Html.ActionLink("Manage Account", "Index", "Manage", routeValues: null, htmlAttributes: new { @class = "button1" })
                     </p>
                     <p class="userpagebutton">
@@ -43,7 +43,7 @@
                         @Html.ActionLink("Create Album", "CreateNewAlbum", "UserHome", routeValues: null, htmlAttributes: new { @class = "button1" })
                     </p>
                     <p class="userpagebutton">
-                        @Html.ActionLink("Purchased Pictures", "OwnedPictures", "UserHome", routeValues: null, htmlAttributes: new { @class = "button1" })
+                        @Html.ActionLink("Bought Photos", "OwnedPictures", "UserHome", routeValues: null, htmlAttributes: new { @class = "button1" })
                     </p>
                 </div>
             }

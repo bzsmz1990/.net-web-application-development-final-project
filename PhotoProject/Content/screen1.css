@@ -808,9 +808,18 @@ label {
 
 .userbuttons p {
    margin-top: 80px;
-   margin-left: 20px;
+   margin-left: 10px;
    display:inline-block;
 }
+
+.userbuttons .userpagebutton1 {
+   margin-left: -100px;
+}
+
+.cartpage .col-2 h4 {
+    position:center;
+}
+
 
 .button1 {
    width: 190px; 
@@ -1286,9 +1295,25 @@ width:120px;
 }
 
 .myWorkContent3 {
-    position:center;
+  position:center;
   /* The width of your document, I suppose */
   width:80%;
+  margin: 0 auto;
+  overflow-x: hidden; /*scroll or hidden for the images overflow*/
+   
+}
+#myWorkContent4 a {
+display: inline-block;
+float:left;
+}
+#myWorkContent4 img{
+width:120px;
+}
+
+.myWorkContent4 {
+  position:center;
+  /* The width of your document, I suppose */
+  width:100%;
   margin: 0 auto;
   overflow-x: hidden; /*scroll or hidden for the images overflow*/
    
