@@ -1200,8 +1200,10 @@ background:none;
 }
 
 .continer {
-    width: 100%;
-    margin-left: 30%;
+    position:center;
+    width:100%;
+    margin-left:30%;
+    margin-right:30%;
 }
 
 .continer div {
@@ -1210,6 +1212,22 @@ background:none;
    margin-top: 20px;
 }
 
+#myWorkContent3 a {
+display: inline-block;
+float:left;
+}
+#myWorkContent3 img{
+width:120px;
+}
+
+.myWorkContent3 {
+    position:center;
+  /* The width of your document, I suppose */
+  width:80%;
+  margin: 0 auto;
+  overflow-x: hidden; /*scroll or hidden for the images overflow*/
+   
+}
 
 
 
