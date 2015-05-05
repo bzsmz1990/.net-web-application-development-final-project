@@ -46,8 +46,8 @@
 
 
 
-            <div class="myWorkContent">
-                <div id="insideDiv">
+            <div class="myWorkContent1">
+                <div id="insideDiv1">
                     @{
                         List<DataLayer.Picture> ownpicList = (List<DataLayer.Picture>)Model.OwnedPictures;
                         if (ownpicList == null)
@@ -75,8 +75,8 @@
 
         <div class="uploadedimages">
             <h4>@Model.Owner.FirstName's albums</h4>
-            <div class="myWorkContent">
-                <div id="insideDiv">
+            <div class="myWorkContent1">
+                <div id="insideDiv1">
                     @{
                         List<DataLayer.Album> albums = Model.Owner.Albums.ToList();
                         if (albums == null)
@@ -87,10 +87,14 @@
                         {
                             foreach (DataLayer.Album alb in albums)
                             {
-                                <a href='@Url.Action("AlbumDetails", "AlbumDetails", new { id = alb.Id }, null)'>
-                                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(@alb.Pictures.LastOrDefault().CompressImg, 0, @alb.Pictures.LastOrDefault().CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
-                                    @Html.ActionLink(alb.Name, "AlbumDetails", "AlbumDetails", new { id = alb.Id }, null)
-                                </a>
+                                <div class="imagebox">
+                                    <a href='@Url.Action("AlbumDetails", "AlbumDetails", new { id = alb.Id }, null)'>
+
+                                        <img src="data:image/jpeg;base64, @Convert.ToBase64String(@alb.Pictures.LastOrDefault().CompressImg, 0, @alb.Pictures.LastOrDefault().CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
+                                        <p>@Html.ActionLink(alb.Name, "AlbumDetails", "AlbumDetails", new { id = alb.Id }, null)</p>
+
+                                    </a>
+                                </div>
                             }
                         }
 }
@@ -102,8 +106,8 @@
 
         <div class="uploadedimages">
             <h4>Pictures @Model.Owner.FirstName liked</h4>
-            <div class="myWorkContent">
-                <div id="insideDiv">
+            <div class="myWorkContent1">
+                <div id="insideDiv1">
                     @{
                         List<DataLayer.Picture> likedpicList = (List<DataLayer.Picture>)Model.LikedPictures;
                         if (likedpicList == null)
