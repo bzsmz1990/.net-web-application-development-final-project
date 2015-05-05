@@ -36,7 +36,7 @@ namespace DataLayer
         public override string ToString()
         {
             string s = "Seller: " + this.Seller.FullName;
-            if (PicturesBeingSold != null || PicturesBeingSold.Count != 0)
+            if (PicturesBeingSold != null && PicturesBeingSold.Count != 0)
             {
                 s += "Pictures bought:\n";
                 foreach (Picture pic in PicturesBeingSold)
