@@ -9,7 +9,7 @@
 
 <div class="albumviewpage">
     <div class="col-2">
-       
+
         <div class="uploadedimages">
             <h2>Pictures in the album</h2>
 
@@ -25,48 +25,51 @@
                 }
 
             </div>
+        </div>
+    </div>
+    <div class="myWorkContent3">
+        <div id="insideDiv">
+            @{
+                List<DataLayer.Picture> picInAlbums = Model.Pictures.ToList();
+                if (picInAlbums == null)
+                {
+                    <h3>The user didn't upload any picture.</h3>
+                }
+                else
+                {
+                    for (int i = 0; i < picInAlbums.Count(); i++)
+                    {
+                        <div class="continer">
+                            <div class="imagegallery">
+
+                                <a href='@Url.Action("Details", "PictureDetails", new { id = @picInAlbums[i].Id })'>
+                                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(picInAlbums[i].CompressImg, 0, picInAlbums[i].CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
+                                </a>
+                            </div>
+
+                        </div>
+                    }
+                }
+            }
+        </div>
+
+    </div>
+
+
+
+    @if (ViewBag.isOwner)
+    {
+        <div class="col-2">
+            <div class="uploadedimages">
+                <p class="albumuserpagebutton">
+                    @Html.ActionLink("Add Picture", "AddPicInAlbum", "AlbumDetails", routeValues: new { id = Model.Id }, htmlAttributes: new { @class = "button" })
+                </p>
+
+                @*<a href="javascript:void(0);" onclick="history.go(-1);">Back to Gallery</a>*@
             </div>
         </div>
-                <div class="myWorkContent3">
-                    <div id="insideDiv">
-                        @{
-                            List<DataLayer.Picture> picInAlbums = Model.Pictures.ToList();
-                            if (picInAlbums == null)
-                            {
-                                <h3>The user didn't upload any picture.</h3>
-                            }
-                            else
-                            {
-                                for (int i = 0; i < picInAlbums.Count(); i++)
-                                {
-                                    <div class="continer">
-                                        <div class="imagegallery">
+    }
 
-                                            <a href='@Url.Action("Details", "PictureDetails", new { id = @picInAlbums[i].Id })'>
-                                                <img src="data:image/jpeg;base64, @Convert.ToBase64String(picInAlbums[i].CompressImg, 0, picInAlbums[i].CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
-                                            </a>
-                                        </div>
-
-                                    </div>
-                                }
-                            }
-                        }
-                    </div>
-
-                                    </div>
-
-
-
-
-    <div class="col-2">
-        <div class="uploadedimages">
-            <p class="albumuserpagebutton">
-                @Html.ActionLink("Add Picture", "AddPicInAlbum", "AlbumDetails", routeValues: new { id = Model.Id }, htmlAttributes: new { @class = "button" })
-            </p>
-
-            @*<a href="javascript:void(0);" onclick="history.go(-1);">Back to Gallery</a>*@
-        </div>
-        </div>
 
 
 </div>
