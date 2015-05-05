@@ -877,7 +877,7 @@ label {
 
 .uploadedimages{
     margin-top: 30px;
-    height: 150px;
+    height: 200px;
 
 }
 
@@ -1201,8 +1201,8 @@ background:none;
 
 .continer {
     position:center;
-    width:100%;
-    margin-left:30%;
+    width:80%;
+    margin-left:25%;
     margin-right:30%;
 }
 
@@ -1248,7 +1248,16 @@ width:120px;
 }
 
 
-
+.cartpage {
+    height:500px;
+    position:center;
+    text-align:center;
+    margin-top: 120px;
+    margin-bottom: 100px;
+    width: 70%;
+    margin-left: 15%;
+    text-align:left;
+}
 
 
 

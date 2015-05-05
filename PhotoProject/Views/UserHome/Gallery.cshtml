@@ -61,7 +61,7 @@
                             {
 
                                 <a href='@Url.Action("Details", "PictureDetails", new { id = @ownpicList[i].Id })'>
-                                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(ownpicList[i].CompressImg, 0, ownpicList[i].CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
+                                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(ownpicList[i].CompressImg, 0, ownpicList[i].CompressImg.Length)" style="width:150px;height:150px;border-radius: 15px 15px 15px 15px; display:inline;" />
                                 </a>
 
                             }
@@ -90,7 +90,7 @@
                                 <div class="imagebox">
                                     <a href='@Url.Action("AlbumDetails", "AlbumDetails", new { id = alb.Id }, null)'>
 
-                                        <img src="data:image/jpeg;base64, @Convert.ToBase64String(@alb.Pictures.LastOrDefault().CompressImg, 0, @alb.Pictures.LastOrDefault().CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
+                                        <img src="data:image/jpeg;base64, @Convert.ToBase64String(@alb.Pictures.LastOrDefault().CompressImg, 0, @alb.Pictures.LastOrDefault().CompressImg.Length)" style="width:150px;height:150px;border-radius: 15px 15px 15px 15px; display:inline;" />
                                         <p>@Html.ActionLink(alb.Name, "AlbumDetails", "AlbumDetails", new { id = alb.Id }, null)</p>
 
                                     </a>
@@ -119,7 +119,7 @@
                             for (int i = 0; i < likedpicList.Count(); i++)
                             {
                                 <a href='@Url.Action("Details", "PictureDetails", new { id = @likedpicList[i].Id })'>
-                                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(likedpicList[i].CompressImg, 0, likedpicList[i].CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
+                                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(likedpicList[i].CompressImg, 0, likedpicList[i].CompressImg.Length)" style="width:150px;height:150px;border-radius: 15px 15px 15px 15px; display:inline;" />
                                 </a>
                             }
                         }
