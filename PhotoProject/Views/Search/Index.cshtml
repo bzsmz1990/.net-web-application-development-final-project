@@ -16,7 +16,7 @@
                 {
 
                     <a href='@Url.Action("Details", "PictureDetails", new { id = @Model.Pictures[i].Id })'>
-                        <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Pictures[i].CompressImg, 0, Model.Pictures[i].CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
+                        <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Pictures[i].CompressImg, 0, Model.Pictures[i].CompressImg.Length)" style="width:190px;height:190px;border-radius: 15px 15px 15px 15px; display:inline;" />
                     </a>
 
                 }
