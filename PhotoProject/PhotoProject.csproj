@@ -224,6 +224,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PictureDetailsController.cs" />
+    <Compile Include="Controllers\PurchasedThingsController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UserHomeController.cs" />
@@ -348,6 +349,7 @@
     <Content Include="Views\AlbumDetails\AddPicInAlbum.cshtml" />
     <Content Include="Views\AlbumDetails\Error.cshtml" />
     <Content Include="Views\UserHome\OwnedPictures.cshtml" />
+    <Content Include="Views\PurchasedThings\OriginalImg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

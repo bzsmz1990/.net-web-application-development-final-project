@@ -7,36 +7,36 @@
 <div class="cartpage">
     <div class="col-2">
     </div>
-        <div class="myWorkContent3">
-            <div id="insideDiv">
-                @if (Model.Item1.Count > 0)
+    <div class="myWorkContent3">
+        <div id="insideDiv">
+            @if (Model.Item1.Count > 0)
+            {
+                foreach (DataLayer.Picture pic in Model.Item1)
                 {
-                    foreach (DataLayer.Picture pic in Model.Item1)
-                    {
-                        <div class="continer">
-                            <div class="imagegallery">
-                                <a href='@Url.Action("Details", "PictureDetails", new { id = pic.Id })'>
-                                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(pic.CompressImg, 0, pic.CompressImg.Length)" style="width:150px;height:150px;border-radius: 15px 15px 15px 15px; display:inline;" />
-                                </a>
+                    <div class="continer">
+                        <div class="imagegallery">
+                            <a href='@Url.Action("OriginalImg", "PurchasedThings", new { id = pic.Id })'>
+                                <img src="data:image/jpeg;base64, @Convert.ToBase64String(pic.CompressImg, 0, pic.CompressImg.Length)" style="width:150px;height:150px;border-radius: 15px 15px 15px 15px; display:inline;" />
                                 <p> @pic.Title</p>
-                            </div>
-
+                            </a>
                         </div>
-                    }
-                }
-                @if (Model.Item2.Count > 0)
-                {
-                    foreach (DataLayer.Album al in Model.Item2)
-                    {
-                        <p> @al.Name</p>
-                    }
-                }
-                @if (Model.Item1.Count + Model.Item2.Count <= 0)
-                {
-                    <p> You have not yet purchased any pictures</p>
-                }
-            </div>
 
-                        
                     </div>
+                }
+            }
+            @if (Model.Item2.Count > 0)
+            {
+                foreach (DataLayer.Album al in Model.Item2)
+                {
+                    <p> @al.Name</p>
+                }
+            }
+            @if (Model.Item1.Count + Model.Item2.Count <= 0)
+            {
+                <p> You have not yet purchased any pictures</p>
+            }
         </div>
+
+
+    </div>
+</div>

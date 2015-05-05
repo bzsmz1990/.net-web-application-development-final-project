@@ -51,7 +51,11 @@ namespace PhotoProject.Controllers
         public ActionResult AddPicInAlbum(int? id)
         {
             Album currentalbum = db.Albums.Find(id);
+            var userID = User.Identity.GetUserId();
+            var albumownerid = currentalbum.UserId;
+            bool isOwner = userID == albumownerid ? true : false;
 
+            ViewBag.isOwner = isOwner;
             return View(currentalbum);
         }
 

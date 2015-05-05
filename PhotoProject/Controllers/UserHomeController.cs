@@ -135,6 +135,8 @@ namespace PhotoProject.Controllers
                 
                 foreach (Transaction tr in trans)
                 {
+                    if (tr.PicturesBeingSold.Count == 0)
+                        break;
                     foreach (Picture pic in tr.PicturesBeingSold)
                     {
                         if (!pics.Contains(pic))
@@ -146,6 +148,8 @@ namespace PhotoProject.Controllers
                 
                 foreach (Transaction tr in trans)
                 {
+                    if (tr.AlbumsBeingSold.Count == 0)
+                        break;
                     foreach (Album al in tr.AlbumsBeingSold)
                     {
                         if (!albums.Contains(al))

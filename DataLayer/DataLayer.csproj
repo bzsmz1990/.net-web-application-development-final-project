@@ -167,10 +167,6 @@
     <Compile Include="Migrations\201504302124419_I don%27t know what has been changed.Designer.cs">
       <DependentUpon>201504302124419_I don%27t know what has been changed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201505050144105_modify FirstName limit.cs" />
-    <Compile Include="Migrations\201505050144105_modify FirstName limit.Designer.cs">
-      <DependentUpon>201505050144105_modify FirstName limit.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PhotoContext.cs" />
     <Compile Include="Picture.cs" />
@@ -207,9 +203,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504302124419_I don%27t know what has been changed.resx">
       <DependentUpon>201504302124419_I don%27t know what has been changed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505050144105_modify FirstName limit.resx">
-      <DependentUpon>201505050144105_modify FirstName limit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

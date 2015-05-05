@@ -1,0 +1,7 @@
+﻿@model DataLayer.Picture
+
+@{
+    ViewBag.Title = "OriginalImg";
+}
+
+<img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.OriginalImg, 0, Model.OriginalImg.Length)" />

@@ -253,6 +253,12 @@ namespace Business_Logic
                 return null;
         }
 
+        public Picture GetSpecificPicture(int id)
+        {
+            Picture pic = db.Pictures.Single(emp => emp.Id == id);
+            return pic;
+        }
+
         public ICollection<Picture> GetLikedPictures(string userID)
         {
             UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
