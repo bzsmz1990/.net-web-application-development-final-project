@@ -47,7 +47,7 @@ namespace Business_Logic
             return user.Following.ToList();
         }
 
-        public UserInfo FollowUser(string currentUserId, string followingUserId)
+        public Tuple<UserInfo, bool> FollowUser(string currentUserId, string followingUserId)
         {
             UserInfo currentUser = db.UserInfos.Single(u => u.UserId == currentUserId);
             UserInfo followingUser = db.UserInfos.Single(u => u.UserId == followingUserId);
@@ -62,7 +62,10 @@ namespace Business_Logic
             if (currentUser.Following.Contains(followingUser))
             {
                 currentUser.Following.Remove(followingUser);
-                return followingUser;
+                //QUESTION: Are we subtracting credit if a user gets unfollowed?
+                followingUser.AccountBalance -= NUM_POINTS_PER_FOLLOW;
+                followingUser.Followers.Remove(currentUser);
+                return Tuple.Create(followingUser, false);
             }
 
             currentUser.Following.Add(followingUser);
@@ -74,7 +77,7 @@ namespace Business_Logic
                 followingUser.Followers.Add(currentUser);
             }
 
-            return followingUser;
+            return Tuple.Create(followingUser, true);
         } 
 
         //TODO: NEEDS TO BE CALLED FROM THE CHECKOUT

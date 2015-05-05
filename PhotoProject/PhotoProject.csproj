@@ -346,6 +346,7 @@
     </Content>
     <Content Include="Views\AlbumDetails\AlbumDetails.cshtml" />
     <Content Include="Views\AlbumDetails\AddPicInAlbum.cshtml" />
+    <Content Include="Views\AlbumDetails\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

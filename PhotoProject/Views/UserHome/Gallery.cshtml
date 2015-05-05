@@ -9,19 +9,34 @@
             <div class="userinfo">
                 <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRVOdD-sjx4UA-Mym9oOQ8hQRrmCm8imPkYXWefj9a_dsnvXuzZ" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px">
                 <h1>@Model.Owner.FullName</h1>
+                @if (!@Model.isOwner)
+                {
+                    if (ViewBag.FollowAction)
+                    {
+                        @Html.ActionLink("Unfollow", "FollowUser", new { @id = Model.Owner.UserId })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Follow", "FollowUser", new { @id = Model.Owner.UserId })
+                    }
+
+                }
                 <h2>Account: @Model.Owner.AccountBalance</h2>
             </div>
-            <div class="userbuttons">
-                <p class="userpagebutton">
-                    @Html.ActionLink("Manage Account", "Index", "Manage", routeValues: null, htmlAttributes: new { @class = "button1" })
-                </p>
-                <p class="userpagebutton">
-                    @Html.ActionLink("Upload Image", "Upload", "Upload", routeValues: null, htmlAttributes: new { @class = "button1" })
-                </p>
-                <p class="userpagebutton">
-                    @Html.ActionLink("Create Album", "CreateNewAlbum", "UserHome", routeValues: null, htmlAttributes: new { @class = "button1" })
-                </p>
-            </div>
+            @if (@Model.isOwner)
+            {
+                <div class="userbuttons">
+                    <p class="userpagebutton">
+                        @Html.ActionLink("Manage Account", "Index", "Manage", routeValues: null, htmlAttributes: new { @class = "button1" })
+                    </p>
+                    <p class="userpagebutton">
+                        @Html.ActionLink("Upload Image", "Upload", "Upload", routeValues: null, htmlAttributes: new { @class = "button1" })
+                    </p>
+                    <p class="userpagebutton">
+                        @Html.ActionLink("Create Album", "CreateNewAlbum", "UserHome", routeValues: null, htmlAttributes: new { @class = "button1" })
+                    </p>
+                </div>
+            }
         </div>
         <div class="uploadedimages">
             <h4>@Model.Owner.FirstName's uploaded pictures</h4>
@@ -66,16 +81,10 @@
                         }
                         else
                         {
-
                             foreach (DataLayer.Album alb in albums)
                             {
-                                <a href='@Url.Action("AlbumDetails", "AlbumDetails", new { id = alb.Id }, null)'>
-                                    <img src="data:image/jpeg;base64, @Convert.ToBase64String(@alb.Pictures.LastOrDefault().CompressImg, 0, @alb.Pictures.LastOrDefault().CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
-                                    @Html.ActionLink(alb.Name, "AlbumDetails", "AlbumDetails", new { id = alb.Id }, null)
-                                 </a>
+                                @Html.ActionLink(alb.Name, "AlbumDetails", "AlbumDetails", routeValues: new {id = alb.Id}, htmlAttributes: new { @class = "button1" })
                             }
-                           
-
                         }
                     }
                 </div>

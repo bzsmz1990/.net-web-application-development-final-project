@@ -22,6 +22,13 @@ namespace PhotoProject.Controllers
         }
 
         [AllowAnonymous]
+        public ActionResult Error(string errorMessage)
+        {
+            ViewBag.Message = errorMessage;
+            return View();
+        }
+
+        [AllowAnonymous]
         public ActionResult AlbumDetails(int? id)
         {
             if (id == null)
@@ -59,7 +66,7 @@ namespace PhotoProject.Controllers
                     Picture pic = currentUser.OwnedPictures.Single(p => p.Id == picId);
                     if (formcollection[key.ToString()].Contains("true"))
                     {
-                        if (!currentalbum.Pictures.Any(p => p.Id == picId))
+                        if (pic.Album==null)
                             currentalbum.Pictures.Add(pic);
                     }
                 }
