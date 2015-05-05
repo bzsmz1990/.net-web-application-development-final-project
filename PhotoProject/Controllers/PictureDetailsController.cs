@@ -18,8 +18,7 @@ namespace PhotoProject.Controllers
 {
     public class PictureDetailsController : Controller
     {
-        private static ApplicationDbContext db = new ApplicationDbContext();
-        private PictureHelper picHelp = new PictureHelper(db);
+        private PictureHelper picHelp = new PictureHelper(AlbumDetailsController.db);
 
         // GET: PictureDetails/Details/5
         public ActionResult Details(int? id)
@@ -29,14 +28,14 @@ namespace PhotoProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture = db.Pictures.Find(id);
+            Picture picture = AlbumDetailsController.db.Pictures.Find(id);
             var userId = User.Identity.GetUserId();
             ViewBag.isOwner = User.Identity.GetUserId() == picture.OwnerId;
 
             UserInfo userInfo = null;
             if (userId != null)
             {
-                userInfo = db.UserInfos.Single(u => u.UserId == userId);
+                userInfo = AlbumDetailsController.db.UserInfos.Single(u => u.UserId == userId);
             }
 
             ViewBag.LikeAction = userInfo == null ? false : userInfo.LikedPictures.Contains(picture); //This will be true if the user has liked the picture and false if the user has unliked the picture
@@ -90,7 +89,7 @@ namespace PhotoProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Picture picture = db.Pictures.Find(id);
+            Picture picture = AlbumDetailsController.db.Pictures.Find(id);
             if (picture == null)
             {
                 return HttpNotFound();
@@ -106,7 +105,7 @@ namespace PhotoProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, FormCollection form)
         {
-            Picture dbPicture = db.Pictures.Find(id);
+            Picture dbPicture = AlbumDetailsController.db.Pictures.Find(id);
 
             if (dbPicture == null)
             {
@@ -117,7 +116,7 @@ namespace PhotoProject.Controllers
             bool updateSuccessful = TryUpdateModel(dbPicture, new[] { "Title", "Cost", "Location", "Description" });
             if (updateSuccessful)
             {
-                db.SaveChanges();
+                AlbumDetailsController.db.SaveChanges();
                 return PartialView(dbPicture);
                 //return RedirectToAction("Details", "PictureDetails", new { id = id });
               /*  return RedirectToAction("Details", new RouteValueDictionary(new { controller = "PictureDetails", action = "Details", id = dbPicture.Id }));*/

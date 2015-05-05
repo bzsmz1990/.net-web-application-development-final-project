@@ -53,23 +53,23 @@ namespace Tests
             Assert.AreEqual(0, userData.ElementAt(0).AccountBalance);
             Assert.AreEqual(0, userData.ElementAt(1).AccountBalance);
 
-            UserInfo followingUser = helper.FollowUser(userData.ElementAt(0).UserId, userData.ElementAt(1).UserId);
+            Tuple<UserInfo, bool> followingUser = helper.FollowUser(userData.ElementAt(0).UserId, userData.ElementAt(1).UserId);
 
-            Assert.IsNotNull(followingUser);
+            Assert.IsNotNull(followingUser.Item1);
             Assert.AreEqual(1, userData.ElementAt(0).Following.Count);
             Assert.AreEqual(1, userData.ElementAt(1).Followers.Count);
             Assert.AreEqual(UserInfoHelper.NUM_POINTS_PER_FOLLOW, userData.ElementAt(1).AccountBalance);
 
             followingUser = helper.FollowUser(userData.ElementAt(2).UserId, userData.ElementAt(1).UserId);
 
-            Assert.IsNotNull(followingUser);
+            Assert.IsNotNull(followingUser.Item1);
             Assert.AreEqual(1, userData.ElementAt(2).Following.Count);
             Assert.AreEqual(2, userData.ElementAt(1).Followers.Count);
             Assert.AreEqual(UserInfoHelper.NUM_POINTS_PER_FOLLOW * 2, userData.ElementAt(1).AccountBalance);
 
             helper.FollowUser(userData.ElementAt(0).UserId, userData.ElementAt(1).UserId);
 
-            Assert.IsNotNull(followingUser);
+            Assert.IsNotNull(followingUser.Item1);
             Assert.AreEqual(0, userData.ElementAt(0).Following.Count);
             Assert.AreEqual(2, userData.ElementAt(1).Followers.Count);
             Assert.AreEqual(UserInfoHelper.NUM_POINTS_PER_FOLLOW * 2, userData.ElementAt(1).AccountBalance);

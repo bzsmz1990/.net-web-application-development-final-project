@@ -11,8 +11,7 @@ namespace PhotoProject.Controllers
     [RequireHttps]
     public class HomeController : Controller
     {
-        private static ApplicationDbContext db = new ApplicationDbContext();
-        private static PictureHelper picHelp = new PictureHelper(db);
+        private static PictureHelper picHelp = new PictureHelper(AlbumDetailsController.db);
 
         public ActionResult Index()
         {

@@ -13,9 +13,8 @@ namespace PhotoProject.Controllers
     [Authorize]
     public class UploadController : Controller
     {
-        private static ApplicationDbContext db = new ApplicationDbContext();
         private static PictureProcess picPro = new PictureProcess();
-        private static PictureHelper picHelp = new PictureHelper(db);
+        private static PictureHelper picHelp = new PictureHelper(AlbumDetailsController.db);
 
         // GET: Upload
         public ActionResult Index()
@@ -40,7 +39,7 @@ namespace PhotoProject.Controllers
         public ActionResult Upload(FormCollection formcollection)
         {
             var userID = User.Identity.GetUserId();
-            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
+            UserInfo currentUser = AlbumDetailsController.db.UserInfos.Single(emp => emp.UserId == userID);
 
             //based on user's level, define whether the user still have room to upload
             bool havePositionToUpload = picHelp.VerifyUserLevel(currentUser);
@@ -75,9 +74,9 @@ namespace PhotoProject.Controllers
 
                     using (ApplicationDbContext tempdb = new ApplicationDbContext())
                     {
-                        db.Pictures.Add(pic);
+                        AlbumDetailsController.db.Pictures.Add(pic);
                         currentUser.OwnedPictures.Add(pic);
-                        db.SaveChanges();
+                        AlbumDetailsController.db.SaveChanges();
                     }
                     
 

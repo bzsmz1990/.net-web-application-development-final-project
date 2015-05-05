@@ -18,14 +18,13 @@ namespace PhotoProject.Controllers
     [Authorize]
     public class CartController : Controller
     {
-        private static ApplicationDbContext db = new ApplicationDbContext();
-        private UserInfoHelper userHelp = new UserInfoHelper(db);
+        private UserInfoHelper userHelp = new UserInfoHelper(AlbumDetailsController.db);
 
         // GET: Cart
         public ActionResult Index()
         {
             var userID = User.Identity.GetUserId();
-            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
+            UserInfo currentUser = AlbumDetailsController.db.UserInfos.Single(emp => emp.UserId == userID);
             Cart cart = currentUser.Cart;
             
             if (cart == null)
@@ -59,7 +58,7 @@ namespace PhotoProject.Controllers
         {
 
             var userID = User.Identity.GetUserId();
-            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
+            UserInfo currentUser = AlbumDetailsController.db.UserInfos.Single(emp => emp.UserId == userID);
             Cart cart = currentUser.Cart;
             if (cart.PicturesInCart == null && cart.AlbumsInCart == null)
             {
@@ -85,7 +84,7 @@ namespace PhotoProject.Controllers
         public ActionResult Submit()
         {
             var userID = User.Identity.GetUserId();
-            UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
+            UserInfo user = AlbumDetailsController.db.UserInfos.Single(emp => emp.UserId == userID);
             List<Transaction> picTrans = CartHelper.generatePictureTransactions(user);
             List<Transaction> albumTrans = CartHelper.generateAlbumTransactions(user);
 
@@ -103,8 +102,8 @@ namespace PhotoProject.Controllers
                 decimal total = trans.TotalAmount;
                 user.AccountBalance -= total;
                 trans.Seller.AccountBalance += total;
-                db.Transactions.Add(trans);
-                db.SaveChanges();
+                AlbumDetailsController.db.Transactions.Add(trans);
+                AlbumDetailsController.db.SaveChanges();
                 userHelp.SetLevel(trans.Seller);
             }
 
@@ -140,8 +139,8 @@ namespace PhotoProject.Controllers
         public ActionResult buyPicture(int picId)
         {
             var userID = User.Identity.GetUserId();
-            UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
-            Picture pic = db.Pictures.Single(c => c.Id == picId);
+            UserInfo user = AlbumDetailsController.db.UserInfos.Single(emp => emp.UserId == userID);
+            Picture pic = AlbumDetailsController.db.Pictures.Single(c => c.Id == picId);
             if (pic != null && user.OwnedPictures.Contains(pic))
             {
                 ViewBag.Message = "You already own that picture";
@@ -150,7 +149,7 @@ namespace PhotoProject.Controllers
             Cart cart = user.Cart;
             cart.PicturesInCart = (cart.PicturesInCart ?? new List<Picture>());
             cart.PicturesInCart.Add(pic);
-            db.SaveChanges();
+            AlbumDetailsController.db.SaveChanges();
             ViewBag.Message = "Just added " + picId;
             return RedirectToAction("Index", "Cart");
 
@@ -159,11 +158,11 @@ namespace PhotoProject.Controllers
         public ActionResult buyAlbum(int albumId)
         {
             var userID = User.Identity.GetUserId();
-            UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
+            UserInfo user = AlbumDetailsController.db.UserInfos.Single(emp => emp.UserId == userID);
             Cart cart = user.Cart;
 
 
-            CartHelper helper = new CartHelper(db);
+            CartHelper helper = new CartHelper(AlbumDetailsController.db);
             if (helper.buyAlbum(albumId, cart.UserId)) {
                 ViewBag.Message = "Just added " + albumId;
                 return RedirectToAction("Index", "Cart");
@@ -184,7 +183,7 @@ namespace PhotoProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cart cart = db.Carts.Find(id);
+            Cart cart = AlbumDetailsController.db.Carts.Find(id);
             if (cart == null)
             {
                 return HttpNotFound();
@@ -195,7 +194,7 @@ namespace PhotoProject.Controllers
         // GET: Cart/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.UserInfos, "UserId", "FirstName");
+            ViewBag.UserId = new SelectList(AlbumDetailsController.db.UserInfos, "UserId", "FirstName");
             return View();
         }
 
@@ -208,12 +207,12 @@ namespace PhotoProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Carts.Add(cart);
-                db.SaveChanges();
+                AlbumDetailsController.db.Carts.Add(cart);
+                AlbumDetailsController.db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserId = new SelectList(db.UserInfos, "UserId", "FirstName", cart.UserId);
+            ViewBag.UserId = new SelectList(AlbumDetailsController.db.UserInfos, "UserId", "FirstName", cart.UserId);
             return View(cart);
         }
 
@@ -224,12 +223,12 @@ namespace PhotoProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cart cart = db.Carts.Find(id);
+            Cart cart = AlbumDetailsController.db.Carts.Find(id);
             if (cart == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(db.UserInfos, "UserId", "FirstName", cart.UserId);
+            ViewBag.UserId = new SelectList(AlbumDetailsController.db.UserInfos, "UserId", "FirstName", cart.UserId);
             return View(cart);
         }
 
@@ -242,11 +241,11 @@ namespace PhotoProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cart).State = EntityState.Modified;
-                db.SaveChanges();
+                AlbumDetailsController.db.Entry(cart).State = EntityState.Modified;
+                AlbumDetailsController.db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(db.UserInfos, "UserId", "FirstName", cart.UserId);
+            ViewBag.UserId = new SelectList(AlbumDetailsController.db.UserInfos, "UserId", "FirstName", cart.UserId);
             return View(cart);
         }
 
@@ -255,7 +254,7 @@ namespace PhotoProject.Controllers
         {
 
             var userID = User.Identity.GetUserId();
-            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
+            UserInfo currentUser = AlbumDetailsController.db.UserInfos.Single(emp => emp.UserId == userID);
             Cart cart = currentUser.Cart;
             if (cart == null)
             {
@@ -267,7 +266,7 @@ namespace PhotoProject.Controllers
                 if (pic.Id == picId)
                 {
                     cart.PicturesInCart.Remove(pic);
-                    db.SaveChanges();
+                    AlbumDetailsController.db.SaveChanges();
                     break;
                 }
             }
@@ -278,7 +277,7 @@ namespace PhotoProject.Controllers
         public ActionResult DeleteAl(int albumID)
         {
             var userID = User.Identity.GetUserId();
-            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
+            UserInfo currentUser = AlbumDetailsController.db.UserInfos.Single(emp => emp.UserId == userID);
             Cart cart = currentUser.Cart;
             if (cart == null)
             {
@@ -289,7 +288,7 @@ namespace PhotoProject.Controllers
                 if (al.Id == albumID)
                 {
                     cart.AlbumsInCart.Remove(al);
-                    db.SaveChanges();
+                    AlbumDetailsController.db.SaveChanges();
                     break;
                 }
             }
