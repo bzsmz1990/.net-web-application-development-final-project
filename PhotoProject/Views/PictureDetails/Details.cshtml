@@ -12,7 +12,7 @@
                     @Html.ActionLink("Edit | ", "Edit", new { id = Model.Id })
 
                     @*<a href="javascript:void(0);" onclick="history.go(-1);"> Back to Gallery | </a>*@
-                    @Html.ActionLink("Back to Gallery | ", "Gallery", "UserHome", new { @id = Model.Owner.UserId }, null)
+                    @Html.ActionLink(Model.Owner.FullName + "'s Gallery |", "Gallery", "UserHome", new { id = Model.OwnerId }, null)
                     @{
                         if (ViewBag.LikeAction)
                         {
