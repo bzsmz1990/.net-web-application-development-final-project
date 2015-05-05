@@ -42,53 +42,56 @@
                 <form method="get" action="/Search/SearchResults2" id="search">
                     <input name="searchTerm" type="text" size="80" placeholder="Search..." />
                     @*<input type="button" value="search" onclick="location.href='<%: Url.Action("")" size="80" placeholder="Search..." />*@
-                    </form>
-                </div><!-- name -->
+                </form>
+            </div><!-- name -->
 
 
-                <div class="header-part dropdown acc-select">
-                    <div class="dd-content">
+            <div class="header-part dropdown acc-select">
+                <div class="dd-content">
 
 
-                        @if (Request.IsAuthenticated)
+                    @if (Request.IsAuthenticated)
+                    {
+                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                         {
-                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                            {
-                                @Html.AntiForgeryToken()
+                            @Html.AntiForgeryToken()
 
-                                <ul class="nav navbar-nav navbar-right">
-                                    <li>
-                                        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Gallery", "UserHome", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { title = "Gallery" })
-                                    </li>
-                                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
-                                </ul>
-                            }
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Gallery", "UserHome", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { title = "Gallery" })
+                                </li>
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
+                            </ul>
                         }
-                        else
-                        {
-                            <a href="#login_form" id="login_pop">Login&nbsp;</a>
-                            @Html.ActionLink("Register", "Register", "Account")
-                            Html.RenderPartial("_LoginPopUp", new DataLayer.LoginViewModel());
-                        }
+                    }
+                    else
+                    {
+                        <a href="#login_form" id="login_pop">Login&nbsp;</a>
+                        @Html.ActionLink("Register", "Register", "Account")
+                        Html.RenderPartial("_LoginPopUp", new DataLayer.LoginViewModel());
+                    }
 
 
 
 
 
-                    </div><!-- .dd-content -->
-                </div><!-- LOGIN MENU -->
-                <!-- Go to your Cart -->
+                </div><!-- .dd-content -->
+            </div><!-- LOGIN MENU -->
+            <!-- Go to your Cart -->
+            @if (Request.IsAuthenticated)
+            {
                 <a style="display:block" href="Cart.html">
 
                     <div class="header-part dropdown mini-cart">
                         <div class="dd-bg"></div>
                         <div class="dd-content">
+
                             @Html.ActionLink("Cart", "Index", "Cart")
 
                             <div class="icon-holder il">
                                 <svg version="1.1" class="cart-icon" id="Layer_1" x="0px" y="0px"
                                      width="34px" height="30px" viewBox="-8.5 -7.5 34 30" enable-background="new -8.5 -7.5 34 30" xml:space="preserve">
-    <g>
+                                <g>
                                 <path fill="#FFFFFF" d="M-5.353-7.497c0.539,0,1.084-0.002,1.623,0C-3-7.493-2.552-7.184-2.292-6.502
 
             c0.38,1.019,0.768,2.038,1.131,3.064c0.092,0.266,0.23,0.344,0.51,0.344C7.535-3.1,15.726-3.096,23.913-3.102
@@ -130,28 +133,29 @@
                         </div><!-- .dd-content -->
                     </div><!-- .dropdown.mini-cart -->
                 </a>
-            </div><!-- .header-top -->
+            }
+        </div><!-- .header-top -->
 
-        </div><!-- #masthead -->
+    </div><!-- #masthead -->
 
-        <div class="container body-content">
-            @RenderBody()
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    <div class="footer-bottom2">
+
+        <div class="logo-container">
+            <a href="@Url.Action("Index", "Home")">
+                <img src="http://gapsa.upenn.edu/wp-content/uploads/2013/08/Camera-Icon2.jpg" alt="HTML tutorial" style="width:42px;height:42px;border:0"> <!-- google image, dimtastic.com -->
+            </a>
         </div>
 
-        <div class="footer-bottom2">
-
-            <div class="logo-container">
-                <a href="@Url.Action("Index", "Home")">
-                    <img src="http://gapsa.upenn.edu/wp-content/uploads/2013/08/Camera-Icon2.jpg" alt="HTML tutorial" style="width:42px;height:42px;border:0"> <!-- google image, dimtastic.com -->
-                </a>
-            </div>
-
-            <div class="site-info">
-                <p>&copy; @DateTime.Now.Year - PhotoBucket</p>
-            </div><!-- .site-info -->
-        </div><!-- .footer-bottom -->
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-    </body>
-    </html>
+        <div class="site-info">
+            <p>&copy; @DateTime.Now.Year - PhotoBucket</p>
+        </div><!-- .site-info -->
+    </div><!-- .footer-bottom -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
