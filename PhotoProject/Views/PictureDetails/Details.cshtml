@@ -9,7 +9,11 @@
             <div class="imagecontainer">
                 <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.CompressImg, 0, Model.CompressImg.Length)" style="width:400px;height:auto;border-radius: 15px 15px 15px 15px; vertical-align:middle;" />
                 <div>
-                    @Html.ActionLink("Edit | ", "Edit", new { id = Model.Id })
+                    @if (!ViewBag.isOwner)
+                    {
+                       @Html.ActionLink("Edit | ", "Edit", new { id = Model.Id })
+                    }
+
 
                     @*<a href="javascript:void(0);" onclick="history.go(-1);"> Back to Gallery | </a>*@
                     @Html.ActionLink(Model.Owner.FullName + "'s Gallery |", "Gallery", "UserHome", new { id = Model.OwnerId }, null)
@@ -18,7 +22,7 @@
 
                     @if (!ViewBag.isOwner)
                     {
-                        @Html.ActionLink("Add to Cart | ", "buyPicture", "Cart", new { picId = Model.Id }, null) @*ADD CONTROLLER TO MAKE IT WORK*@
+                        @Html.ActionLink("Add to Cart | ", "buyPicture", "Cart", new { picId = Model.Id }, null) 
                     }
                     @Html.ActionLink("Report Photo", "LikePicture", new { @id = Model.Id })
 

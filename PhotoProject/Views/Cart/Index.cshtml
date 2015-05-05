@@ -10,6 +10,7 @@
 
 <div class="cartpage">
     <div class="col-2">
+        <h2> Pictures in your cart:</h2>
         @if (Model.PicturesInCart.Count != 0)
         {
             foreach (DataLayer.Picture pic in Model.PicturesInCart)
@@ -21,10 +22,12 @@
 
            
         }
+        <h2> Albums in your cart:</h2>
         @if (Model.AlbumsInCart.Count != 0)
         {
             foreach (DataLayer.Album album in Model.AlbumsInCart)
             {
+                <img src="data:image/jpeg;base64, @Convert.ToBase64String(@album.Pictures.LastOrDefault().CompressImg, 0, @album.Pictures.LastOrDefault().CompressImg.Length)" style="width:150px;height:150px;border-radius: 15px 15px 15px 15px; display:inline;" />
                 <p>Album: @album.Name | @Html.ActionLink("Delete", "DeleteAl", new {albumId = album.Id})</p>
             }
         }
