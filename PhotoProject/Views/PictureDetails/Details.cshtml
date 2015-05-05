@@ -9,19 +9,18 @@
             <div class="imagecontainer">
                 <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.CompressImg, 0, Model.CompressImg.Length)" style="width:400px;height:auto;border-radius: 15px 15px 15px 15px; vertical-align:middle;" />
                 <div>
-                    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id })*@
-                    <a href="#login_form" id="login_pop">Edit&nbsp;|</a>
+                    @Html.ActionLink("Edit |", "Edit", new { id = Model.Id })
                     
-                    <a href="javascript:void(0);" onclick="history.go(-1);">Back to Gallery | </a>
+                    <a href="javascript:void(0);" onclick="history.go(-1);"> Back to Gallery | </a>
 
                     @{
                         if (ViewBag.LikeAction)
                         {
-                            @Html.ActionLink("Unlike|", "LikePicture", new { @id = Model.Id })
+                            @Html.ActionLink("Unlike |", "LikePicture", new { @id = Model.Id })
                         }
                         else
                         {
-                            @Html.ActionLink("Like|", "LikePicture", new { @id = Model.Id })
+                            @Html.ActionLink("Like |", "LikePicture", new { @id = Model.Id })
                         }
 }
 
@@ -29,7 +28,7 @@
                     @if (!ViewBag.isOwner) {
                         @Html.ActionLink("Add to Cart |", "buyPicture", "Cart", new { picId = Model.Id }, null) @*ADD CONTROLLER TO MAKE IT WORK*@
                     }
-                    @Html.ActionLink("Report Photo |", "LikePicture", new { @id = Model.Id }) @*ADD CONTROLLER TO MAKE IT WORK*@
+                    @Html.ActionLink("Report Photo", "LikePicture", new { @id = Model.Id }) 
                     
                     <p> Number Of Likes: @Html.DisplayFor(model => model.NumberOfLikes)</p>
                 </div>
@@ -91,7 +90,3 @@
 </div>
 
 
-<a href="#x" class="overlay" id="login_form"></a>
-<div class="popup">
-    @{Html.RenderAction("Edit", "PictureDetails");}
-</div>
