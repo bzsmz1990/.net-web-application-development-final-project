@@ -17,7 +17,7 @@ namespace DataLayer
         public virtual ApplicationUser User { get; set; }
 
         [Required]
-        [StringLength(25, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 5)]
+        [StringLength(25, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
         public string FirstName { get; set; }
 
         [StringLength(1, ErrorMessage = "The {0} should be {1} character long")]
