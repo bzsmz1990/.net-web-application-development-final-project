@@ -41,7 +41,8 @@
 
                     <tr>
                         <td>@Html.DisplayNameFor(model => model.Owner.FullName):</td>
-                        <td>@Html.DisplayFor(model => model.Owner.FullName)</td>
+                        <td>@Html.ActionLink(Model.Owner.FullName, "Gallery", "UserHome", new { id =Model.OwnerId}, null)</td>
+                        @*<td>@Html.DisplayFor(model => model.Owner.FullName)</td>*@
                     </tr>
 
 
