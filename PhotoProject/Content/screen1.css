@@ -994,7 +994,6 @@ background:none;
   /* The width of your document, I suppose */
   width:210%;
   margin: 0 auto;
-  white-space:nowrap; 
   overflow-x: hidden; /*scroll or hidden for the images overflow*/
    
 }
@@ -1167,57 +1166,13 @@ background:none;
     margin-top: 20px;
 }
 
-.albumcreatepage .col-2 .form-horizontal .myWorkContent ul.rig {
-	list-style: none;
-	font-size: 0px;
-	margin-left: -2.5%; /* should match li left margin */
-}
-.albumcreatepage .col-2 .form-horizontal .myWorkContent ul.rig li {
-	display: inline-block;
-	padding: 10px;
-	margin: 0 0 2.5% 2.5%;
-	background: #fff;
-	border: 1px solid #ddd;
-	font-size: 16px;
-	font-size: 1rem;
-	vertical-align: top;
-	box-shadow: 0 0 5px #ddd;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
+.continer {
+    width: 500px;
 }
 
-/* class for 2 columns */
-.albumcreatepage .col-2 .form-horizontal .myWorkContent ul.rig.columns-2 li {
-	width: 27.5%; /* this value + 2.5 should = 50% */
+.continer div {
+   float:left;
 }
-/* class for 3 columns */
-.albumcreatepage .col-2 .form-horizontal .myWorkContent ul.rig.columns-3 li {
-	width: 16.83%; /* this value + 2.5 should = 33% */
-}
-/* class for 4 columns */
-.albumcreatepage .col-2 .form-horizontal .myWorkContent ul.rig.columns-4 li {
-	width: 22.5%; /* this value + 2.5 should = 25% */
-}
- 
-@media (max-width: 480px) {
-	.albumcreatepage .col-2 .form-horizontal .myWorkContent ul.grid-nav li {
-		display: block;
-		margin: 0 0 5px;
-	}
-	.albumcreatepage .col-2 .form-horizontal .myWorkContent ul.grid-nav li a {
-		display: block;
-	}
-	.albumcreatepage .col-2 .form-horizontal .myWorkContent ul.rig {
-		margin-left: 0;
-	}
-	.albumcreatepage .col-2 .form-horizontal .myWorkContent ul.rig li {
-		width: 100% !important; /* over-ride all li styles */
-		margin: 0 0 20px;
-	}
-}
-
-
 
 
 

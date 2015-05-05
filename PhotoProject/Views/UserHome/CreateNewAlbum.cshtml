@@ -40,16 +40,17 @@
                        
                             @foreach (var pic in Model.owner.OwnedPictures)
                             {
-                                <ul class="rig columns-3">
+                                <div class="continer">
+                                    <div class="imagegallery">
 
-                                    <li>
                                         <a href='@Url.Action("Details", "PictureDetails", new { id = @pic.Id })'>
-                                            <img src="data:image/jpeg;base64, @Convert.ToBase64String(pic.CompressImg, 0, pic.CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:block;" />
+                                            <img class="images1" src="data:image/jpeg;base64, @Convert.ToBase64String(pic.CompressImg, 0, pic.CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px;" />
                                             @Html.CheckBox("Picture" + pic.Id)
                                             <label for="Picture@pic.Id" class="inline">@pic.Title</label>
                                         </a>
-                                    </li>
-                                </ul>
+                                    </div>
+                                      
+                                </div>
                             }
                        
                     </div>
