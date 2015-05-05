@@ -24,17 +24,6 @@
                     </div>
                 }
             }
-            @if (Model.Item2.Count > 0)
-            {
-                foreach (DataLayer.Album al in Model.Item2)
-                {
-                    <p>
-                        @Html.ActionLink(al.Name, "PurchasedAlbum", "PurchasedThings", new { id = al.Id }, null)
-                    </p>
-
-                }
-            }
-
             @if (Model.Item1.Count + Model.Item2.Count <= 0)
             {
                 <p> You have not yet purchased any pictures</p>

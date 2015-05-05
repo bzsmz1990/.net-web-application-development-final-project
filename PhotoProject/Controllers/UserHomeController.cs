@@ -152,10 +152,14 @@ namespace PhotoProject.Controllers
                     //    break;
                     foreach (Album al in tr.AlbumsBeingSold)
                     {
-                        if (!albums.Contains(al))
+                        foreach (Picture pic in al.Pictures)
                         {
-                            albums.Add(al);
+                            if (!pics.Contains(pic))
+                            {
+                                pics.Add(pic);
+                            }
                         }
+                        
                     }
                 }
             }
