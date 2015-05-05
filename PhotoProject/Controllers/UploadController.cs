@@ -14,8 +14,8 @@ namespace PhotoProject.Controllers
     public class UploadController : Controller
     {
         private static ApplicationDbContext db = new ApplicationDbContext();
-        private static PictureProcess picPro = new PictureProcess();
-        private static PictureHelper picHelp = new PictureHelper(db);
+        private PictureProcess picPro = new PictureProcess();
+        private PictureHelper picHelp = new PictureHelper(db);
 
         // GET: Upload
         public ActionResult Index()
@@ -73,14 +73,11 @@ namespace PhotoProject.Controllers
                     //create picture
                     Picture pic = picHelp.CreatPicture(userID, formcollection["Title"], Convert.ToDecimal(formcollection["Cost"]), formcollection["Location"], formcollection["Description"], formcollection["Tags"], DateTime.Now, type, data);
 
-                    using (ApplicationDbContext tempdb = new ApplicationDbContext())
-                    {
-                        db.Pictures.Add(pic);
-                        currentUser.OwnedPictures.Add(pic);
-                        db.SaveChanges();
-                    }
+                    db.Pictures.Add(pic);
+                    //db.UserInfos.Single(emp => emp.UserId == userID).OwnedPictures.Add(pic);
+                    currentUser.OwnedPictures.Add(pic);
+                    db.SaveChanges();
                     
-
                     //try
                     //{
                     //    db.SaveChanges();

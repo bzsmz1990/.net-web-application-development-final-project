@@ -58,7 +58,7 @@ namespace PhotoProject.Controllers
         [HttpPost]
         public ActionResult AddPicInAlbum(FormCollection formcollection)
         {
-            Album currentalbum = db.Albums.Find(formcollection["Id"]);
+            Album currentalbum = db.Albums.Find(Convert.ToInt32(formcollection["Id"]));
             var userID = User.Identity.GetUserId();
             UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
             foreach (var key in formcollection.Keys)

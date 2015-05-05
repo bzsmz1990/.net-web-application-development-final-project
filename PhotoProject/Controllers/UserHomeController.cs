@@ -15,10 +15,10 @@ namespace PhotoProject.Controllers
     public class UserHomeController : Controller
     {
         private static ApplicationDbContext db = new ApplicationDbContext();
-        private static PictureProcess picPro = new PictureProcess();
-        private static PictureHelper picHelp = new PictureHelper(db);
-        private static UserInfoHelper userHelp = new UserInfoHelper(db);
-        private static AlbumHelper albumHelp = new AlbumHelper(db);
+        private PictureProcess picPro = new PictureProcess();
+        private PictureHelper picHelp = new PictureHelper(db);
+        private UserInfoHelper userHelp = new UserInfoHelper(db);
+        private AlbumHelper albumHelp = new AlbumHelper(db);
 
         // GET: UserHome
         //public ActionResult Index()
