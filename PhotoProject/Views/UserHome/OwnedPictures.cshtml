@@ -1,0 +1,28 @@
+﻿@model Tuple<List<DataLayer.Picture>, List<DataLayer.Album>>
+
+@{
+    ViewBag.Title = "OwnedPictures";
+}
+
+<div class="managepage">
+    <div class="col-2">
+        @if (Model.Item1.Count > 0)
+        {
+            foreach (DataLayer.Picture pic in Model.Item1)
+            {
+                <p> @pic.Title</p>
+            }
+        }
+        @if (Model.Item2.Count > 0)
+        {
+            foreach (DataLayer.Album al in Model.Item2)
+            {
+                <p> @al.Name</p>
+            }
+        }
+        @if (Model.Item1.Count + Model.Item2.Count <= 0)
+        {
+            <p> You have not yet purchased any pictures</p>
+        }
+    </div>
+</div>
