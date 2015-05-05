@@ -6,25 +6,31 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 <h2></h2>
-<div class="col-2">
-    @{
-        <a href="@Url.Action("Index", "Search", new { sortOrder = "most_purchased" })"> Most Purchased </a> 
- 
-        <a href="@Url.Action("Index", "Search", new { sortOrder = "most_recent" })"> Most Recent </a>
+<div class="searchpage">
+    <div class="myWorkContent4">
+        <div id="insideDiv">
+            @{
 
-    for (int i = 0; i < Model.Pictures.Count(); i++)
-    {
 
-            <a href='@Url.Action("Details", "PictureDetails", new { id = @Model.Pictures[i].Id })'>
-                <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Pictures[i].CompressImg, 0, Model.Pictures[i].CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
-            </a>
+                for (int i = 0; i < Model.Pictures.Count(); i++)
+                {
 
-        }
-    }
+                    <a href='@Url.Action("Details", "PictureDetails", new { id = @Model.Pictures[i].Id })'>
+                        <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Pictures[i].CompressImg, 0, Model.Pictures[i].CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px; display:inline;" />
+                    </a>
 
-    <br />
-    Page @(Model.Pictures.PageCount < Model.Pictures.PageNumber ? 0 : Model.Pictures.PageNumber) of @Model.Pictures.PageCount
+                }
+            }
+            <p>Filter by: </p>
+            <a href="@Url.Action("Index", "Search", new { sortOrder = "most_purchased" })"> 1. Most Purchased </a>
+            <p></p>
 
-    @Html.PagedListPager(Model.Pictures, picturePage => Url.Action("SearchResults", new { picturePage, currentFilter = ViewBag.CurrentFilter }))
+            <a href="@Url.Action("Index", "Search", new { sortOrder = "most_recent" })">2.  Most Recent </a>
+            <p></p>
+           
 
+            @Html.PagedListPager(Model.Pictures, picturePage => Url.Action("SearchResults", new { picturePage, currentFilter = ViewBag.CurrentFilter }))
+            Page @(Model.Pictures.PageCount < Model.Pictures.PageNumber ? 0 : Model.Pictures.PageNumber) of @Model.Pictures.PageCount
+        </div>
+    </div>
 </div>
