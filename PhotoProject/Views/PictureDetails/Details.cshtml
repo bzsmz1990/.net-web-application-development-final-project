@@ -13,16 +13,7 @@
 
                     @*<a href="javascript:void(0);" onclick="history.go(-1);"> Back to Gallery | </a>*@
                     @Html.ActionLink(Model.Owner.FullName + "'s Gallery |", "Gallery", "UserHome", new { id = Model.OwnerId }, null)
-                    @{
-                        if (ViewBag.LikeAction)
-                        {
-                            @Html.ActionLink("Unlike | ", "LikePicture", new { @id = Model.Id })
-                        }
-                        else
-                        {
-                            @Html.ActionLink("Like | ", "LikePicture", new { @id = Model.Id })
-                        }
-                    }
+                   
 
 
                     @if (!ViewBag.isOwner)
@@ -32,6 +23,22 @@
                     @Html.ActionLink("Report Photo", "LikePicture", new { @id = Model.Id })
 
                     <p> Number Of Likes: @Html.DisplayFor(model => model.NumberOfLikes)</p>
+                    @{
+                        if (ViewBag.LikeAction)
+                        {
+                            <a href='@Url.Action("LikePicture", new { @id = Model.Id })'>
+                                <img src="http://swebliss.topstreamers.com/images/icons/vote.png" , style="width:20px;height:20px; margin-top:5px;" />
+                            </a>
+                            @* @Html.ActionLink("Unlike | ", "LikePicture", new { @id = Model.Id })*@
+                        }
+                        else
+                        {
+                            <a href='@Url.Action("LikePicture", new { @id = Model.Id })'>
+                                <img src="http://www.barstoolbeats.com/assets/music/red_heart-c9d3acd6ea74649504559a68579fa62c.png" , style="width:20px;height:20px; margin-top:5px;" />
+                            </a>
+                            @*@Html.ActionLink("Like | ", "LikePicture", new { @id = Model.Id })*@
+                        }
+                    }
                 </div>
             </div>
             <div class="informationcontainer">
