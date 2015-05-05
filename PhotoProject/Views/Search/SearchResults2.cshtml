@@ -8,7 +8,7 @@
 
 <div class="searchpage">
     <div class="col-2">
-        <h2>SearchResults</h2>
+        <h2>Search Results for Images:</h2>
         <div class="myWorkContent">
             <div id="insideDiv">
                 @{
@@ -35,7 +35,34 @@
 
             </div>
         </div>
+        <h2>Search Results for Albums:</h2>
+        <div class="myWorkContent">
+            <div id="insideDiv">
+                @{
+                    if (Model.Albums == null || Model.Albums.Count == 0)
+                    {
+                        <h3>No matching results</h3>
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Model.Albums.Count(); i++)
+                        {
+
+                            <a href='@Url.Action("AlbumDetails", "AlbumDetails", new { id = @Model.Albums[i].Id })'>
+                                <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Albums[i].Pictures.LastOrDefault().CompressImg, 0, Model.Pictures[i].CompressImg.Length)" style="width:190px;height:190px;border-radius: 15px 15px 15px 15px; display:inline;" />
+                            </a>
+
+                        }
+                    }
+                }
+
+                Page @(Model.Albums.PageCount < Model.Albums.PageNumber ? 0 : Model.Albums.PageNumber) of @Model.Albums.PageCount
+
+                @Html.PagedListPager(Model.Albums, albumPage => Url.Action("SearchResults2", new { albumPage, currentFilter = ViewBag.CurrentFilter }))
 
             </div>
-
         </div>
+
+ </div>
+
+</div>

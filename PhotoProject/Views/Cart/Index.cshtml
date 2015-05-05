@@ -14,7 +14,9 @@
         {
             foreach (DataLayer.Picture pic in Model.PicturesInCart)
             {
+                <img src="data:image/jpeg;base64, @Convert.ToBase64String(pic.CompressImg, 0, pic.CompressImg.Length)" style="width:150px;height:150px;border-radius: 15px 15px 15px 15px; display:inline;" />
                 <p> @pic.Title | @Html.ActionLink("Delete", "DeletePic", new { picId = pic.Id })</p>
+    
             }
 
            

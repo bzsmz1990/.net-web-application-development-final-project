@@ -71,10 +71,8 @@ namespace Tests
 
             Assert.IsNotNull(followingUser.Item1);
             Assert.AreEqual(0, userData.ElementAt(0).Following.Count);
-            Assert.AreEqual(2, userData.ElementAt(1).Followers.Count);
-            Assert.AreEqual(UserInfoHelper.NUM_POINTS_PER_FOLLOW * 2, userData.ElementAt(1).AccountBalance);
-
-
+            Assert.AreEqual(1, userData.ElementAt(1).Followers.Count);
+            Assert.AreEqual(UserInfoHelper.NUM_POINTS_PER_FOLLOW, userData.ElementAt(1).AccountBalance);
 
         }
 
