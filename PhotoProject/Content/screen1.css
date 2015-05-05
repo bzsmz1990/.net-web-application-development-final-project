@@ -992,14 +992,14 @@ background:none;
 
 .myWorkContent {
   /* The width of your document, I suppose */
-  width:210%;
+  width:100%;
   margin: 0 auto;
   overflow-x: hidden; /*scroll or hidden for the images overflow*/
    
 }
 #insideDive {
  /* As large as it needs to be */
-  width: 210%;
+  width: 100%;
 }
 
 ::-webkit-scrollbar {
@@ -1167,12 +1167,24 @@ background:none;
 }
 
 .continer {
-    width: 500px;
+    width: 100%;
+    margin-left: 30%;
 }
 
 .continer div {
    float:left;
+   margin-left: 20px;
+   margin-top: 20px;
 }
+
+
+
+
+
+
+
+
+
 
 
 

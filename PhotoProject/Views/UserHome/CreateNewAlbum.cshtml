@@ -6,7 +6,7 @@
 
 
 <div class="albumcreatepage">
-    <div class="col-2">
+
         <h4>Create new album</h4>
 
         @using (Html.BeginForm("CreateNewAlbum", "UserHome", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -14,57 +14,58 @@
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
+                <div class="col-2">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.album.Name, htmlAttributes: new { @class = "control-label col-md-2" })<span class="required">*</span>
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.album.Name, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.album.Name, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.album.Name, htmlAttributes: new { @class = "control-label col-md-2" })<span class="required">*</span>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.album.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.album.Name, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.album.Cost, htmlAttributes: new { @class = "control-label col-md-2" })<span class="required">*</span>
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.album.Cost, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.album.Cost, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.album.Cost, htmlAttributes: new { @class = "control-label col-md-2" })<span class="required">*</span>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.album.Cost, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.album.Cost, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
-
+                 </div>
                 <h2>Select pictures you want to add to the album:</h2>
 
                 <div class="myWorkContent">
                     <div id="insideDiv">
-                       
+
                             @foreach (var pic in Model.owner.OwnedPictures)
                             {
                                 <div class="continer">
                                     <div class="imagegallery">
-
                                         <a href='@Url.Action("Details", "PictureDetails", new { id = @pic.Id })'>
                                             <img class="images1" src="data:image/jpeg;base64, @Convert.ToBase64String(pic.CompressImg, 0, pic.CompressImg.Length)" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px;" />
+                                            <p></p>
                                             @Html.CheckBox("Picture" + pic.Id)
                                             <label for="Picture@pic.Id" class="inline">@pic.Title</label>
                                         </a>
                                     </div>
-                                      
+
                                 </div>
                             }
-                       
+
                     </div>
                 </div>
 
+                <div class="col-2">
+                    <p>
+                        <input type="submit" class="button" value="Create" />
+                    </p>
 
-                <p>
-                    <input type="submit" class="button" value="Create" />
-                </p>
-
-            </div>
+                </div>
+                </div>
         }
     </div>
-</div>
+
 
 
 
