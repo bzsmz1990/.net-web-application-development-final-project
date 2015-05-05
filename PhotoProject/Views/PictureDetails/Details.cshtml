@@ -9,27 +9,28 @@
             <div class="imagecontainer">
                 <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.CompressImg, 0, Model.CompressImg.Length)" style="width:400px;height:auto;border-radius: 15px 15px 15px 15px; vertical-align:middle;" />
                 <div>
-                    @Html.ActionLink("Edit |", "Edit", new { id = Model.Id })
-                    
-                    <a href="javascript:void(0);" onclick="history.go(-1);"> Back to Gallery | </a>
+                    @Html.ActionLink("Edit | ", "Edit", new { id = Model.Id })
 
+                    @*<a href="javascript:void(0);" onclick="history.go(-1);"> Back to Gallery | </a>*@
+                    @Html.ActionLink("Back to Gallery | ", "Gallery", "UserHome", new { @id = Model.Owner.UserId }, null)
                     @{
                         if (ViewBag.LikeAction)
                         {
-                            @Html.ActionLink("Unlike |", "LikePicture", new { @id = Model.Id })
+                            @Html.ActionLink("Unlike | ", "LikePicture", new { @id = Model.Id })
                         }
                         else
                         {
-                            @Html.ActionLink("Like |", "LikePicture", new { @id = Model.Id })
+                            @Html.ActionLink("Like | ", "LikePicture", new { @id = Model.Id })
                         }
-}
-
-                    @*@Html.ActionLink("Back to List", "Gallery", "UserHome", new { @id = Model.Owner.UserId }, null)*@
-                    @if (!ViewBag.isOwner) {
-                        @Html.ActionLink("Add to Cart |", "buyPicture", "Cart", new { picId = Model.Id }, null) @*ADD CONTROLLER TO MAKE IT WORK*@
                     }
-                    @Html.ActionLink("Report Photo", "LikePicture", new { @id = Model.Id }) 
-                    
+
+
+                    @if (!ViewBag.isOwner)
+                    {
+                        @Html.ActionLink("Add to Cart | ", "buyPicture", "Cart", new { picId = Model.Id }, null) @*ADD CONTROLLER TO MAKE IT WORK*@
+                    }
+                    @Html.ActionLink("Report Photo", "LikePicture", new { @id = Model.Id })
+
                     <p> Number Of Likes: @Html.DisplayFor(model => model.NumberOfLikes)</p>
                 </div>
             </div>
@@ -38,20 +39,15 @@
 
                 <table>
 
-
                     <tr>
                         <td>@Html.DisplayNameFor(model => model.Owner.FullName):</td>
-                        <td>@Html.ActionLink(Model.Owner.FullName, "Gallery", "UserHome", new { id =Model.OwnerId}, null)</td>
-                        @*<td>@Html.DisplayFor(model => model.Owner.FullName)</td>*@
+                        <td>@Html.ActionLink(Model.Owner.FullName, "Gallery", "UserHome", new { id = Model.OwnerId }, null)</td>
                     </tr>
-
-
 
                     <tr>
                         <td>@Html.DisplayNameFor(model => model.Title):</td>
                         <td>@Html.DisplayFor(model => model.Title)</td>
                     </tr>
-
 
                     <tr>
                         <td>@Html.DisplayNameFor(model => model.Cost):</td>
@@ -62,7 +58,6 @@
                         <td>@Html.DisplayNameFor(model => model.Location):</td>
                         <td>@Html.DisplayFor(model => model.Location)</td>
                     </tr>
-
 
                     <tr>
                         <td> @Html.DisplayNameFor(model => model.Description):</td>
@@ -75,7 +70,6 @@
                         <td>
 
                     </tr>
-                    
 
                     <tr>
                         <td>@Html.DisplayNameFor(model => model.PictureType):</td>
@@ -89,5 +83,3 @@
 
     </div>
 </div>
-
-

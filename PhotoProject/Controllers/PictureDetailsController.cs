@@ -45,7 +45,7 @@ namespace PhotoProject.Controllers
             {
                 return HttpNotFound();
             }
-
+            ViewBag.PreviousUrl = System.Web.HttpContext.Current.Request.UrlReferrer;
             return View(picture);
         }
                 
