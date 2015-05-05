@@ -81,13 +81,10 @@
                         }
                         else
                         {
-
                             foreach (DataLayer.Album alb in albums)
                             {
                                 @Html.ActionLink(alb.Name, "AlbumDetails", "AlbumDetails", routeValues: new {id = alb.Id}, htmlAttributes: new { @class = "button1" })
                             }
-
-
                         }
                     }
                 </div>

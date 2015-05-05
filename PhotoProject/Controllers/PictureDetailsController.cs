@@ -82,6 +82,7 @@ namespace PhotoProject.Controllers
 
 
         // GET: PictureDetails/Edit/5
+        [HttpGet]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -117,12 +118,12 @@ namespace PhotoProject.Controllers
             {
                 db.SaveChanges();
                 return PartialView(dbPicture);
+                //return RedirectToAction("Details", "PictureDetails", new { id = id });
               /*  return RedirectToAction("Details", new RouteValueDictionary(new { controller = "PictureDetails", action = "Details", id = dbPicture.Id }));*/
             }
             else
             {
                 return PartialView(dbPicture);
-
             }
 
 

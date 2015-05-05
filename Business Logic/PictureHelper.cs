@@ -8,6 +8,7 @@ using System.Text;
 using System.Web;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
+using System.Data.Entity.Validation;
 
 namespace Business_Logic
 {
@@ -142,6 +143,22 @@ namespace Business_Logic
             userInfo.LikedPictures.Add(picture);
             db.SaveChanges();
 
+            //try
+            //{
+            //    db.SaveChanges();
+            //}
+            //catch (DbEntityValidationException e)
+            //{
+            //    foreach (var eve in e.EntityValidationErrors)
+            //    {
+            //        string EntityTypeStr = "Entity of type " + eve.Entry.Entity.GetType().Name.ToString() + " in state " + eve.Entry.State.ToString() + " has the following validation errors:";
+            //        foreach (var ve in eve.ValidationErrors)
+            //        {
+            //            string PropertyStr = "Property: " + ve.PropertyName.ToString() + ", Error: " + ve.ErrorMessage.ToString();
+            //        }
+            //    }
+            //    throw;
+            //}
 
             return Tuple.Create(picture, true);
         }
