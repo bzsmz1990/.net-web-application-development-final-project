@@ -19,7 +19,7 @@ namespace PhotoProject.Controllers
     public class PictureDetailsController : Controller
     {
         private static ApplicationDbContext db = new ApplicationDbContext();
-        private static PictureHelper picHelp = new PictureHelper(db);
+        private PictureHelper picHelp = new PictureHelper(db);
 
         // GET: PictureDetails/Details/5
         public ActionResult Details(int? id)
@@ -48,26 +48,7 @@ namespace PhotoProject.Controllers
 
             return View(picture);
         }
-
-        [Authorize]
-        public ActionResult buyPicture(int picId)
-        {
-            var userID = User.Identity.GetUserId();
-            UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
-            Picture pic = db.Pictures.Single(c => c.Id == picId);
-            if (pic != null && user.OwnedPictures.Contains(pic))
-            {
-                ViewBag.Message = "You already own that picture";
-                return RedirectToAction("Error", "Cart");
-            }
-            Cart cart = user.Cart;
-            cart.PicturesInCart = (cart.PicturesInCart ?? new List<Picture>());
-            cart.PicturesInCart.Add(pic);
-            db.SaveChanges();
-            ViewBag.Message = "Just added " + picId;
-            return RedirectToAction("Index", "Cart");
-
-        }
+                
 
         [Authorize]
         // GET: PictureDetails/LikePicture

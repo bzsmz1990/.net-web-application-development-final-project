@@ -26,7 +26,7 @@
 }
 
                     @*@Html.ActionLink("Back to List", "Gallery", "UserHome", new { @id = Model.Owner.UserId }, null)*@
-                    @Html.ActionLink("Add to Cart |", "buyPicture", new { picId = Model.Id }) @*ADD CONTROLLER TO MAKE IT WORK*@
+                    @Html.ActionLink("Add to Cart |", "buyPicture", "Cart", new { picId = Model.Id }, null) @*ADD CONTROLLER TO MAKE IT WORK*@
                     @Html.ActionLink("Report Photo |", "LikePicture", new { @id = Model.Id }) @*ADD CONTROLLER TO MAKE IT WORK*@
                     
                     <p> Number Of Likes: @Html.DisplayFor(model => model.NumberOfLikes)</p>
