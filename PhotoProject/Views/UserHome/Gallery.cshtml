@@ -10,20 +10,26 @@
             <div class="userinfo">
                 <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRVOdD-sjx4UA-Mym9oOQ8hQRrmCm8imPkYXWefj9a_dsnvXuzZ" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px">
                 <h1>@Model.Owner.FullName</h1>
+                <h2>Account: @Model.Owner.AccountBalance</h2>
                 @if (!@Model.isOwner)
                 {
                     if (ViewBag.FollowAction)
                     {
-                        @Html.ActionLink("Unfollow", "FollowUser", new { @id = Model.Owner.UserId })
+                        <div class="userbuttons2">
+                            <p class="userpagebutton">
+                                @Html.ActionLink("Unfollow", "FollowUser", new { @id = Model.Owner.UserId }, htmlAttributes: new { @class = "button2" })
+                            </p>
+                        </div>
                     }
                     else
                     {
-                        @Html.ActionLink("Follow", "FollowUser", new { @id = Model.Owner.UserId })
+                        <div class="userbuttons2">
+                            @Html.ActionLink("Follow", "FollowUser", new { @id = Model.Owner.UserId }, htmlAttributes: new { @class = "button2" })
+                        </div>
                     }
 
-                }
-                <h2>Account: @Model.Owner.AccountBalance</h2>
-            </div>
+                    }
+                        </div>
             @if (@Model.isOwner)
             {
                 <div class="userbuttons">
@@ -35,6 +41,9 @@
                     </p>
                     <p class="userpagebutton">
                         @Html.ActionLink("Create Album", "CreateNewAlbum", "UserHome", routeValues: null, htmlAttributes: new { @class = "button1" })
+                    </p>
+                    <p class="userpagebutton">
+                        @Html.ActionLink("Purchased Pictures", "OwnedPictures", "UserHome", routeValues: null, htmlAttributes: new { @class = "button1" })
                     </p>
                 </div>
             }
@@ -52,7 +61,7 @@
                         List<DataLayer.Picture> ownpicList = (List<DataLayer.Picture>)Model.OwnedPictures;
                         if (ownpicList == null)
                         {
-                            <h3>The user doesn't upload any picture.</h3>
+                            <h3>No pictures have been uploaded yet.</h3>
                         }
                         else
                         {
@@ -81,7 +90,7 @@
                         List<DataLayer.Album> albums = Model.Owner.Albums.ToList();
                         if (albums == null)
                         {
-                            <h3>There are no albums</h3>
+                            <h3>No albums have been created yet</h3>
                         }
                         else
                         {
@@ -112,7 +121,7 @@
                         List<DataLayer.Picture> likedpicList = (List<DataLayer.Picture>)Model.LikedPictures;
                         if (likedpicList == null)
                         {
-                            <h3>The user didn't like any pictures</h3>
+                            <h3>The user didn't like any pictures yet</h3>
                         }
                         else
                         {
@@ -138,7 +147,7 @@
                         List<DataLayer.UserInfo> followinglist = (List<DataLayer.UserInfo>)Model.Following;
                         if (followinglist == null)
                         {
-                            <h3>There are no users followed</h3>
+                            <h3>There are no users being followed</h3>
                         }
                         else
                         {

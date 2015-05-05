@@ -120,5 +120,42 @@ namespace PhotoProject.Controllers
             AlbumDetailsController.db.SaveChanges();
             return RedirectToAction("Gallery", "UserHome", new { id = userID });
         }
+    
+        [Authorize]
+        public ActionResult OwnedPictures()
+        {
+            var userID = User.Identity.GetUserId();
+            UserInfo user = AlbumDetailsController.db.UserInfos.Single(emp => emp.UserId == userID);
+
+            List<Transaction> trans = AlbumDetailsController.db.Transactions.Where(tr => tr.BuyerId == userID).ToList();
+            List<Picture> pics = new List<Picture>();
+            List<Album> albums = new List<Album>();
+            if (trans != null)
+            {
+                
+                foreach (Transaction tr in trans)
+                {
+                    foreach (Picture pic in tr.PicturesBeingSold)
+                    {
+                        if (!pics.Contains(pic))
+                        {
+                            pics.Add(pic);
+                        }
+                    }
+                }
+                
+                foreach (Transaction tr in trans)
+                {
+                    foreach (Album al in tr.AlbumsBeingSold)
+                    {
+                        if (!albums.Contains(al))
+                        {
+                            albums.Add(al);
+                        }
+                    }
+                }
+            }
+            return View(Tuple.Create(pics, albums));
+        }
     }
 }
