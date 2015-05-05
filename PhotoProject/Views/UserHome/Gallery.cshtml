@@ -154,7 +154,7 @@
                             foreach (DataLayer.UserInfo user in followinglist)
                             {
                                 <li>
-                                    @Html.ActionLink(user.FullName, "Gallery", "UserHome", new { id = user.UserId })
+                                    @Html.ActionLink(user.FullName, "Gallery", "UserHome", new { id = user.UserId }, null)
                                 </li>
                             }
                         }
