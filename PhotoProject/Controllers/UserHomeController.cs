@@ -38,7 +38,7 @@ namespace PhotoProject.Controllers
             var userID = User.Identity.GetUserId();
             //define whether the visiter is the user of this home page
             bool isOwner = userID == id ? true : false;
-
+            ViewBag.isOwner = isOwner;
             if(id==null)    //if the parameter id is null
             {
                 return RedirectToAction("Error", "UserHome", new { errorMessage = "Didn't give user id parameter!" });
