@@ -95,7 +95,7 @@ namespace PhotoProject.Controllers
                 return HttpNotFound();
             }
 
-            return PartialView(picture);
+            return View(picture);
         }
 
         // POST: PictureDetails/Edit/5
@@ -117,13 +117,13 @@ namespace PhotoProject.Controllers
             if (updateSuccessful)
             {
                 AlbumDetailsController.db.SaveChanges();
-                return PartialView(dbPicture);
+          //      return PartialView(dbPicture);
                 //return RedirectToAction("Details", "PictureDetails", new { id = id });
-              /*  return RedirectToAction("Details", new RouteValueDictionary(new { controller = "PictureDetails", action = "Details", id = dbPicture.Id }));*/
+              return RedirectToAction("Details", new RouteValueDictionary(new { controller = "PictureDetails", action = "Details", id = dbPicture.Id }));
             }
             else
             {
-                return PartialView(dbPicture);
+                return View(dbPicture);
             }
 
 
