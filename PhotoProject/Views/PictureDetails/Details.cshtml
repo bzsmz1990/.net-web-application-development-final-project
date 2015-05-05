@@ -11,7 +11,8 @@
                 <div>
                     @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id })*@
                     <a href="#login_form" id="login_pop">Edit&nbsp;|</a>
-                    @Html.ActionLink("Back to List |", "LikePicture", new { @id = Model.Id })@*ADD CONTROLLER TO MAKE IT WORK*@
+                    
+                    <a href="javascript:void(0);" onclick="history.go(-1);">Back to Gallery | </a>
 
                     @{
                         if (ViewBag.LikeAction)
