@@ -17,6 +17,10 @@
             {
                 <p> @pic.Title - Cost: @pic.Cost   |   @Html.ActionLink("Delete", "Delete", new { picId = pic.Id })</p>
             }
+            @foreach (DataLayer.Album al in Model.AlbumsInCart)
+            {
+                <p> @al.Name - Cost: @al.Cost   |   @Html.ActionLink("Delete", "Delete", new { albumID = al.Id })</p>
+            }
             <br />
 
             <p>

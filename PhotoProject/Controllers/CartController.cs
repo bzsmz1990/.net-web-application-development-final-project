@@ -10,8 +10,14 @@ using DataLayer;
 using Business_Logic;
 using System.Text;
 using SendGrid;
+using System.Net;
 using System.Net.Mail;
 using Microsoft.AspNet.Identity;
+using System;
+using System.Net;
+using System.Net.Mail;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace PhotoProject.Controllers
 {
@@ -81,7 +87,7 @@ namespace PhotoProject.Controllers
             return View();
         }
 
-        public ActionResult Submit()
+        public async Task<ActionResult> Submit()
         {
             var userID = User.Identity.GetUserId();
             UserInfo user = AlbumDetailsController.db.UserInfos.Single(emp => emp.UserId == userID);
@@ -106,12 +112,23 @@ namespace PhotoProject.Controllers
                 AlbumDetailsController.db.SaveChanges();
                 userHelp.SetLevel(trans.Seller);
             }
+            user.Cart.PicturesInCart.Clear();
+            user.Cart.AlbumsInCart.Clear();
 
             email_msg += "Your current balance: " + user.AccountBalance + "\n";
 
             //Send email
-            var message = new SendGridMessage();
-            message.AddTo(user.User.Email);
+            await sendEmail(email_msg, user.User.Email);
+
+            return View();
+
+
+        }
+
+        private async Task sendEmail(string email_msg, string email)
+        {
+            SendGridMessage message = new SendGridMessage();
+            message.AddTo(email);
             message.From = new MailAddress("NoReply@photobucket", "Photo Bucket");
             message.Subject = "Transaction Confirmation";
             message.Text = email_msg;
@@ -125,14 +142,15 @@ namespace PhotoProject.Controllers
             var transportWeb = new Web(credentials);
 
             // Send the email.
-            transportWeb.DeliverAsync(message);
-
-            user.Cart.PicturesInCart.Clear();
-            user.Cart.AlbumsInCart.Clear();
-
-            return View();
-
-
+            if (transportWeb != null)
+            {
+                await transportWeb.DeliverAsync(message);
+            }
+            else
+            {
+                Trace.TraceError("Failed to create Web transport.");
+                await Task.FromResult(0);
+            }
         }
 
         [Authorize]

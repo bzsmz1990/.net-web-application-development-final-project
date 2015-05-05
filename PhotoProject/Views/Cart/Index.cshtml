@@ -19,16 +19,20 @@
     
             }
 
-            <p>
-                @Html.ActionLink("Checkout", "CheckOut")
-            </p>
+           
         }
-        else if (Model.AlbumsInCart.Count != 0)
+        @if (Model.AlbumsInCart.Count != 0)
         {
             foreach (DataLayer.Album album in Model.AlbumsInCart)
             {
                 <p> @album.Name | @Html.ActionLink("Delete", "DeleteAl", new {albumId = album.Id})</p>
             }
+        }
+        @if (Model.AlbumsInCart.Count + Model.PicturesInCart.Count > 0)
+        {
+            <p>
+                @Html.ActionLink("Checkout", "CheckOut")
+            </p>
         }
         else
         {
