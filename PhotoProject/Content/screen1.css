@@ -1230,8 +1230,22 @@ width:120px;
 }
 
 
+.albumviewpage {
+    position:center;
+    text-align:center;
+    margin-top: 120px;
+    margin-bottom: 100px;
+    height:600px;
+}
 
+.albumviewpage .col-2 .uploadedimages h2{
+    text-align:center;
+    margin-bottom: 40px;
+}
 
+.albumuserpagebutton {
+    position:center;
+}
 
 
 
