@@ -28,10 +28,10 @@
             {
                 foreach (DataLayer.Album al in Model.Item2)
                 {
-                    @*<p>
-                            @Html.ActionLink(al.Name, "PurchasedAlbum", "PurchasedThings", new { id = al.Id })
-                        </p>*@
-                    <p>@al.Name</p>
+                    <p>
+                        @Html.ActionLink(al.Name, "PurchasedAlbum", "PurchasedThings", new { id = al.Id }, null)
+                    </p>
+
                 }
             }
 
