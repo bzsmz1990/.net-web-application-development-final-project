@@ -136,25 +136,23 @@ namespace PhotoProject.Controllers
 
         }
 
+        [Authorize]
         public ActionResult buyPicture(int picId)
         {
-            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
-            Picture pic = db.Pictures.Include(c => picId).FirstOrDefault();
+            var userID = User.Identity.GetUserId();
+            UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
+            Picture pic = db.Pictures.Single(c => c.Id == picId);
             if (pic != null && user.OwnedPictures.Contains(pic))
             {
                 ViewBag.Message = "You already own that picture";
                 return RedirectToAction("Error", "Cart");
             }
             Cart cart = user.Cart;
-
-            CartHelper helper = new CartHelper(db);
-            if (helper.buyPicture(picId, cart.UserId))
-            {
-                ViewBag.Message = "Just added " + picId;
-                return RedirectToAction("Index", "Cart");
-            } else {
-                return RedirectToAction("Error", "Cart");
-            }
+            cart.PicturesInCart = (cart.PicturesInCart ?? new List<Picture>());
+            cart.PicturesInCart.Add(pic);
+            db.SaveChanges();
+            ViewBag.Message = "Just added " + picId;
+            return RedirectToAction("Index", "Cart");
 
         }
         
