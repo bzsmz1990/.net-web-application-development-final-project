@@ -10,20 +10,26 @@
             <div class="userinfo">
                 <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRVOdD-sjx4UA-Mym9oOQ8hQRrmCm8imPkYXWefj9a_dsnvXuzZ" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px">
                 <h1>@Model.Owner.FullName</h1>
+                <h2>Account: @Model.Owner.AccountBalance</h2>
                 @if (!@Model.isOwner)
                 {
                     if (ViewBag.FollowAction)
                     {
-                        @Html.ActionLink("Unfollow", "FollowUser", new { @id = Model.Owner.UserId })
+                        <div class="userbuttons2">
+                            <p class="userpagebutton">
+                                @Html.ActionLink("Unfollow", "FollowUser", new { @id = Model.Owner.UserId }, htmlAttributes: new { @class = "button2" })
+                            </p>
+                        </div>
                     }
                     else
                     {
-                        @Html.ActionLink("Follow", "FollowUser", new { @id = Model.Owner.UserId })
+                        <div class="userbuttons2">
+                            @Html.ActionLink("Follow", "FollowUser", new { @id = Model.Owner.UserId }, htmlAttributes: new { @class = "button2" })
+                        </div>
                     }
 
-                }
-                <h2>Account: @Model.Owner.AccountBalance</h2>
-            </div>
+                    }
+                        </div>
             @if (@Model.isOwner)
             {
                 <div class="userbuttons">
