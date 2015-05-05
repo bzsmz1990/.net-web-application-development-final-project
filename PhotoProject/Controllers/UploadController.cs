@@ -39,7 +39,7 @@ namespace PhotoProject.Controllers
         public ActionResult Upload(FormCollection formcollection)
         {
             var userID = User.Identity.GetUserId();
-            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
+            UserInfo currentUser = AlbumDetailsController.db.UserInfos.Single(emp => emp.UserId == userID);
 
             //based on user's level, define whether the user still have room to upload
             bool havePositionToUpload = picHelp.VerifyUserLevel(currentUser);
@@ -72,10 +72,10 @@ namespace PhotoProject.Controllers
                     //create picture
                     Picture pic = picHelp.CreatPicture(userID, formcollection["Title"], Convert.ToDecimal(formcollection["Cost"]), formcollection["Location"], formcollection["Description"], formcollection["Tags"], DateTime.Now, type, data);
 
-                    db.Pictures.Add(pic);
+                    AlbumDetailsController.db.Pictures.Add(pic);
                     //db.UserInfos.Single(emp => emp.UserId == userID).OwnedPictures.Add(pic);
                     currentUser.OwnedPictures.Add(pic);
-                    db.SaveChanges();
+                    AlbumDetailsController.db.SaveChanges();
                     
                     //try
                     //{
