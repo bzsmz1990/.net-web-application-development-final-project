@@ -4,6 +4,7 @@
     ViewBag.Title = "Gallery";
 }
 <div class="gallerypage">
+
     <div class="col-2">
         <div class="profileinfo">
             <div class="userinfo">
@@ -38,6 +39,8 @@
                 </div>
             }
         </div>
+        </div>
+    <div class="col-4">
         <div class="uploadedimages">
             <h4>@Model.Owner.FirstName's uploaded pictures</h4>
 
@@ -53,6 +56,7 @@
                         }
                         else
                         {
+
                             for (int i = 0; i < ownpicList.Count(); i++)
                             {
 
@@ -147,9 +151,9 @@
         </div>
         <br />
         <br />
-
+        </div>
     </div>
 
-</div>
+
 
 

@@ -31,6 +31,7 @@ namespace PhotoProject.Controllers
             }
             Picture picture = db.Pictures.Find(id);
             var userId = User.Identity.GetUserId();
+            ViewBag.isOwner = User.Identity.GetUserId() == picture.OwnerId;
 
             UserInfo userInfo = null;
             if (userId != null)
