@@ -14,11 +14,10 @@ namespace PhotoProject.Controllers
     [Authorize]
     public class UserHomeController : Controller
     {
-        private static ApplicationDbContext db = new ApplicationDbContext();
-        private PictureProcess picPro = new PictureProcess();
-        private PictureHelper picHelp = new PictureHelper(db);
-        private UserInfoHelper userHelp = new UserInfoHelper(db);
-        private AlbumHelper albumHelp = new AlbumHelper(db);
+        private static PictureProcess picPro = new PictureProcess();
+        private static PictureHelper picHelp = new PictureHelper(AlbumDetailsController.db);
+        private static UserInfoHelper userHelp = new UserInfoHelper(AlbumDetailsController.db);
+        private static AlbumHelper albumHelp = new AlbumHelper(AlbumDetailsController.db);
 
         // GET: UserHome
         //public ActionResult Index()
@@ -54,9 +53,9 @@ namespace PhotoProject.Controllers
                 userhome.Following = userHelp.GetFollowing(id);
                 if (userID != null)
                 {
-                    UserInfo userInfo = db.UserInfos.Single(emp => emp.UserId == userID);
+                    UserInfo userInfo = AlbumDetailsController.db.UserInfos.Single(emp => emp.UserId == userID);
                     //THis will be true if the current user has followed *this* user, false otherwise
-                    ViewBag.FollowAction = userInfo == null ? false : userInfo.Following.Contains(db.UserInfos.Single(emp => emp.UserId == id));
+                    ViewBag.FollowAction = userInfo == null ? false : userInfo.Following.Contains(AlbumDetailsController.db.UserInfos.Single(emp => emp.UserId == id));
                 }
                 else
                 {
@@ -86,7 +85,7 @@ namespace PhotoProject.Controllers
         {
             CreateAlbumViewModel createalbum = new CreateAlbumViewModel();
             var userID = User.Identity.GetUserId();
-            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
+            UserInfo currentUser = AlbumDetailsController.db.UserInfos.Single(emp => emp.UserId == userID);
             createalbum.owner = currentUser;
             return View(createalbum);
         }
@@ -99,7 +98,7 @@ namespace PhotoProject.Controllers
             createalbum.album.Pictures = new List<Picture>();
             createalbum.owner = new UserInfo();
             var userID = User.Identity.GetUserId();
-            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
+            UserInfo currentUser = AlbumDetailsController.db.UserInfos.Single(emp => emp.UserId == userID);
             createalbum.owner = currentUser;
 
             List<Picture> picInAlbum = new List<Picture>();
@@ -118,7 +117,7 @@ namespace PhotoProject.Controllers
             }
             createalbum.album = albumHelp.CreateAlbum(formcollection["album.Name"], userID, currentUser, picInAlbum, Convert.ToDecimal(formcollection["album.Cost"]));
             currentUser.Albums.Add(createalbum.album);
-            db.SaveChanges();
+            AlbumDetailsController.db.SaveChanges();
             return RedirectToAction("Gallery", "UserHome", new { id = userID });
         }
     }

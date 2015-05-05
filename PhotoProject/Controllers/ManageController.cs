@@ -15,7 +15,6 @@ namespace PhotoProject.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private static ApplicationDbContext db = new ApplicationDbContext();
 
         public ManageController()
         {
@@ -76,7 +75,7 @@ namespace PhotoProject.Controllers
                 LastName = UserManager.FindById(userId).LastName
             };
 
-            Business_Logic.UserInfoHelper helper = new Business_Logic.UserInfoHelper(db);
+            Business_Logic.UserInfoHelper helper = new Business_Logic.UserInfoHelper(AlbumDetailsController.db);
             UserInfo user = helper.GetUser(userId);
             ViewBag.user = user;
 

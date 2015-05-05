@@ -13,7 +13,7 @@ namespace PhotoProject.Controllers
     [Authorize]
     public class AlbumDetailsController : Controller
     {
-        private static ApplicationDbContext db = new ApplicationDbContext();
+        public static ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: AlbumDetail
         public ActionResult Index()

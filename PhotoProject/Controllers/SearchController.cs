@@ -15,9 +15,8 @@ namespace PhotoProject.Controllers
 {
     public class SearchController : Controller
     {
-        private static ApplicationDbContext db = new ApplicationDbContext();
-        private static PictureHelper pictureHelper = new PictureHelper(db);
-        private static AlbumHelper albumHelper = new AlbumHelper(db);
+        private static PictureHelper pictureHelper = new PictureHelper(AlbumDetailsController.db);
+        private static AlbumHelper albumHelper = new AlbumHelper(AlbumDetailsController.db);
 
         private static int LIST_SIZE = 10;
 
