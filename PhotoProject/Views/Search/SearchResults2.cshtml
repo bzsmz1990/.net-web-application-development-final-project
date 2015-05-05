@@ -56,7 +56,7 @@
                     }
                 }
 
-                Page @(Model.Albums.PageCount < Model.Pictures.PageNumber ? 0 : Model.Albums.PageNumber) of @Model.Albums.PageCount
+                Page @(Model.Albums.PageCount < Model.Albums.PageNumber ? 0 : Model.Albums.PageNumber) of @Model.Albums.PageCount
 
                 @Html.PagedListPager(Model.Albums, albumPage => Url.Action("SearchResults2", new { albumPage, currentFilter = ViewBag.CurrentFilter }))
 
