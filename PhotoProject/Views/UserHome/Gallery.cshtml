@@ -10,7 +10,11 @@
             <div class="userinfo">
                 <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRVOdD-sjx4UA-Mym9oOQ8hQRrmCm8imPkYXWefj9a_dsnvXuzZ" style="width:110px;height:110px;border-radius: 15px 15px 15px 15px">
                 <h1>@Model.Owner.FullName</h1>
-                <h2>Account: @Model.Owner.AccountBalance</h2>
+                @if (ViewBag.isOwner)
+                {
+                    <h2>Account: @Model.Owner.AccountBalance</h2>
+                }
+
                 @if (!ViewBag.isOwner)
                 {
                     if (ViewBag.FollowAction)
@@ -166,7 +170,3 @@
         <br />
     </div>
 </div>
-
-
-
-
