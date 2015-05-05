@@ -14,12 +14,19 @@
         {
             foreach (DataLayer.Picture pic in Model.PicturesInCart)
             {
-                <p> @pic.Title | @Html.ActionLink("Delete", "Delete", new { picId = pic.Id })</p>
+                <p> @pic.Title | @Html.ActionLink("Delete", "DeletePic", new { picId = pic.Id })</p>
             }
 
             <p>
                 @Html.ActionLink("Checkout", "CheckOut")
             </p>
+        }
+        else if (Model.AlbumsInCart.Count != 0)
+        {
+            foreach (DataLayer.Album album in Model.AlbumsInCart)
+            {
+                <p> @album.Name | @Html.ActionLink("Delete", "DeleteAl", new {albumId = album.Id})</p>
+            }
         }
         else
         {

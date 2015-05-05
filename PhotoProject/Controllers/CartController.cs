@@ -158,8 +158,10 @@ namespace PhotoProject.Controllers
         
         public ActionResult buyAlbum(int albumId)
         {
-            UserInfo user = db.UserInfos.Include(c => c.User).FirstOrDefault();
+            var userID = User.Identity.GetUserId();
+            UserInfo user = db.UserInfos.Single(emp => emp.UserId == userID);
             Cart cart = user.Cart;
+
 
             CartHelper helper = new CartHelper(db);
             if (helper.buyAlbum(albumId, cart.UserId)) {
@@ -249,7 +251,7 @@ namespace PhotoProject.Controllers
         }
 
         // GET: Cart/Delete/5
-        public ActionResult Delete(int picId)
+        public ActionResult DeletePic(int picId)
         {
 
             var userID = User.Identity.GetUserId();
@@ -270,6 +272,28 @@ namespace PhotoProject.Controllers
                 }
             }
                             
+            return RedirectToAction("Index", "Cart");
+        }
+
+        public ActionResult DeleteAl(int albumID)
+        {
+            var userID = User.Identity.GetUserId();
+            UserInfo currentUser = db.UserInfos.Single(emp => emp.UserId == userID);
+            Cart cart = currentUser.Cart;
+            if (cart == null)
+            {
+                return HttpNotFound();
+            }
+            foreach (Album al in cart.AlbumsInCart)
+            {
+                if (al.Id == albumID)
+                {
+                    cart.AlbumsInCart.Remove(al);
+                    db.SaveChanges();
+                    break;
+                }
+            }
+
             return RedirectToAction("Index", "Cart");
         }
 
